@@ -4,9 +4,9 @@ using UnityEngine;
 public class LevelSelectionSystem : MonoBehaviour
 {
     
-    [SerializeField] private GameObject levelsParent;
+    [SerializeField] public GameObject levelsParent;
     private static int currentLevel;
-
+    
     public void Update()
     {
         foreach (Transform level in levelsParent.transform)
@@ -34,6 +34,5 @@ public class LevelSelectionSystem : MonoBehaviour
         var enabledIcon = level.transform.Find("OnActive").gameObject;
         enabledIcon.SetActive(true);
         currentLevel = Int32.Parse(level.name);
-        Debug.Log("Current level is " + currentLevel);
     }
 }
