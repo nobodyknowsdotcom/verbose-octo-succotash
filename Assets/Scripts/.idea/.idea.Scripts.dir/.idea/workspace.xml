@@ -2,7 +2,13 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="0060e374-3d25-448d-be83-ccb8a8101054" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/../Scenes/MainScene.unity" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Scenes/MainScene.unity.meta" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/../Scenes/Map.unity" beforeDir="false" afterPath="$PROJECT_DIR$/../Scenes/Map.unity" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Scenes/Menu.unity" beforeDir="false" afterPath="$PROJECT_DIR$/../Scenes/Menu.unity" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/.idea.Scripts.dir/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.Scripts.dir/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/LevelSelectionSystem.cs" beforeDir="false" afterPath="$PROJECT_DIR$/LevelSelectionSystem.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../UserSettings/EditorUserSettings.asset" beforeDir="false" afterPath="$PROJECT_DIR$/../../UserSettings/EditorUserSettings.asset" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -13,7 +19,12 @@
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/../.." />
   </component>
   <component name="HighlightingSettingsPerFile">
-    <setting file="file://$PROJECT_DIR$/LevelSelection.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/LevelSelectionSystem.cs" root0="SKIP_HIGHLIGHTING" />
+  </component>
+  <component name="IdeDocumentHistory">
+    <changedPaths>
+      <option value="$PROJECT_DIR$/LevelSelectionSystem.cs" />
+    </changedPaths>
   </component>
   <component name="ProjectId" id="28Sr0Ls0dWIy3VzziNOG8c743od" />
   <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
@@ -39,6 +50,8 @@
       <workItem from="1651220638780" duration="728000" />
       <workItem from="1651221439581" duration="1497000" />
       <workItem from="1651223076628" duration="258000" />
+      <workItem from="1651401381050" duration="413000" />
+      <workItem from="1651403236805" duration="106000" />
     </task>
     <servers />
   </component>
