@@ -1,12 +1,12 @@
 using System;
 using System.Collections.Generic;
-using UnityEditor;
 using UnityEngine;
 
 public class LevelSelectionSystem : MonoBehaviour
 {
     
-    [SerializeField] public GameObject levelsParent;
+    [SerializeField] private GameObject levelsParent;
+    [SerializeField] private GameObject squadsParent;
     private static int _currentLevel;
     private static int _currentSquad;
 
@@ -25,6 +25,8 @@ public class LevelSelectionSystem : MonoBehaviour
     {
         var firstLevel = levelsParent.transform.GetChild(0).gameObject;
         SetCurrentLevel(firstLevel);
+        var defaultSquad = squadsParent.transform.GetChild(1).gameObject;
+        SetCurrentSquad(defaultSquad);
     }
     
     public void Update()
@@ -38,6 +40,20 @@ public class LevelSelectionSystem : MonoBehaviour
                 level.Find("OnAvailable").gameObject.SetActive(true);
             else
                 level.Find("OnAvailable").gameObject.SetActive(false);
+        }
+
+        foreach (Transform squad in squadsParent.transform)
+        {
+            if (Int32.Parse(squad.name) == _currentSquad)
+            {
+                var enabledIcon = squad.transform.Find("OnActive").gameObject;
+                enabledIcon.SetActive(true);
+            }
+            else
+            {
+                var enabledIcon = squad.transform.Find("OnActive").gameObject;
+                enabledIcon.SetActive(false);
+            }
         }
     }
 
@@ -53,14 +69,14 @@ public class LevelSelectionSystem : MonoBehaviour
         return _currentLevel;
     }
 
-    public int GetCurrentSquad()
+    public static int GetCurrentSquad()
     {
         return _currentSquad;
     }
     
-    public void SetCurrentSquad(int squad)
+    public static void SetCurrentSquad(GameObject squad)
     {
-        _currentSquad =  squad;
+        _currentSquad = Int32.Parse(squad.name);
     }
 
     public static Dictionary<int, List<int>> GetAvailablelevels()

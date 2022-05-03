@@ -1,18 +1,11 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.EventSystems;
 
 public class OnSquadClick : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
+    public void OnClick()
     {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
+        var squad = EventSystem.current.currentSelectedGameObject;
+        LevelSelectionSystem.SetCurrentSquad(squad);
     }
 }

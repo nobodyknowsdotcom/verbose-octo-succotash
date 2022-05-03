@@ -3,13 +3,9 @@
   <component name="ChangeListManager">
     <list default="true" id="0b3f2042-8aef-4295-9e71-03ff8180e52d" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/.idea.verbose-octo-succotash/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.verbose-octo-succotash/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Assets/CustomSprites/squad_icon_1.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Assets/CustomSprites/squad_icon_1.png.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Assets/CustomSprites/squad_icon_2.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Assets/CustomSprites/squad_icon_2.png.meta" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/Scenes/Map.unity" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scenes/Map.unity" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/Scripts/LevelSelectionSystem.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/LevelSelectionSystem.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/OnLevelClick.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/OnLevelClick.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/OnSquadClick.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/OnSquadClick.cs" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -21,8 +17,9 @@
   </component>
   <component name="IdeDocumentHistory">
     <changedPaths>
-      <option value="$PROJECT_DIR$/Assets/Scripts/LevelSelectionSystem.cs" />
       <option value="$PROJECT_DIR$/Assets/Scripts/OnLevelClick.cs" />
+      <option value="$PROJECT_DIR$/Assets/Scripts/LevelSelectionSystem.cs" />
+      <option value="$PROJECT_DIR$/Assets/Scripts/OnSquadClick.cs" />
     </changedPaths>
   </component>
   <component name="ProjectId" id="28Swb6SCp9JQooodyj6MSMtxZfz" />
@@ -75,7 +72,7 @@
       <workItem from="1651262855580" duration="579000" />
       <workItem from="1651266588983" duration="213000" />
       <workItem from="1651403358531" duration="1326000" />
-      <workItem from="1651563622000" duration="2141000" />
+      <workItem from="1651563622000" duration="5332000" />
     </task>
     <servers />
   </component>
