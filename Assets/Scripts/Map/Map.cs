@@ -4,10 +4,10 @@ using UnityEngine;
 
 public class Map : MonoBehaviour
 {
-    private static int _currentLevel;
+    private static Dictionary<int, int> _squadsLocation;
     private static int _currentSquad;
 
-    private static readonly Dictionary<int, List<int>> AvailableLevels = new Dictionary<int, List<int>>
+    private static readonly Dictionary<int, List<int>> Paths = new Dictionary<int, List<int>>
     {
         {0, new List<int>{1, 2, 3}},
         {1, new List<int>{0, 2, 4}},
@@ -17,7 +17,17 @@ public class Map : MonoBehaviour
         {5, new List<int>{3, 6}},
         {6, new List<int>{4, 5}},
     };
-    
+
+    public void Awake()
+    {
+        _squadsLocation = new Dictionary<int, int>()
+        {
+            {0, 0},
+            {1, 0}
+        };
+        _currentSquad = 0;
+    }
+
     public void Start()
     {
     }
@@ -29,13 +39,15 @@ public class Map : MonoBehaviour
     public static void SetCurrentLevel(GameObject level)
     {
         var enabledIcon = level.transform.Find("OnActive").gameObject;
+        var squadIcon = level.transform.Find("Squad_"+_currentSquad).gameObject;
         enabledIcon.SetActive(true);
-        _currentLevel = Int32.Parse(level.name);
+        squadIcon.SetActive(true);
+        _squadsLocation[_currentSquad] = Int32.Parse(level.name);
     }
 
     public static int GetCurrentLevel()
     {
-        return _currentLevel;
+        return _squadsLocation[_currentSquad];
     }
 
     public static int GetCurrentSquad()
@@ -43,13 +55,18 @@ public class Map : MonoBehaviour
         return _currentSquad;
     }
     
-    public static void SetCurrentSquad(GameObject squad)
+    public static void SetCurrentSquad(int index)
     {
-        _currentSquad = Int32.Parse(squad.name);
+        _currentSquad = index;
     }
 
-    public static Dictionary<int, List<int>> GetAvailablelevels()
+    public static Dictionary<int, List<int>> GetPaths()
     {
-        return AvailableLevels;
+        return Paths;
+    }
+
+    public static Dictionary<int, int> GetSquadsLocation()
+    {
+        return _squadsLocation;
     }
 }

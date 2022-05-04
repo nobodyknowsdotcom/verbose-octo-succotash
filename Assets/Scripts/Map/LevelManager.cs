@@ -1,28 +1,26 @@
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using UnityEngine;
-using UnityEngine.Diagnostics;
 using UnityEngine.EventSystems;
 
 public class LevelManager : MonoBehaviour
 {
     [SerializeField] private GameObject levelsParent;
     private LineRenderer lineRenderer;
-    private Dictionary<int, List<int>> AvailableLevels;
+    private Dictionary<int, List<int>> Paths;
 
     public void Awake()
     {
         lineRenderer = GetComponent<LineRenderer>();
         lineRenderer.sortingOrder = 2;
-        AvailableLevels = Map.GetAvailablelevels();
+        Paths = Map.GetPaths();
     }
 
     public void Start()
     {
         var firstLevel = levelsParent.transform.GetChild(0).gameObject;
         Map.SetCurrentLevel(firstLevel);
-        UpdateLevels(levelsParent, Map.GetCurrentLevel());
+        UpdateLevels(Map.GetCurrentLevel());
     }
     
     public void OnClick()
@@ -30,29 +28,31 @@ public class LevelManager : MonoBehaviour
         var level = EventSystem.current.currentSelectedGameObject;
         var currentLevelIndex = Map.GetCurrentLevel();
         
-        // Переходим на указанный уровень, если он доступен
-        if (AvailableLevels[currentLevelIndex].Contains(Int32.Parse(level.name)))
+        if (Paths[currentLevelIndex].Contains(Int32.Parse(level.name)))
         {
             Map.SetCurrentLevel(level);
+            SquadsManager.MoveSquad( Map.GetCurrentSquad(), Int32.Parse(level.name));
         }
-
-        UpdateLevels(levelsParent, Map.GetCurrentLevel());
+        UpdateLevels(Map.GetCurrentLevel());
     }
-
-    private void UpdateLevels(GameObject parent, int currentLevel)
+    
+    private void UpdateLevels(int currentLevel)
     {
         var drawingList = new List<GameObject>();
-        var currentLevelObj = levelsParent.transform.GetChild(Map.GetCurrentLevel()).gameObject;
-        foreach (Transform level in parent.transform)
-        {
-            
-            if (level.name != currentLevel.ToString())
-                level.Find("OnActive").gameObject.SetActive(false);
+        var currentLevelAsObject = levelsParent.transform.GetChild(Map.GetCurrentLevel()).gameObject;
 
-            if (AvailableLevels[currentLevel].Contains(Int32.Parse(level.name)))
+        foreach (Transform level in levelsParent.transform)
+        {
+            if (level.name != currentLevel.ToString())
+            {
+                level.Find("OnActive").gameObject.SetActive(false);
+                level.Find("Squad_"+Map.GetCurrentSquad()).gameObject.SetActive(false);
+            }
+            
+            if (Paths[currentLevel].Contains(Int32.Parse(level.name)))
             {
                 level.Find("OnAvailable").gameObject.SetActive(true);
-                drawingList.Add(currentLevelObj);
+                drawingList.Add(currentLevelAsObject);
                 drawingList.Add(level.gameObject);
             }
             else
