@@ -13,7 +13,6 @@ public class SquadsManager : MonoBehaviour
     public void Awake()
     {
         lineRenderer = GetComponent<LineRenderer>();
-        lineRenderer.sortingOrder = 2;
         _squadsLocation = Map.GetSquadsLocation();
         
         for (var i = 0; i < _squadsLocation.Count; i++)

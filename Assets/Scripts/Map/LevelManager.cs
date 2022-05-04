@@ -12,7 +12,6 @@ public class LevelManager : MonoBehaviour
     public void Awake()
     {
         lineRenderer = GetComponent<LineRenderer>();
-        lineRenderer.sortingOrder = 2;
         Paths = Map.GetPaths();
     }
 
