@@ -36,18 +36,9 @@ public class Map : MonoBehaviour
     {
     }
 
-    public static void SetCurrentLevel(GameObject level)
-    {
-        var enabledIcon = level.transform.Find("OnActive").gameObject;
-        var squadIcon = level.transform.Find("Squad_"+_currentSquad).gameObject;
-        enabledIcon.SetActive(true);
-        squadIcon.SetActive(true);
-        _squadsLocation[_currentSquad] = Int32.Parse(level.name);
-    }
-
     public static int GetCurrentLevel()
     {
-        return _squadsLocation[_currentSquad];
+        return SquadsManager.GetSquadsLocation()[_currentSquad];
     }
 
     public static int GetCurrentSquad()

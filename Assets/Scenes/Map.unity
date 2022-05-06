@@ -767,9 +767,8 @@ RectTransform:
   m_Children:
   - {fileID: 1968966122}
   - {fileID: 1865436204}
-  - {fileID: 1276610237}
   m_Father: {fileID: 1143063552}
-  m_RootOrder: 0
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -2306,7 +2305,7 @@ GameObject:
   - component: {fileID: 467054351}
   - component: {fileID: 467054350}
   m_Layer: 0
-  m_Name: LevelsPanel
+  m_Name: LevelsParent
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -4031,7 +4030,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 1524818940}
         m_TargetAssemblyTypeName: PopupManager, Assembly-CSharp
-        m_MethodName: ClosePopup
+        m_MethodName: Fight
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -4616,7 +4615,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &1143063552
 RectTransform:
   m_ObjectHideFlags: 0
@@ -4628,6 +4627,7 @@ RectTransform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
+  - {fileID: 1276610237}
   - {fileID: 249420420}
   m_Father: {fileID: 408688259}
   m_RootOrder: 7
@@ -5390,13 +5390,13 @@ RectTransform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
-  m_Father: {fileID: 249420420}
-  m_RootOrder: 2
+  m_Father: {fileID: 1143063552}
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: -180, y: 0}
-  m_SizeDelta: {x: 180, y: 150}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: -959.69, y: -540.17}
+  m_SizeDelta: {x: 1919.4, y: 1080.3}
   m_Pivot: {x: 0, y: 0}
 --- !u!114 &1276610238
 MonoBehaviour:
@@ -5467,14 +5467,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Color: {r: 0, g: 0, b: 0, a: 0}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 45096cbf10a16e54abb94043d2e417fb, type: 3}
+  m_Sprite: {fileID: 0}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -5576,7 +5576,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 1524818940}
         m_TargetAssemblyTypeName: PopupManager, Assembly-CSharp
-        m_MethodName: ClosePopup
+        m_MethodName: Search
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -6946,6 +6946,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   popup: {fileID: 1143063551}
+  levelsParent: {fileID: 467054348}
 --- !u!1 &1541703070
 GameObject:
   m_ObjectHideFlags: 0
