@@ -6,13 +6,14 @@ using UnityEngine.EventSystems;
 public class LevelManager : MonoBehaviour
 {
     [SerializeField] private GameObject levelsParent;
+    [SerializeField] private GameObject popup;
     private LineRenderer lineRenderer;
-    private Dictionary<int, List<int>> Paths;
+    private Dictionary<int, List<int>> _paths;
 
     public void Awake()
     {
         lineRenderer = GetComponent<LineRenderer>();
-        Paths = Map.GetPaths();
+        _paths = Map.GetPaths();
     }
 
     public void Start()
@@ -27,12 +28,13 @@ public class LevelManager : MonoBehaviour
         var level = EventSystem.current.currentSelectedGameObject;
         var currentLevelIndex = Map.GetCurrentLevel();
         
-        if (Paths[currentLevelIndex].Contains(Int32.Parse(level.name)))
+        if (_paths[currentLevelIndex].Contains(Int32.Parse(level.name)))
         {
             Map.SetCurrentLevel(level);
             SquadsManager.MoveSquad( Map.GetCurrentSquad(), Int32.Parse(level.name));
         }
         UpdateLevels(Map.GetCurrentLevel());
+        OpenPopup();
     }
     
     private void UpdateLevels(int currentLevel)
@@ -48,7 +50,7 @@ public class LevelManager : MonoBehaviour
                 level.Find("Squad_"+Map.GetCurrentSquad()).gameObject.SetActive(false);
             }
             
-            if (Paths[currentLevel].Contains(Int32.Parse(level.name)))
+            if (_paths[currentLevel].Contains(Int32.Parse(level.name)))
             {
                 level.Find("OnAvailable").gameObject.SetActive(true);
                 drawingList.Add(currentLevelAsObject);
@@ -61,6 +63,11 @@ public class LevelManager : MonoBehaviour
         }
         
         DrawLine(drawingList.ToArray());
+    }
+
+    public void OpenPopup()
+    {
+        popup.SetActive(true);
     }
     
     private void DrawLine(params GameObject[] objectsList)
