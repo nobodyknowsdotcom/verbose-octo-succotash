@@ -13,7 +13,16 @@ public class LevelManager : MonoBehaviour
     public void Awake()
     {
         _lineRenderer = GetComponent<LineRenderer>();
-        _paths = Map.GetPaths();
+        _paths = new Dictionary<int, List<int>>
+        {
+            {0, new List<int>{1, 2, 3}},
+            {1, new List<int>{0, 2, 4}},
+            {2, new List<int>{0, 1, 4}},
+            {3, new List<int>{0, 5}},
+            {4, new List<int>{1, 2, 5, 6}},
+            {5, new List<int>{3, 6}},
+            {6, new List<int>{4, 5}},
+        };
     }
 
     public void Start()
@@ -25,37 +34,41 @@ public class LevelManager : MonoBehaviour
     public void OnClick()
     {
         var level = EventSystem.current.currentSelectedGameObject;
-        var currentLevelIndex = Map.GetCurrentLevel();
+        var currentLevelIndex = GetCurrentLevel();
         // if level is available from current level 
         if (_paths[currentLevelIndex].Contains(Int32.Parse(level.name)))
         {
-            SquadsManager.MoveSquad( Map.GetCurrentSquad(), Int32.Parse(level.name));
+            SquadsManager.MoveSquad( SquadsManager.GetCurrentSquad(), Int32.Parse(level.name));
             UpdateLevels(levelsParent);
             OpenPopup();
         }
     }
+
+    public static int GetCurrentLevel()
+    {
+        return SquadsManager.GetSquadsLocation()[SquadsManager.GetCurrentSquad()];
+    }
     
     public static void UpdateLevels(GameObject levelsParent)
     {
-        var availableLevels = Map.GetPaths();
         var drawingList = new List<GameObject>();
-        var currentLevel = levelsParent.transform.GetChild(Map.GetCurrentLevel()).gameObject;
-        var currentLevelIndex = Map.GetCurrentLevel();
+        var currentLevel = levelsParent.transform.GetChild(GetCurrentLevel()).gameObject;
+        var currentLevelIndex = GetCurrentLevel();
 
         foreach (Transform level in levelsParent.transform)
         {
             if (level.name != currentLevelIndex.ToString())
             {
                 level.Find("OnActive").gameObject.SetActive(false);
-                level.Find("Squad_"+Map.GetCurrentSquad()).gameObject.SetActive(false);
+                level.Find("Squad_"+SquadsManager.GetCurrentSquad()).gameObject.SetActive(false);
             }
             else
             {
                 level.Find("OnActive").gameObject.SetActive(true);
-                level.Find("Squad_"+Map.GetCurrentSquad()).gameObject.SetActive(true);
+                level.Find("Squad_"+SquadsManager.GetCurrentSquad()).gameObject.SetActive(true);
             }
             
-            if (availableLevels[currentLevelIndex].Contains(Int32.Parse(level.name)))
+            if (_paths[currentLevelIndex].Contains(Int32.Parse(level.name)))
             {
                 level.Find("OnAvailable").gameObject.SetActive(true);
                 drawingList.Add(currentLevel);

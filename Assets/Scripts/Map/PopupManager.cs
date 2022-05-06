@@ -7,7 +7,7 @@ public class PopupManager : MonoBehaviour
 
     public void ClosePopup()
     {
-        var currentSquad = Map.GetCurrentSquad();
+        var currentSquad = SquadsManager.GetCurrentSquad();
         var squadsLocationBufer = SquadsManager.GetSquadsLocationBuffer();
         SquadsManager.MoveSquad(currentSquad, squadsLocationBufer);
         LevelManager.UpdateLevels(levelsParent);

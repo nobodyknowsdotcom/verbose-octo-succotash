@@ -8,12 +8,18 @@ public class SquadsManager : MonoBehaviour
     [SerializeField] private GameObject squadsParent;
     [SerializeField] private GameObject levelsParent;
     private static int _previouslevel;
+    private static int _currentSquad;
     private static Dictionary<int, int> _squadsLocation;
     private static Dictionary<int, bool> _squadsState;
 
     public void Awake()
     {
-        _squadsLocation = Map.GetSquadsLocation();
+        _currentSquad = 0;
+        _squadsLocation = new Dictionary<int, int>()
+        {
+            {0, 0},
+            {1, 0}
+        };
         
         for (var i = 0; i < _squadsLocation.Count; i++)
         {
@@ -24,15 +30,15 @@ public class SquadsManager : MonoBehaviour
     
     public void Start()
     {
-        UpdateSquadsPanel(Map.GetCurrentSquad());
+        UpdateSquadsPanel(_currentSquad);
     }
     
     public void OnClick()
     {
         var squad = EventSystem.current.currentSelectedGameObject;
-        Map.SetCurrentSquad(Int32.Parse(squad.name));
+        _currentSquad = Int32.Parse(squad.name);
         
-        UpdateSquadsPanel(Map.GetCurrentSquad());
+        UpdateSquadsPanel(_currentSquad);
         LevelManager.UpdateLevels(levelsParent);
     }
     
@@ -67,7 +73,7 @@ public class SquadsManager : MonoBehaviour
 
     public static void MoveSquad(int index, int levelIndex)
     {
-        _previouslevel = _squadsLocation[Map.GetCurrentSquad()];
+        _previouslevel = _squadsLocation[_currentSquad];
         Debug.Log(_previouslevel);
         _squadsLocation[index] = levelIndex;
         Debug.Log(_previouslevel);
@@ -76,5 +82,15 @@ public class SquadsManager : MonoBehaviour
     public static int GetSquadsLocationBuffer()
     {
         return _previouslevel;
+    }
+    
+    public static int GetCurrentSquad()
+    {
+        return _currentSquad;
+    }
+    
+    public static void SetCurrentSquad(int index)
+    {
+        _currentSquad = index;
     }
 }
