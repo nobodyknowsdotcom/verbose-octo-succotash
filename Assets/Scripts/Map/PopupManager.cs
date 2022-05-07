@@ -1,26 +1,33 @@
 using UnityEngine;
+using UnityEngine.Serialization;
 
 public class PopupManager : MonoBehaviour
 {
-    [SerializeField] private GameObject popup;
+    [SerializeField] private GameObject onNewLevelPopup;
+    [SerializeField] private GameObject squadPopup;
     [SerializeField] private GameObject levelsParent;
 
-    public void ClosePopup()
+    public void CloseLevelPopup()
     {
         var currentSquad = SquadsManager.GetCurrentSquad();
         var squadsLocationBufer = SquadsManager.GetSquadsLocationBuffer();
         SquadsManager.MoveSquad(currentSquad, squadsLocationBufer);
         LevelManager.UpdateLevels(levelsParent);
-        popup.SetActive(false);
+        onNewLevelPopup.SetActive(false);
+    }
+
+    public void CloseSquadPopup()
+    {
+        squadPopup.SetActive(false);
     }
 
     public void Fight()
     {
-        popup.SetActive(false);
+        onNewLevelPopup.SetActive(false);
     }
 
     public void Search()
     {
-        popup.SetActive(false);
+        onNewLevelPopup.SetActive(false);
     }
 }

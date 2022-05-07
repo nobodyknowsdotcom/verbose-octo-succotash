@@ -3,9 +3,7 @@
   <component name="ChangeListManager">
     <list default="true" id="0b3f2042-8aef-4295-9e71-03ff8180e52d" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/.idea.verbose-octo-succotash/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.verbose-octo-succotash/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Map/LevelManager.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Map/LevelManager.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Map/Map.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Map/Map.cs.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scenes/Map.unity" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scenes/Map.unity" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/Scripts/Map/PopupManager.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Map/PopupManager.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/Scripts/Map/SquadsManager.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Map/SquadsManager.cs" afterDir="false" />
     </list>
@@ -87,7 +85,9 @@
       <workItem from="1651690576134" duration="1058000" />
       <workItem from="1651854439448" duration="1573000" />
       <workItem from="1651857578113" duration="758000" />
-      <workItem from="1651866816183" duration="6120000" />
+      <workItem from="1651866816183" duration="6239000" />
+      <workItem from="1651905294756" duration="1863000" />
+      <workItem from="1651911511604" duration="474000" />
     </task>
     <servers />
   </component>

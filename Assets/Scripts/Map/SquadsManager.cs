@@ -1,12 +1,18 @@
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
+using System.Threading;
 using UnityEngine;
 using UnityEngine.EventSystems;
+using Debug = UnityEngine.Debug;
 
 public class SquadsManager : MonoBehaviour
 {
     [SerializeField] private GameObject squadsParent;
     [SerializeField] private GameObject levelsParent;
+    [SerializeField] private GameObject squadPopup;
+    
+    private static Stopwatch stopWatch;
     private static int _previouslevel;
     private static int _currentSquad;
     private static Dictionary<int, int> _squadsLocation;
@@ -36,6 +42,10 @@ public class SquadsManager : MonoBehaviour
     public void OnClick()
     {
         var squad = EventSystem.current.currentSelectedGameObject;
+        if (Int32.Parse(squad.name) == _currentSquad)
+        {
+            squadPopup.SetActive(true);
+        }
         _currentSquad = Int32.Parse(squad.name);
         
         UpdateSquadsPanel(_currentSquad);
@@ -93,4 +103,20 @@ public class SquadsManager : MonoBehaviour
     {
         _currentSquad = index;
     }
+    
+    public static bool IsDoubleTap(){
+        bool result = false;
+        float MaxTimeWait = 1;
+        float VariancePosition = 1;
+        
+        if( Input.touchCount == 1  && Input.GetTouch(0).phase == TouchPhase.Began)
+        {
+         float DeltaTime = Input.GetTouch (0).deltaTime;
+         float DeltaPositionLenght=Input.GetTouch (0).deltaPosition.magnitude;
+        
+         if ( DeltaTime> 0 && DeltaTime < MaxTimeWait && DeltaPositionLenght < VariancePosition)
+             result = true;                
+        }
+        return result;
+     }
 }
