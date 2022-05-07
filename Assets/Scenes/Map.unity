@@ -1786,7 +1786,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 264173981}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1524818936}
+        m_TargetAssemblyTypeName: LevelManager, Assembly-CSharp
+        m_MethodName: EndStep
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &264173981
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3640,7 +3652,7 @@ MonoBehaviour:
     m_FontStyle: 1
     m_BestFit: 1
     m_MinSize: 10
-    m_MaxSize: 57
+    m_MaxSize: 50
     m_Alignment: 4
     m_AlignByGeometry: 1
     m_RichText: 1
@@ -13936,6 +13948,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   levelsParent: {fileID: 467054348}
   popup: {fileID: 1143063551}
+  stepText: {fileID: 451281133}
 --- !u!114 &1524818938
 MonoBehaviour:
   m_ObjectHideFlags: 0

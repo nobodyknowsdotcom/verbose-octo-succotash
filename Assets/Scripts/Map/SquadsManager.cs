@@ -12,7 +12,7 @@ public class SquadsManager : MonoBehaviour
     [SerializeField] private GameObject levelsParent;
     [SerializeField] private GameObject squadPopup;
     
-    private static Stopwatch stopWatch;
+    private static LineRenderer _lineRenderer;
     private static int _previouslevel;
     private static int _currentSquad;
     private static Dictionary<int, int> _squadsLocation;
@@ -21,10 +21,16 @@ public class SquadsManager : MonoBehaviour
     public void Awake()
     {
         _currentSquad = 0;
+        _lineRenderer = GetComponent<LineRenderer>();
         _squadsLocation = new Dictionary<int, int>()
         {
             {0, 0},
             {1, 0}
+        };
+        _squadsState = new Dictionary<int, bool>()
+        {
+            {0, false},
+            {1, false}
         };
         
         for (var i = 0; i < _squadsLocation.Count; i++)
@@ -49,6 +55,14 @@ public class SquadsManager : MonoBehaviour
         _currentSquad = Int32.Parse(squad.name);
         
         UpdateSquadsPanel(_currentSquad);
+        if (GetSquadsState()[_currentSquad])
+        {
+            LevelManager.UpdateLevelsWithoutAviable(levelsParent, _lineRenderer);
+        }
+        else
+        {
+            LevelManager.UpdateLevels(levelsParent);
+        }
         LevelManager.UpdateLevels(levelsParent);
     }
     
@@ -81,12 +95,26 @@ public class SquadsManager : MonoBehaviour
         _squadsLocation = location;
     }
 
-    public static void MoveSquad(int index, int levelIndex)
+    public static void MoveSquad(int index, int levelIndex, bool isRollback)
     {
         _previouslevel = _squadsLocation[_currentSquad];
-        Debug.Log(_previouslevel);
         _squadsLocation[index] = levelIndex;
-        Debug.Log(_previouslevel);
+        if (isRollback)
+        {
+            _squadsState[_currentSquad] = false;
+        }
+        else
+        {
+            _squadsState[_currentSquad] = true;
+        }
+    }
+
+    public static void RefreshSquadsState()
+    {
+        for(var i=0; i<_squadsState.Count; i++)
+        {
+            _squadsState[i] = false;
+        }
     }
     
     public static int GetSquadsLocationBuffer()
@@ -103,20 +131,9 @@ public class SquadsManager : MonoBehaviour
     {
         _currentSquad = index;
     }
-    
-    public static bool IsDoubleTap(){
-        bool result = false;
-        float MaxTimeWait = 1;
-        float VariancePosition = 1;
-        
-        if( Input.touchCount == 1  && Input.GetTouch(0).phase == TouchPhase.Began)
-        {
-         float DeltaTime = Input.GetTouch (0).deltaTime;
-         float DeltaPositionLenght=Input.GetTouch (0).deltaPosition.magnitude;
-        
-         if ( DeltaTime> 0 && DeltaTime < MaxTimeWait && DeltaPositionLenght < VariancePosition)
-             result = true;                
-        }
-        return result;
-     }
+
+    public static Dictionary<int, bool> GetSquadsState()
+    {
+        return _squadsState;
+    }
 }
