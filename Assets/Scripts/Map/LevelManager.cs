@@ -10,13 +10,14 @@ public class LevelManager : MonoBehaviour
     [SerializeField] private GameObject levelsParent;
     [SerializeField] private GameObject popup;
     [SerializeField] private GameObject stepText;
-    private static int step;
+    private static int _step;
     private static LineRenderer _lineRenderer;
     private static Dictionary<int, List<int>> _paths;
 
     public void Awake()
     {
-        step = 0;
+        _step = 1;
+        stepText.GetComponent<Text>().text = "Ход: " + _step;
         _lineRenderer = GetComponent<LineRenderer>();
         _paths = new Dictionary<int, List<int>>
         {
@@ -83,6 +84,7 @@ public class LevelManager : MonoBehaviour
                 level.Find("Squad_"+SquadsManager.GetCurrentSquad()).gameObject.SetActive(true);
             }
             
+            // if level available
             if (_paths[currentLevelIndex].Contains(Int32.Parse(level.name)))
             {
                 level.Find("OnAvailable").gameObject.SetActive(true);
@@ -127,8 +129,8 @@ public class LevelManager : MonoBehaviour
 
     public void EndStep()
     {
-        step++;
-        stepText.GetComponent<Text>().text = "Ход: " + step;
+        _step++;
+        stepText.GetComponent<Text>().text = "Ход: " + _step;
         SquadsManager.RefreshSquadsState();
         UpdateLevels(levelsParent);
     }

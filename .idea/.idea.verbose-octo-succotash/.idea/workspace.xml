@@ -5,7 +5,6 @@
       <change beforePath="$PROJECT_DIR$/.idea/.idea.verbose-octo-succotash/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.verbose-octo-succotash/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/Scenes/Map.unity" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scenes/Map.unity" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/Scripts/Map/LevelManager.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Map/LevelManager.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Map/PopupManager.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Map/PopupManager.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/Scripts/Map/SquadsManager.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Map/SquadsManager.cs" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -91,7 +90,8 @@
       <workItem from="1651911511604" duration="906000" />
       <workItem from="1651912569503" duration="2240000" />
       <workItem from="1651915170945" duration="108000" />
-      <workItem from="1651915400837" duration="443000" />
+      <workItem from="1651915400837" duration="1583000" />
+      <workItem from="1651939487438" duration="345000" />
     </task>
     <servers />
   </component>

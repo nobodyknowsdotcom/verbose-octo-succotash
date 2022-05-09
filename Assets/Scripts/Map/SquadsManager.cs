@@ -42,7 +42,7 @@ public class SquadsManager : MonoBehaviour
     
     public void Start()
     {
-        UpdateSquadsPanel(_currentSquad);
+        UpdateSquadsPanel();
     }
     
     public void OnClick()
@@ -54,7 +54,7 @@ public class SquadsManager : MonoBehaviour
         }
         _currentSquad = Int32.Parse(squad.name);
         
-        UpdateSquadsPanel(_currentSquad);
+        UpdateSquadsPanel();
         if (GetSquadsState()[_currentSquad])
         {
             LevelManager.UpdateLevelsWithoutAviable(levelsParent, _lineRenderer);
@@ -63,16 +63,15 @@ public class SquadsManager : MonoBehaviour
         {
             LevelManager.UpdateLevels(levelsParent);
         }
-        LevelManager.UpdateLevels(levelsParent);
     }
     
     
     
-    private void UpdateSquadsPanel(int currentSquad)
+    private void UpdateSquadsPanel()
     {
         foreach (Transform e in squadsParent.transform)
         {
-            if (Int32.Parse(e.name) == currentSquad)
+            if (Int32.Parse(e.name) == _currentSquad)
             {
                 var enabledIcon = e.transform.Find("OnActive").gameObject;
                 enabledIcon.SetActive(true);
