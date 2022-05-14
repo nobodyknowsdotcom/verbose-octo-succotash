@@ -1,19 +1,37 @@
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
+using System.Threading;
 using UnityEngine;
 using UnityEngine.EventSystems;
+using Debug = UnityEngine.Debug;
 
 public class SquadsManager : MonoBehaviour
 {
     [SerializeField] private GameObject squadsParent;
     [SerializeField] private GameObject levelsParent;
-    private LineRenderer lineRenderer;
+    [SerializeField] private GameObject squadPopup;
+    
+    private static LineRenderer _lineRenderer;
+    private static int _previouslevel;
+    private static int _currentSquad;
     private static Dictionary<int, int> _squadsLocation;
+    private static Dictionary<int, bool> _squadsState;
 
     public void Awake()
     {
-        lineRenderer = GetComponent<LineRenderer>();
-        _squadsLocation = Map.GetSquadsLocation();
+        _currentSquad = 0;
+        _lineRenderer = GetComponent<LineRenderer>();
+        _squadsLocation = new Dictionary<int, int>()
+        {
+            {0, 0},
+            {1, 0}
+        };
+        _squadsState = new Dictionary<int, bool>()
+        {
+            {0, false},
+            {1, false}
+        };
         
         for (var i = 0; i < _squadsLocation.Count; i++)
         {
@@ -24,57 +42,36 @@ public class SquadsManager : MonoBehaviour
     
     public void Start()
     {
-        UpdateSquadsPanel(Map.GetCurrentSquad());
+        UpdateSquadsPanel();
     }
     
     public void OnClick()
     {
         var squad = EventSystem.current.currentSelectedGameObject;
-        Map.SetCurrentSquad(Int32.Parse(squad.name));
-        
-        UpdateSquadsPanel(Map.GetCurrentSquad());
-        UpdateLevels(Map.GetCurrentLevel());
-    }
-    
-    private void UpdateLevels(int currentLevel)
-    {
-        var availableLevels = Map.GetPaths();
-        var drawingList = new List<GameObject>();
-        var currentLevelAsObject = levelsParent.transform.GetChild(Map.GetCurrentLevel()).gameObject;
-
-        foreach (Transform level in levelsParent.transform)
+        if (Int32.Parse(squad.name) == _currentSquad)
         {
-            if (level.name != currentLevel.ToString())
-            {
-                level.Find("OnActive").gameObject.SetActive(false);
-                level.Find("Squad_"+Map.GetCurrentSquad()).gameObject.SetActive(false);
-            }
-            else
-            {
-                level.Find("OnActive").gameObject.SetActive(true);
-                level.Find("Squad_"+Map.GetCurrentSquad()).gameObject.SetActive(true);
-            }
-            
-            if (availableLevels[currentLevel].Contains(Int32.Parse(level.name)))
-            {
-                level.Find("OnAvailable").gameObject.SetActive(true);
-                drawingList.Add(currentLevelAsObject);
-                drawingList.Add(level.gameObject);
-            }
-            else
-            {
-                level.Find("OnAvailable").gameObject.SetActive(false);
-            }
+            squadPopup.SetActive(true);
         }
+        _currentSquad = Int32.Parse(squad.name);
         
-        DrawLine(drawingList.ToArray());
+        UpdateSquadsPanel();
+        if (GetSquadsState()[_currentSquad])
+        {
+            LevelManager.UpdateLevelsWithoutAviable(levelsParent, _lineRenderer);
+        }
+        else
+        {
+            LevelManager.UpdateLevels(levelsParent);
+        }
     }
     
-    private void UpdateSquadsPanel(int currentSquad)
+    
+    
+    private void UpdateSquadsPanel()
     {
         foreach (Transform e in squadsParent.transform)
         {
-            if (Int32.Parse(e.name) == currentSquad)
+            if (Int32.Parse(e.name) == _currentSquad)
             {
                 var enabledIcon = e.transform.Find("OnActive").gameObject;
                 enabledIcon.SetActive(true);
@@ -97,22 +94,45 @@ public class SquadsManager : MonoBehaviour
         _squadsLocation = location;
     }
 
-    public static void MoveSquad(int index, int levelIndex)
+    public static void MoveSquad(int index, int levelIndex, bool isRollback)
     {
+        _previouslevel = _squadsLocation[_currentSquad];
         _squadsLocation[index] = levelIndex;
+        if (isRollback)
+        {
+            _squadsState[_currentSquad] = false;
+        }
+        else
+        {
+            _squadsState[_currentSquad] = true;
+        }
+    }
+
+    public static void RefreshSquadsState()
+    {
+        for(var i=0; i<_squadsState.Count; i++)
+        {
+            _squadsState[i] = false;
+        }
     }
     
-    private void DrawLine(params GameObject[] objectsList)
+    public static int GetSquadsLocationBuffer()
     {
-        lineRenderer.positionCount = objectsList.Length;
-        for (int i = 0; i< objectsList.Length; i+=2)
-        {
-            var point1 = objectsList[i].transform.position;
-            var point2 = objectsList[i+1].transform.position;
-            var centedObject1 = new Vector3(point1.x + 0.4f,point1.y + 0.4f);
-            var centedObject2 = new Vector3(point2.x + 0.4f,point2.y + 0.4f);
-            lineRenderer.SetPosition(i, centedObject1);
-            lineRenderer.SetPosition (i+1, centedObject2);
-        }
+        return _previouslevel;
+    }
+    
+    public static int GetCurrentSquad()
+    {
+        return _currentSquad;
+    }
+    
+    public static void SetCurrentSquad(int index)
+    {
+        _currentSquad = index;
+    }
+
+    public static Dictionary<int, bool> GetSquadsState()
+    {
+        return _squadsState;
     }
 }
