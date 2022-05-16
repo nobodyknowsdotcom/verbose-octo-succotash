@@ -3,11 +3,31 @@
   <component name="ChangeListManager">
     <list default="true" id="0b3f2042-8aef-4295-9e71-03ff8180e52d" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/.idea.verbose-octo-succotash/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.verbose-octo-succotash/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Prefabs/Tile.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Prefabs/Tile.prefab" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Figma.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Figma/ActiveAbilityBackground.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Figma/ActiveAbilityBackground.png.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Figma/Activeicon.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Figma/Activeicon.png.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Figma/Move.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Figma/Move.png.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Figma/PasiveAbilityBackground.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Figma/PasiveAbilityBackground.png.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Figma/PasiveIcon.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Figma/PasiveIcon.png.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Figma/PersArt.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Figma/PersArt.png.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Figma/Scale.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Figma/Scale.png.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Figma/backgroundMenu.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Figma/backgroundMenu.png.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Figma/endTurn.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Figma/endTurn.png.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Figma/persBackground.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Figma/persBackground.png.meta" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/Scenes/Battle.unity" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scenes/Battle.unity" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scenes/Fight.unity" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scenes/Fight.unity.meta" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/Scenes/Map.unity" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scenes/Map.unity" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Battle/FieldManager.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Battle/FieldManager.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Map/LevelManager.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Map/LevelManager.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/UserSettings/EditorUserSettings.asset" beforeDir="false" afterPath="$PROJECT_DIR$/UserSettings/EditorUserSettings.asset" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -29,6 +49,7 @@
       <option value="$PROJECT_DIR$/Assets/Scripts/Map/SquadsManager.cs" />
       <option value="$PROJECT_DIR$/Assets/Scripts/ScenesManager.cs" />
       <option value="$PROJECT_DIR$/Assets/Scripts/Battle/FieldManager.cs" />
+      <option value="$PROJECT_DIR$/Assets/Scripts/Entities/Warrior.cs" />
     </changedPaths>
   </component>
   <component name="ProjectId" id="28Swb6SCp9JQooodyj6MSMtxZfz" />
@@ -99,6 +120,8 @@
       <workItem from="1652275288172" duration="1891000" />
       <workItem from="1652444862711" duration="7148000" />
       <workItem from="1652507879585" duration="5335000" />
+      <workItem from="1652516037497" duration="1376000" />
+      <workItem from="1652683651137" duration="1064000" />
     </task>
     <servers />
   </component>
