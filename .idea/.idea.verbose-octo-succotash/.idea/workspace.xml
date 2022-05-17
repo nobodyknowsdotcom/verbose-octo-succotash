@@ -3,32 +3,11 @@
   <component name="ChangeListManager">
     <list default="true" id="0b3f2042-8aef-4295-9e71-03ff8180e52d" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/.idea.verbose-octo-succotash/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.verbose-octo-succotash/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Figma.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Figma/ActiveAbilityBackground.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Figma/ActiveAbilityBackground.png.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Figma/Activeicon.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Figma/Activeicon.png.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Figma/Move.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Figma/Move.png.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Figma/PasiveAbilityBackground.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Figma/PasiveAbilityBackground.png.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Figma/PasiveIcon.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Figma/PasiveIcon.png.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Figma/PersArt.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Figma/PersArt.png.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Figma/Scale.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Figma/Scale.png.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Figma/backgroundMenu.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Figma/backgroundMenu.png.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Figma/endTurn.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Figma/endTurn.png.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Figma/persBackground.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Figma/persBackground.png.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scenes/Battle.unity" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scenes/Battle.unity" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scenes/Fight.unity" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scenes/Fight.unity.meta" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/Scenes/Map.unity" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scenes/Map.unity" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/UserSettings/EditorUserSettings.asset" beforeDir="false" afterPath="$PROJECT_DIR$/UserSettings/EditorUserSettings.asset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Entities/Warrior.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Entities/Warrior.cs.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Map/LevelManager.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Map/LevelManager.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Map/SquadsManager.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Map/SquadsManager.cs" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -38,6 +17,14 @@
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
+  <component name="GitSEFilterConfiguration">
+    <file-type-list>
+      <filtered-out-file-type name="LOCAL_BRANCH" />
+      <filtered-out-file-type name="REMOTE_BRANCH" />
+      <filtered-out-file-type name="TAG" />
+      <filtered-out-file-type name="COMMIT_BY_MESSAGE" />
+    </file-type-list>
+  </component>
   <component name="IdeDocumentHistory">
     <changedPaths>
       <option value="$PROJECT_DIR$/Assets/Scripts/LevelSelectionSystem.cs" />
@@ -45,11 +32,13 @@
       <option value="$PROJECT_DIR$/Assets/Scripts/OnSquadClick.cs" />
       <option value="$PROJECT_DIR$/Assets/Scripts/OnLevelClick.cs" />
       <option value="$PROJECT_DIR$/Assets/Scripts/Map/Map.cs" />
-      <option value="$PROJECT_DIR$/Assets/Scripts/Map/LevelManager.cs" />
-      <option value="$PROJECT_DIR$/Assets/Scripts/Map/SquadsManager.cs" />
       <option value="$PROJECT_DIR$/Assets/Scripts/ScenesManager.cs" />
       <option value="$PROJECT_DIR$/Assets/Scripts/Battle/FieldManager.cs" />
       <option value="$PROJECT_DIR$/Assets/Scripts/Entities/Warrior.cs" />
+      <option value="$PROJECT_DIR$/Assets/Scripts/Map/PopupManager.cs" />
+      <option value="$PROJECT_DIR$/Assets/Scripts/Map/LevelManager.cs" />
+      <option value="$PROJECT_DIR$/Assets/Scripts/Entities/Unit.cs" />
+      <option value="$PROJECT_DIR$/Assets/Scripts/Map/SquadsManager.cs" />
     </changedPaths>
   </component>
   <component name="ProjectId" id="28Swb6SCp9JQooodyj6MSMtxZfz" />
@@ -122,6 +111,7 @@
       <workItem from="1652507879585" duration="5335000" />
       <workItem from="1652516037497" duration="1376000" />
       <workItem from="1652683651137" duration="1064000" />
+      <workItem from="1652776920527" duration="4261000" />
     </task>
     <servers />
   </component>

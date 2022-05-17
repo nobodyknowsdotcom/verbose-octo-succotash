@@ -2,21 +2,22 @@ using System;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
+using UnityEngine.Serialization;
 using UnityEngine.UI;
 
 public class LevelManager : MonoBehaviour
 {
     [SerializeField] private GameObject levelsParent;
     [SerializeField] private GameObject popup;
-    [SerializeField] private GameObject stepText;
-    private static int _step;
+    [FormerlySerializedAs("stepText")] [SerializeField] private GameObject turnText;
+    private static int _turn;
     private static LineRenderer _lineRenderer;
     private static Dictionary<int, List<int>> _paths;
 
     public void Awake()
     {
-        _step = 1;
-        stepText.GetComponent<Text>().text = "Ход: " + _step;
+        _turn = 1;
+        turnText.GetComponent<Text>().text = "Ход: " + _turn;
         _lineRenderer = GetComponent<LineRenderer>();
         _paths = new Dictionary<int, List<int>>
         {
@@ -128,8 +129,8 @@ public class LevelManager : MonoBehaviour
 
     public void EndStep()
     {
-        _step++;
-        stepText.GetComponent<Text>().text = "Ход: " + _step;
+        _turn++;
+        turnText.GetComponent<Text>().text = "Ход: " + _turn;
         SquadsManager.RefreshSquadsState();
         UpdateLevels(levelsParent);
     }

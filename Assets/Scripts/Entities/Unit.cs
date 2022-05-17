@@ -1,8 +1,9 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
-public class Warrior : MonoBehaviour
+public class Unit : MonoBehaviour
 {
     private string _name { get; set; }
     private int _level { get; set; }
@@ -13,18 +14,18 @@ public class Warrior : MonoBehaviour
     private double _dodgeChance { get; set; }
     private double _accuracy { get; set; }
     
-    private GameObject _icon { get; set; }
+    private Sprite _icon { get; set; }
     
-    public Warrior(string name, int level, int maintenancePrice, int damage, int health, int defense, double dodgeChance, double accuracy, GameObject icon)
+    public Unit(string name, Sprite icon)
     {
         _name = name;
-        _level = level;
-        _maintenancePrice = maintenancePrice;
-        _damage = damage;
-        _health = health;
-        _defense = defense;
-        _dodgeChance = dodgeChance;
-        _accuracy = accuracy;
+        _level = 1;
+        _maintenancePrice = 20;
+        _damage = 30;
+        _health = 70;
+        _defense = 10;
+        _dodgeChance = 0.05;
+        _accuracy = 0.8;
         _icon = icon;
     }
 }
