@@ -5,22 +5,22 @@ using System.Linq;
 using System.Threading;
 using UnityEngine;
 using UnityEngine.EventSystems;
+using UnityEngine.Serialization;
 using UnityEngine.UI;
 using Debug = UnityEngine.Debug;
 
 public class SquadsManager : MonoBehaviour
 {
-    [SerializeField] private GameObject squadsParent;
-    [SerializeField] private GameObject levelsParent;
+    [SerializeField] private GameObject squadsPanel;
     [SerializeField] private GameObject squadPopup;
-    [SerializeField] private Sprite[] unitIcons;
+    [SerializeField] private GameObject levelsParent;
     
     private static LineRenderer _lineRenderer;
     private static int _previouslevel;
     private static int _currentSquad;
     private static Dictionary<int, int> _squadsLocation;
     private static Dictionary<int, bool> _squadsState;
-    private static Dictionary<int, List<Unit>> _squads;
+    private Dictionary<int, List<Warrior>> _squads;
 
     public void Awake()
     {
@@ -49,13 +49,14 @@ public class SquadsManager : MonoBehaviour
 
     public void OnSquadClick()
     {
-        var squad = EventSystem.current.currentSelectedGameObject;
+        var squadIcon = EventSystem.current.currentSelectedGameObject;
         
-        if (Int32.Parse(squad.name) == _currentSquad)
+        if (Int32.Parse(squadIcon.name) == _currentSquad)
         {
             squadPopup.SetActive(true);
+            UpdateSquadPopup();
         }
-        _currentSquad = Int32.Parse(squad.name);
+        _currentSquad = Int32.Parse(squadIcon.name);
         UpdateSquadsPanel();
         
         if (GetSquadsState()[_currentSquad])
@@ -70,7 +71,7 @@ public class SquadsManager : MonoBehaviour
     
     private void UpdateSquadsPanel()
     {
-        foreach (Transform e in squadsParent.transform)
+        foreach (Transform e in squadsPanel.transform)
         {
             if (Int32.Parse(e.name) == _currentSquad)
             {
@@ -106,6 +107,52 @@ public class SquadsManager : MonoBehaviour
             _squadsState[i] = false;
         }
     }
+
+    public void UpdateSquadPopup()
+    {
+        UpdateSquad(squadPopup.transform.Find("SquadsParent"), _squads[_currentSquad]);
+    }
+
+    public void UpdateSquad(Transform cardsParent, List<Warrior> squad)
+    {
+        for (var i = 0; i < cardsParent.childCount; i++)
+        {
+            var warrior = cardsParent.Find(i.ToString());
+            var name = warrior.Find("NameContainer").Find("Name").GetComponent<Text>();
+            name.text = squad[i].GetName();
+            
+            var maintenancePrice = warrior.Find("Stats").Find("Price").Find("Stat").GetComponent<Text>();
+            maintenancePrice.text = squad[i].GetMaintenance().ToString();
+            
+            var health = warrior.Find("Stats").Find("Health").Find("Stat").GetComponent<Text>();
+            health.text = squad[i].GetHealth().ToString();
+            
+            var damage = warrior.Find("Stats").Find("Damage").Find("Stat").GetComponent<Text>();
+            damage.text = squad[i].GetDamage().ToString();
+            
+            var defense = warrior.Find("Stats").Find("Defense").Find("Stat").GetComponent<Text>();
+            defense.text = squad[i].GetDefennse().ToString();
+            
+            var dodge = warrior.Find("Stats").Find("Dodge").Find("Stat").GetComponent<Text>();
+            dodge.text = squad[i].GetDodgeChance()*100 + " %";
+            
+            var accuracy = warrior.Find("Stats").Find("Accuracy").Find("Stat").GetComponent<Text>();
+            accuracy.text = squad[i].GetAccuracy()*100 + " %";
+        }
+    }
+
+    private void InitSquads()
+    {
+        _squads = new Dictionary<int, List<Warrior>>();
+        for (int i = 0; i < 3; i++)
+        {
+            var unit0 = new Warrior("Убийца нечисти", 7, 25, 24, 70, 12, 0.1, 0.85);
+            var unit1 = new Warrior("Чебупицца", 2, 8, 10, 40, 6, 0.02, 0.8);
+            var unit2 = new Warrior("Бульмени", 1, 5, 8, 35, 5, 0.1, 0.7);
+
+            _squads[i] = new List<Warrior>() {unit0, unit1, unit2};
+        }
+    }
     
     private void InitSquadsOnMap()
     {
@@ -118,28 +165,9 @@ public class SquadsManager : MonoBehaviour
     
     private void SetListeners()
     {
-        foreach (Transform squadBttn in squadsParent.transform)
+        foreach (Transform squadBttn in squadsPanel.transform)
         {
             squadBttn.GetComponent<Button>().onClick.AddListener(OnSquadClick);
-        }
-    }
-
-    public void UpdatePopup()
-    {
-        var cardsParent = squadsParent.transform.Find("Panel");
-    }
-
-    private void InitSquads()
-    {
-        var squadsCount = squadsParent.transform.Find("Panel").childCount;
-        for (int i = 0; i < squadsCount; i++)
-        {
-            var squad = new List<Unit>();
-            squad.Append(new Unit(name = "unit0", unitIcons[0]));
-            squad.Append(new Unit(name = "unit1",unitIcons[1]));
-            squad.Append(new Unit(name = "unit2",unitIcons[2]));
-
-            _squads[i] = squad;
         }
     }
 

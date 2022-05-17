@@ -4,9 +4,8 @@
     <list default="true" id="0b3f2042-8aef-4295-9e71-03ff8180e52d" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/.idea.verbose-octo-succotash/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.verbose-octo-succotash/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/Scenes/Map.unity" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scenes/Map.unity" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Entities/Warrior.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Entities/Warrior.cs.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Map/LevelManager.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Map/LevelManager.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Entities/Unit.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Entities/Unit.cs.meta" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/Scripts/Map/SquadsManager.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Map/SquadsManager.cs" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -34,10 +33,10 @@
       <option value="$PROJECT_DIR$/Assets/Scripts/Map/Map.cs" />
       <option value="$PROJECT_DIR$/Assets/Scripts/ScenesManager.cs" />
       <option value="$PROJECT_DIR$/Assets/Scripts/Battle/FieldManager.cs" />
-      <option value="$PROJECT_DIR$/Assets/Scripts/Entities/Warrior.cs" />
       <option value="$PROJECT_DIR$/Assets/Scripts/Map/PopupManager.cs" />
       <option value="$PROJECT_DIR$/Assets/Scripts/Map/LevelManager.cs" />
       <option value="$PROJECT_DIR$/Assets/Scripts/Entities/Unit.cs" />
+      <option value="$PROJECT_DIR$/Assets/Scripts/Entities/Warrior.cs" />
       <option value="$PROJECT_DIR$/Assets/Scripts/Map/SquadsManager.cs" />
     </changedPaths>
   </component>
@@ -111,7 +110,10 @@
       <workItem from="1652507879585" duration="5335000" />
       <workItem from="1652516037497" duration="1376000" />
       <workItem from="1652683651137" duration="1064000" />
-      <workItem from="1652776920527" duration="4261000" />
+      <workItem from="1652776920527" duration="5967000" />
+      <workItem from="1652783610795" duration="1887000" />
+      <workItem from="1652790714422" duration="3187000" />
+      <workItem from="1652807225537" duration="2316000" />
     </task>
     <servers />
   </component>
