@@ -11674,10 +11674,10 @@ RectTransform:
   m_Father: {fileID: 2109035868}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 1, y: 1}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 0.000015258789, y: -32.49994}
-  m_SizeDelta: {x: -100, y: -65}
+  m_SizeDelta: {x: 230, y: 265}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1291454235
 MonoBehaviour:
@@ -12370,10 +12370,10 @@ RectTransform:
   m_Father: {fileID: 723562397}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 1, y: 1}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 0.000015258789, y: -32.49994}
-  m_SizeDelta: {x: -100, y: -65}
+  m_SizeDelta: {x: 230, y: 265}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1326298242
 MonoBehaviour:
@@ -14130,6 +14130,10 @@ MonoBehaviour:
   squadsPanel: {fileID: 1541703070}
   squadPopup: {fileID: 1847767253}
   levelsParent: {fileID: 467054348}
+  warriorIcons:
+  - {fileID: 21300000, guid: 74a2f7ed31e822e4f9b8754a628e1b7b, type: 3}
+  - {fileID: 21300000, guid: 194c8f347ccc18d45a1adbdd40dd99cd, type: 3}
+  - {fileID: 21300000, guid: 87dcd9ea33cd3ab43bbee167ea26e091, type: 3}
 --- !u!120 &1524818939
 LineRenderer:
   m_ObjectHideFlags: 0
@@ -17318,10 +17322,10 @@ RectTransform:
   m_Father: {fileID: 446494624}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0.000015258789, y: -32.5}
-  m_SizeDelta: {x: -139.96, y: -65}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: 0, y: -32.5}
+  m_SizeDelta: {x: 230, y: 265}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1888703921
 MonoBehaviour:

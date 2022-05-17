@@ -14,6 +14,7 @@ public class SquadsManager : MonoBehaviour
     [SerializeField] private GameObject squadsPanel;
     [SerializeField] private GameObject squadPopup;
     [SerializeField] private GameObject levelsParent;
+    [SerializeField] private Sprite[] warriorIcons;
     
     private static LineRenderer _lineRenderer;
     private static int _previouslevel;
@@ -54,7 +55,7 @@ public class SquadsManager : MonoBehaviour
         if (Int32.Parse(squadIcon.name) == _currentSquad)
         {
             squadPopup.SetActive(true);
-            UpdateSquadPopup();
+            UpdateSquad(squadPopup.transform.Find("SquadsParent"), _squads[_currentSquad]);
         }
         _currentSquad = Int32.Parse(squadIcon.name);
         UpdateSquadsPanel();
@@ -108,16 +109,15 @@ public class SquadsManager : MonoBehaviour
         }
     }
 
-    public void UpdateSquadPopup()
-    {
-        UpdateSquad(squadPopup.transform.Find("SquadsParent"), _squads[_currentSquad]);
-    }
-
     public void UpdateSquad(Transform cardsParent, List<Warrior> squad)
     {
         for (var i = 0; i < cardsParent.childCount; i++)
         {
             var warrior = cardsParent.Find(i.ToString());
+            
+            var icon = warrior.Find("ImageContainer").Find("Icon").GetComponent<Image>();
+            icon.sprite = squad[i].GetSprite();
+            
             var name = warrior.Find("NameContainer").Find("Name").GetComponent<Text>();
             name.text = squad[i].GetName();
             
@@ -144,14 +144,19 @@ public class SquadsManager : MonoBehaviour
     private void InitSquads()
     {
         _squads = new Dictionary<int, List<Warrior>>();
-        for (int i = 0; i < 3; i++)
+        _squads[0] = new List<Warrior>()
         {
-            var unit0 = new Warrior("Убийца нечисти", 7, 25, 24, 70, 12, 0.1, 0.85);
-            var unit1 = new Warrior("Чебупицца", 2, 8, 10, 40, 6, 0.02, 0.8);
-            var unit2 = new Warrior("Бульмени", 1, 5, 8, 35, 5, 0.1, 0.7);
-
-            _squads[i] = new List<Warrior>() {unit0, unit1, unit2};
-        }
+            new Warrior("Убийца нечисти", 7, 25, 24, 70, 12, 0.1, 0.85, warriorIcons[0]),
+            new Warrior("Чебупицца", 2, 8, 10, 40, 6, 0.02, 0.8, warriorIcons[1]),
+            new Warrior("Бульмени", 1, 5, 8, 35, 5, 0.1, 0.7, warriorIcons[1])
+        };
+        
+        _squads[1] = new List<Warrior>()
+        {
+            new Warrior("Рекрутер", 1, 2, 2, 12, 1, 0.01, 0.2, warriorIcons[0]),
+            new Warrior("Ветеран", 34, 600, 160, 560, 45, 0.021, 0.92, warriorIcons[1]),
+            new Warrior("Мужик", 8, 60, 47, 140, 18, 0.13, 0.85, warriorIcons[1])
+        };
     }
     
     private void InitSquadsOnMap()

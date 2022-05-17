@@ -1,4 +1,6 @@
-public class Warrior
+using UnityEngine;
+
+public class Warrior : MonoBehaviour
 {
     private string _name;
     private int _level;
@@ -9,7 +11,9 @@ public class Warrior
     private double _dodgeChance;
     private double _accuracy;
 
-    public Warrior(string name, int level, int maintenancePrice, int damage, int health, int defense, double dodgeChance, double accuracy)
+    private Sprite _sprite;
+    
+    public Warrior(string name, int level, int maintenancePrice, int damage, int health, int defense, double dodgeChance, double accuracy, Sprite sprite)
     {
         _name = name;
         _level = level;
@@ -19,6 +23,7 @@ public class Warrior
         _defense = defense;
         _dodgeChance = dodgeChance;
         _accuracy = accuracy;
+        _sprite = sprite;
     }
 
     public string GetName()
@@ -59,5 +64,10 @@ public class Warrior
     public double GetAccuracy()
     {
         return _accuracy;
+    }
+
+    public Sprite GetSprite()
+    {
+        return _sprite;
     }
 }
