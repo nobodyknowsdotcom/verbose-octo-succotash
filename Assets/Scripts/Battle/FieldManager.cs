@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
@@ -6,6 +7,7 @@ public class FieldManager : MonoBehaviour
 {
     [SerializeField] private GameObject cellPrefab;
     [SerializeField] private GameObject cellsField;
+    [SerializeField] private GameObject warriorPrefab;
     private GameObject[,] _gameGrid;
     private string _currentCell;
     private string _targetCell;
@@ -22,6 +24,7 @@ public class FieldManager : MonoBehaviour
     public void Start()
     {
         DrawCells();
+        InitWarriorsOnField();
     }
 
     private void DrawCells()
@@ -79,8 +82,55 @@ public class FieldManager : MonoBehaviour
     {
         foreach (var cell in _gameGrid)
         {
-            cell.transform.Find("OnActive").gameObject.SetActive(cell.name == _currentCell);
-            cell.transform.Find("OnTarget").gameObject.SetActive(cell.name == _targetCell);
+           cell.transform.Find("OnActive").gameObject.SetActive(cell.name == _currentCell);
+           cell.transform.Find("OnTarget").gameObject.SetActive(cell.name == _targetCell);
         }
+    }
+
+    private void InitWarriorsOnField()
+    {
+        var positions = RndArray(3);
+
+        foreach (var pos in positions)
+        {
+            var warrior = Instantiate(warriorPrefab, _gameGrid[pos[0], pos[1]].transform.position, Quaternion.identity);
+            warrior.transform.SetParent(_gameGrid[pos[0], pos[1]].transform);
+        }
+    }
+    
+    private static int[][] RndArray(int len)
+    {
+        var result = new int[len][];
+        var rnd = new System.Random();
+
+        for (int i = 0; i < len; i++)
+        {
+            var x = rnd.Next(8);
+            var y = rnd.Next(8);
+            var point = new []{ x, y };
+
+            if (!Contain(result, point)) result[i] = point;
+            else i--;
+        }
+
+        return result;
+    }
+
+    private static bool Contain(int[][] array, int[] search)
+    {
+        foreach (var e in array)
+            if (Equal(e, search)) return Equal(e, search);
+
+        return false;
+    }
+
+    private static bool Equal(int[] a1, int[] a2)
+    {
+        if (a1 is null || a1.Length != a2.Length) return false;
+
+        for (int i = 0; i < a1.Length; i++)
+            if (a1[i] != a2[i]) return false;
+
+        return true;
     }
 }

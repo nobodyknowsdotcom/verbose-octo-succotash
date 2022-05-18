@@ -2,8 +2,9 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="0b3f2042-8aef-4295-9e71-03ff8180e52d" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/.idea.verbose-octo-succotash/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.verbose-octo-succotash/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/Scenes/Battle.unity" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scenes/Battle.unity" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/UserSettings/EditorUserSettings.asset" beforeDir="false" afterPath="$PROJECT_DIR$/UserSettings/EditorUserSettings.asset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Battle/FieldManager.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Battle/FieldManager.cs" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -29,12 +30,12 @@
       <option value="$PROJECT_DIR$/Assets/Scripts/OnLevelClick.cs" />
       <option value="$PROJECT_DIR$/Assets/Scripts/Map/Map.cs" />
       <option value="$PROJECT_DIR$/Assets/Scripts/ScenesManager.cs" />
-      <option value="$PROJECT_DIR$/Assets/Scripts/Battle/FieldManager.cs" />
       <option value="$PROJECT_DIR$/Assets/Scripts/Map/PopupManager.cs" />
       <option value="$PROJECT_DIR$/Assets/Scripts/Map/LevelManager.cs" />
       <option value="$PROJECT_DIR$/Assets/Scripts/Entities/Unit.cs" />
       <option value="$PROJECT_DIR$/Assets/Scripts/Entities/Warrior.cs" />
       <option value="$PROJECT_DIR$/Assets/Scripts/Map/SquadsManager.cs" />
+      <option value="$PROJECT_DIR$/Assets/Scripts/Battle/FieldManager.cs" />
     </changedPaths>
   </component>
   <component name="ProjectId" id="28Swb6SCp9JQooodyj6MSMtxZfz" />
@@ -110,7 +111,8 @@
       <workItem from="1652776920527" duration="5967000" />
       <workItem from="1652783610795" duration="1887000" />
       <workItem from="1652790714422" duration="3187000" />
-      <workItem from="1652807225537" duration="3959000" />
+      <workItem from="1652807225537" duration="3982000" />
+      <workItem from="1652857081476" duration="3494000" />
     </task>
     <servers />
   </component>
