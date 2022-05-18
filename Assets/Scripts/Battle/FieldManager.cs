@@ -1,13 +1,16 @@
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.EventSystems;
+using UnityEngine.Serialization;
 using UnityEngine.UI;
 
 public class FieldManager : MonoBehaviour
 {
     [SerializeField] private GameObject cellPrefab;
     [SerializeField] private GameObject cellsField;
-    [SerializeField] private GameObject warriorPrefab;
+    [SerializeField] private GameObject allyWarriorPrefab;
+    [SerializeField] private GameObject enemyWarriorPrefab;
     private GameObject[,] _gameGrid;
     private string _currentCell;
     private string _targetCell;
@@ -89,11 +92,17 @@ public class FieldManager : MonoBehaviour
 
     private void InitWarriorsOnField()
     {
-        var positions = RndArray(3);
+        var positions = RndArray(6);
 
-        foreach (var pos in positions)
+        foreach (var pos in positions.Take(3))
         {
-            var warrior = Instantiate(warriorPrefab, _gameGrid[pos[0], pos[1]].transform.position, Quaternion.identity);
+            var warrior = Instantiate(allyWarriorPrefab, _gameGrid[pos[0], pos[1]].transform.position, Quaternion.identity);
+            warrior.transform.SetParent(_gameGrid[pos[0], pos[1]].transform);
+        }
+        
+        foreach (var pos in positions.Skip(3).Take(3))
+        {
+            var warrior = Instantiate(enemyWarriorPrefab, _gameGrid[pos[0], pos[1]].transform.position, Quaternion.identity);
             warrior.transform.SetParent(_gameGrid[pos[0], pos[1]].transform);
         }
     }

@@ -572,7 +572,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   cellPrefab: {fileID: 8504819267213613518, guid: 2fb25dc389dddad49919494087b6dfda, type: 3}
   cellsField: {fileID: 841761802}
-  warriorPrefab: {fileID: 8454979708811358685, guid: 15c841c8e60f4d44d91a627193a48367, type: 3}
+  allyWarriorPrefab: {fileID: 8454979708811358685, guid: 15c841c8e60f4d44d91a627193a48367, type: 3}
+  enemyWarriorPrefab: {fileID: 7393786409664591270, guid: e5d03a88fcf35be41a44cbd986b4dda8, type: 3}
 --- !u!1 &189707886
 GameObject:
   m_ObjectHideFlags: 0

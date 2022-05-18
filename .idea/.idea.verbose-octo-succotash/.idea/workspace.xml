@@ -3,7 +3,9 @@
   <component name="ChangeListManager">
     <list default="true" id="0b3f2042-8aef-4295-9e71-03ff8180e52d" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/.idea.verbose-octo-succotash/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.verbose-octo-succotash/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scenes/Battle.unity" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scenes/Battle.unity" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Assets/CustomSprites/ally0.png" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Assets/CustomSprites/ally0.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Prefabs/Warrior.prefab" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Prefabs/Warrior.prefab.meta" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/Scripts/Battle/FieldManager.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Battle/FieldManager.cs" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -112,7 +114,7 @@
       <workItem from="1652783610795" duration="1887000" />
       <workItem from="1652790714422" duration="3187000" />
       <workItem from="1652807225537" duration="3982000" />
-      <workItem from="1652857081476" duration="3494000" />
+      <workItem from="1652857081476" duration="4442000" />
     </task>
     <servers />
   </component>
