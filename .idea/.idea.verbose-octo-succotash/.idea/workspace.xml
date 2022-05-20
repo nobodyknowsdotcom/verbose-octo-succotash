@@ -2,11 +2,111 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="0b3f2042-8aef-4295-9e71-03ff8180e52d" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/Assets/Scripts/Factories.meta" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Scripts/Factories/WarriorFactory.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Scripts/Factories/WarriorFactory.cs.meta" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/.idea.verbose-octo-succotash/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.verbose-octo-succotash/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Assets/CustomSprites/ally0.png" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Assets/CustomSprites/ally0.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Prefabs/Warrior.prefab" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Prefabs/Warrior.prefab.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Assets/CustomSprites.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Assets/CustomSprites/ActiveAbilityBackground.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Assets/CustomSprites/ActiveAbilityBackground.png.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Assets/CustomSprites/Activeicon.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Assets/CustomSprites/Activeicon.png.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Assets/CustomSprites/Blur 2.0.mat" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Assets/CustomSprites/Blur 2.0.mat.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Assets/CustomSprites/Blur.shader" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Assets/CustomSprites/Blur.shader.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Assets/CustomSprites/MaskedUIBlur 1.shader" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Assets/CustomSprites/MaskedUIBlur 1.shader.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Assets/CustomSprites/Move.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Assets/CustomSprites/Move.png.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Assets/CustomSprites/OnActive.anim" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Assets/CustomSprites/OnActive.anim.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Assets/CustomSprites/PasiveAbilityBackground.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Assets/CustomSprites/PasiveAbilityBackground.png.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Assets/CustomSprites/PasiveIcon.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Assets/CustomSprites/PasiveIcon.png.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Assets/CustomSprites/PersArt.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Assets/CustomSprites/PersArt.png.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Assets/CustomSprites/Round 64px 1.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Assets/CustomSprites/Round 64px 1.png.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Assets/CustomSprites/Scale.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Assets/CustomSprites/Scale.png.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Assets/CustomSprites/ally0.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Assets/CustomSprites/ally0.png.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Assets/CustomSprites/back_button.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Assets/CustomSprites/back_button.png.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Assets/CustomSprites/backgroundMenu.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Assets/CustomSprites/backgroundMenu.png.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Assets/CustomSprites/basic_skill.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Assets/CustomSprites/basic_skill.png.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Assets/CustomSprites/border.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Assets/CustomSprites/border.png.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Assets/CustomSprites/circle128.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Assets/CustomSprites/circle128.png.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Assets/CustomSprites/circle128_right_down_corner.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Assets/CustomSprites/circle128_right_down_corner.png.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Assets/CustomSprites/circlefillRy32px256px.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Assets/CustomSprites/circlefillRy32px256px.png.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Assets/CustomSprites/endTurn.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Assets/CustomSprites/endTurn.png.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Assets/CustomSprites/enemy0.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Assets/CustomSprites/enemy0.png.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Assets/CustomSprites/fakecells.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Assets/CustomSprites/fakecells.png.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Assets/CustomSprites/fight.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Assets/CustomSprites/fight.png.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Assets/CustomSprites/gold_coin.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Assets/CustomSprites/gold_coin.png.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Assets/CustomSprites/gun.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Assets/CustomSprites/gun.png.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Assets/CustomSprites/items.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Assets/CustomSprites/items.png.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Assets/CustomSprites/line.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Assets/CustomSprites/line.png.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Assets/CustomSprites/persBackground.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Assets/CustomSprites/persBackground.png.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Assets/CustomSprites/person.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Assets/CustomSprites/person.png.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Assets/CustomSprites/person_1.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Assets/CustomSprites/person_1.png.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Assets/CustomSprites/person_2.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Assets/CustomSprites/person_2.png.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Assets/CustomSprites/person_3.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Assets/CustomSprites/person_3.png.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Assets/CustomSprites/round.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Assets/CustomSprites/round.png.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Assets/CustomSprites/round_64px_2.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Assets/CustomSprites/round_64px_2.png.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Assets/CustomSprites/search.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Assets/CustomSprites/search.png.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Assets/CustomSprites/special_skill.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Assets/CustomSprites/special_skill.png.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Assets/CustomSprites/special_value.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Assets/CustomSprites/special_value.png.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Assets/CustomSprites/squad_1.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Assets/CustomSprites/squad_1.png.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Assets/CustomSprites/squad_2.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Assets/CustomSprites/squad_2.png.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Assets/CustomSprites/square.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Assets/CustomSprites/square.png.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Assets/CustomSprites/star.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Assets/CustomSprites/star.png.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Assets/CustomSprites/triangle.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Assets/CustomSprites/triangle.png.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Assets/CustomSprites/xp.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Assets/CustomSprites/xp.png.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Prefabs/AllyWarrior.prefab" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Prefabs/AllyWarrior.prefab.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Prefabs/EnemyWarrior.prefab" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Prefabs/EnemyWarrior.prefab.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scenes/Battle.unity" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scenes/Battle.unity" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scenes/Map.unity" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scenes/Map.unity" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/Scripts/Battle/FieldManager.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Battle/FieldManager.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Entities/Warrior.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Entities/Warrior.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Map/LevelManager.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Map/LevelManager.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Map/PopupManager.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Map/PopupManager.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Map/SquadsManager.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Map/SquadsManager.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/UserSettings/EditorUserSettings.asset" beforeDir="false" afterPath="$PROJECT_DIR$/UserSettings/EditorUserSettings.asset" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -32,10 +132,11 @@
       <option value="$PROJECT_DIR$/Assets/Scripts/OnLevelClick.cs" />
       <option value="$PROJECT_DIR$/Assets/Scripts/Map/Map.cs" />
       <option value="$PROJECT_DIR$/Assets/Scripts/ScenesManager.cs" />
-      <option value="$PROJECT_DIR$/Assets/Scripts/Map/PopupManager.cs" />
-      <option value="$PROJECT_DIR$/Assets/Scripts/Map/LevelManager.cs" />
       <option value="$PROJECT_DIR$/Assets/Scripts/Entities/Unit.cs" />
+      <option value="$PROJECT_DIR$/Assets/Scripts/Map/LevelManager.cs" />
+      <option value="$PROJECT_DIR$/Assets/Scripts/Map/PopupManager.cs" />
       <option value="$PROJECT_DIR$/Assets/Scripts/Entities/Warrior.cs" />
+      <option value="$PROJECT_DIR$/Assets/Scripts/Factories/WarriorFactory.cs" />
       <option value="$PROJECT_DIR$/Assets/Scripts/Map/SquadsManager.cs" />
       <option value="$PROJECT_DIR$/Assets/Scripts/Battle/FieldManager.cs" />
     </changedPaths>
@@ -114,7 +215,10 @@
       <workItem from="1652783610795" duration="1887000" />
       <workItem from="1652790714422" duration="3187000" />
       <workItem from="1652807225537" duration="3982000" />
-      <workItem from="1652857081476" duration="4442000" />
+      <workItem from="1652857081476" duration="4640000" />
+      <workItem from="1652984689905" duration="7272000" />
+      <workItem from="1653049031573" duration="1966000" />
+      <workItem from="1653053944765" duration="3142000" />
     </task>
     <servers />
   </component>

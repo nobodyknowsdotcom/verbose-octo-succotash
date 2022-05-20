@@ -1,16 +1,20 @@
 using System.Collections.Generic;
+using System.Drawing;
 using System.Linq;
 using UnityEngine;
 using UnityEngine.EventSystems;
-using UnityEngine.Serialization;
 using UnityEngine.UI;
 
 public class FieldManager : MonoBehaviour
 {
     [SerializeField] private GameObject cellPrefab;
     [SerializeField] private GameObject cellsField;
-    [SerializeField] private GameObject allyWarriorPrefab;
-    [SerializeField] private GameObject enemyWarriorPrefab;
+
+    [SerializeField] private GameObject wariorPrefab;
+
+    private static Dictionary<int, List<Warrior>> _squads;
+    private List<Warrior> _enemySquad;
+    private static Dictionary<GameObject, Warrior> _squadsPositions;
     private GameObject[,] _gameGrid;
     private string _currentCell;
     private string _targetCell;
@@ -27,6 +31,8 @@ public class FieldManager : MonoBehaviour
     public void Start()
     {
         DrawCells();
+        InitEnemySquad();
+        _squads = SquadsManager.Squads;
         InitWarriorsOnField();
     }
 
@@ -92,45 +98,58 @@ public class FieldManager : MonoBehaviour
 
     private void InitWarriorsOnField()
     {
-        var positions = RndArray(6);
+        var allyPositions = RndArray(3, new Point(0,0), new Point(4, 8), new List<Point>());
+        var enemyPositions = RndArray(3, new Point(4,0), new Point(8, 8), new List<Point>());
 
-        foreach (var pos in positions.Take(3))
+        for (int i=0; i<_squads[SquadsManager.CurrentSquad].Count; i++)
         {
-            var warrior = Instantiate(allyWarriorPrefab, _gameGrid[pos[0], pos[1]].transform.position, Quaternion.identity);
-            warrior.transform.SetParent(_gameGrid[pos[0], pos[1]].transform);
-        }
-        
-        foreach (var pos in positions.Skip(3).Take(3))
-        {
-            var warrior = Instantiate(enemyWarriorPrefab, _gameGrid[pos[0], pos[1]].transform.position, Quaternion.identity);
-            warrior.transform.SetParent(_gameGrid[pos[0], pos[1]].transform);
+            var allyPrefab = wariorPrefab;
+            allyPrefab.transform.GetChild(0).GetComponent<Image>().sprite =
+                _squads[SquadsManager.CurrentSquad][i].Sprite;
+            SpawnWarrior(allyPrefab, i, allyPositions);
+            
+            var enemyPrefab = wariorPrefab;
+            enemyPrefab.transform.GetChild(0).GetComponent<Image>().sprite =
+                _enemySquad[i].Sprite;
+            SpawnWarrior(enemyPrefab, i, enemyPositions);
         }
     }
-    
-    private static int[][] RndArray(int len)
+
+    private void SpawnWarrior(GameObject prefab, int positionIndex, Dictionary<int, Point> positions)
     {
-        var result = new int[len][];
+        var warrior = Instantiate(prefab,
+            _gameGrid[positions[positionIndex].X, positions[positionIndex].Y].transform.position, Quaternion.identity);
+        warrior.transform.SetParent(_gameGrid[positions[positionIndex].X, positions[positionIndex].Y].transform);
+    }
+    
+    private void InitEnemySquad()
+    {
+        _enemySquad = new List<Warrior>()
+        {
+            new Warrior("Супер монстр", 7, 25, 24, 65, 12, 0.1, 0.7, SquadsManager.StaticWarriorIcons[3]),
+            new Warrior("Чудовище", 2, 8, 10, 35, 6, 0.02, 0.7, SquadsManager.StaticWarriorIcons[4]),
+            new Warrior("Мясо", 1, 5, 8, 20, 5, 0.1, 0.7, SquadsManager.StaticWarriorIcons[5])
+        };
+    }
+    
+    private static Dictionary<int, Point> RndArray(int len, Point start, Point end, List<Point> restrictedPoints)
+    {
+        var result = new Dictionary<int, Point>();
         var rnd = new System.Random();
 
         for (int i = 0; i < len; i++)
         {
-            var x = rnd.Next(8);
-            var y = rnd.Next(8);
-            var point = new []{ x, y };
+            var x = rnd.Next(end.X - start.X);
+            var y = rnd.Next(end.Y - start.Y);
+            var point = new Point(x, y);
 
-            if (!Contain(result, point)) result[i] = point;
-            else i--;
+            if (!result.ContainsValue(point) && !restrictedPoints.Contains(point))
+                result[i] = new Point(point.X + start.X, point.Y + start.Y);
+            else 
+                i--;
         }
 
         return result;
-    }
-
-    private static bool Contain(int[][] array, int[] search)
-    {
-        foreach (var e in array)
-            if (Equal(e, search)) return Equal(e, search);
-
-        return false;
     }
 
     private static bool Equal(int[] a1, int[] a2)

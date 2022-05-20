@@ -85,7 +85,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4977293191198646736}
   m_Layer: 0
-  m_Name: AllyWarrior
+  m_Name: Warrior
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

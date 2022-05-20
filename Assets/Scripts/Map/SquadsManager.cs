@@ -1,32 +1,31 @@
 using System;
 using System.Collections.Generic;
-using System.Diagnostics;
-using System.Linq;
-using System.Threading;
 using UnityEngine;
 using UnityEngine.EventSystems;
-using UnityEngine.Serialization;
 using UnityEngine.UI;
-using Debug = UnityEngine.Debug;
 
 public class SquadsManager : MonoBehaviour
 {
     [SerializeField] private GameObject squadsPanel;
     [SerializeField] private GameObject squadPopup;
     [SerializeField] private GameObject levelsParent;
-    [SerializeField] private Sprite[] warriorIcons;
+    // [allyAssault, allyKnight, allySniper, enemyAssault, enemy...]
+    public Sprite[] warriorIcons;
+    
+    public static Sprite[] StaticWarriorIcons;
+    public static Dictionary<int, List<Warrior>> Squads;
     
     private static LineRenderer _lineRenderer;
     private static int _previouslevel;
-    private static int _currentSquad;
+    public static int CurrentSquad { get; set; }
     private static Dictionary<int, int> _squadsLocation;
     private static Dictionary<int, bool> _squadsState;
-    private Dictionary<int, List<Warrior>> _squads;
 
     public void Awake()
     {
-        _currentSquad = 0;
+        CurrentSquad = 0;
         _lineRenderer = GetComponent<LineRenderer>();
+        StaticWarriorIcons = warriorIcons;
         _squadsLocation = new Dictionary<int, int>
         {
             {0, 0},
@@ -52,15 +51,15 @@ public class SquadsManager : MonoBehaviour
     {
         var squadIcon = EventSystem.current.currentSelectedGameObject;
         
-        if (Int32.Parse(squadIcon.name) == _currentSquad)
+        if (Int32.Parse(squadIcon.name) == CurrentSquad)
         {
             squadPopup.SetActive(true);
-            UpdateSquad(squadPopup.transform.Find("SquadsParent"), _squads[_currentSquad]);
+            UpdateSquad(squadPopup.transform.Find("SquadsParent"), Squads[CurrentSquad]);
         }
-        _currentSquad = Int32.Parse(squadIcon.name);
+        CurrentSquad = Int32.Parse(squadIcon.name);
         UpdateSquadsPanel();
         
-        if (GetSquadsState()[_currentSquad])
+        if (GetSquadsState()[CurrentSquad])
         {
             LevelManager.UpdateLevelsWithoutAviable(levelsParent, _lineRenderer);
         }
@@ -74,7 +73,7 @@ public class SquadsManager : MonoBehaviour
     {
         foreach (Transform e in squadsPanel.transform)
         {
-            if (Int32.Parse(e.name) == _currentSquad)
+            if (Int32.Parse(e.name) == CurrentSquad)
             {
                 var enabledIcon = e.transform.Find("OnActive").gameObject;
                 enabledIcon.SetActive(true);
@@ -89,15 +88,15 @@ public class SquadsManager : MonoBehaviour
     
     public static void MoveSquad(int index, int levelIndex, bool isRollback)
     {
-        _previouslevel = _squadsLocation[_currentSquad];
+        _previouslevel = _squadsLocation[CurrentSquad];
         _squadsLocation[index] = levelIndex;
         if (isRollback)
         {
-            _squadsState[_currentSquad] = false;
+            _squadsState[CurrentSquad] = false;
         }
         else
         {
-            _squadsState[_currentSquad] = true;
+            _squadsState[CurrentSquad] = true;
         }
     }
     
@@ -116,46 +115,47 @@ public class SquadsManager : MonoBehaviour
             var warrior = cardsParent.Find(i.ToString());
             
             var icon = warrior.Find("ImageContainer").Find("Icon").GetComponent<Image>();
-            icon.sprite = squad[i].GetSprite();
+            icon.sprite = squad[i].Sprite;
             
             var name = warrior.Find("NameContainer").Find("Name").GetComponent<Text>();
-            name.text = squad[i].GetName();
+            name.text = squad[i].Name;
             
             var maintenancePrice = warrior.Find("Stats").Find("Price").Find("Stat").GetComponent<Text>();
-            maintenancePrice.text = squad[i].GetMaintenance().ToString();
+            maintenancePrice.text = squad[i].MaintenancePrice.ToString();
             
             var health = warrior.Find("Stats").Find("Health").Find("Stat").GetComponent<Text>();
-            health.text = squad[i].GetHealth().ToString();
+            health.text = squad[i].Health.ToString();
             
             var damage = warrior.Find("Stats").Find("Damage").Find("Stat").GetComponent<Text>();
-            damage.text = squad[i].GetDamage().ToString();
+            damage.text = squad[i].Damage.ToString();
             
             var defense = warrior.Find("Stats").Find("Defense").Find("Stat").GetComponent<Text>();
-            defense.text = squad[i].GetDefennse().ToString();
+            defense.text = squad[i].Defense.ToString();
             
             var dodge = warrior.Find("Stats").Find("Dodge").Find("Stat").GetComponent<Text>();
-            dodge.text = squad[i].GetDodgeChance()*100 + " %";
+            dodge.text = squad[i].DodgeChance*100 + " %";
             
             var accuracy = warrior.Find("Stats").Find("Accuracy").Find("Stat").GetComponent<Text>();
-            accuracy.text = squad[i].GetAccuracy()*100 + " %";
+            accuracy.text = squad[i].Accuracy*100 + " %";
         }
     }
 
-    private void InitSquads()
+    public static void InitSquads()
     {
-        _squads = new Dictionary<int, List<Warrior>>();
-        _squads[0] = new List<Warrior>()
+        Squads = new Dictionary<int, List<Warrior>>
         {
-            new Warrior("Убийца нечисти", 7, 25, 24, 70, 12, 0.1, 0.85, warriorIcons[0]),
-            new Warrior("Чебупицца", 2, 8, 10, 40, 6, 0.02, 0.8, warriorIcons[1]),
-            new Warrior("Бульмени", 1, 5, 8, 35, 5, 0.1, 0.7, warriorIcons[1])
-        };
-        
-        _squads[1] = new List<Warrior>()
-        {
-            new Warrior("Рекрутер", 1, 2, 2, 12, 1, 0.01, 0.2, warriorIcons[0]),
-            new Warrior("Ветеран", 34, 600, 160, 560, 45, 0.021, 0.92, warriorIcons[1]),
-            new Warrior("Мужик", 8, 60, 47, 140, 18, 0.13, 0.85, warriorIcons[1])
+            [0] = new List<Warrior>
+            {
+                new Warrior("Убийца нечисти", 7, 25, 24, 70, 12, 0.1, 0.85, StaticWarriorIcons[0]),
+                new Warrior("Чебупицца", 2, 8, 10, 40, 6, 0.02, 0.8, StaticWarriorIcons[1]),
+                new Warrior("Бульмени", 1, 5, 8, 35, 5, 0.1, 0.7, StaticWarriorIcons[2])
+            },
+            [1] = new List<Warrior>
+            {
+                new Warrior("Рекрутер", 1, 2, 2, 12, 1, 0.01, 0.2, StaticWarriorIcons[2]),
+                new Warrior("Ветеран", 34, 600, 160, 560, 45, 0.021, 0.92, StaticWarriorIcons[2]),
+                new Warrior("Мужик", 8, 60, 47, 140, 18, 0.13, 0.85, StaticWarriorIcons[1])
+            }
         };
     }
     
@@ -189,16 +189,6 @@ public class SquadsManager : MonoBehaviour
     public static int GetSquadsLocationBuffer()
     {
         return _previouslevel;
-    }
-    
-    public static int GetCurrentSquad()
-    {
-        return _currentSquad;
-    }
-    
-    public static void SetCurrentSquad(int index)
-    {
-        _currentSquad = index;
     }
 
     public static Dictionary<int, bool> GetSquadsState()

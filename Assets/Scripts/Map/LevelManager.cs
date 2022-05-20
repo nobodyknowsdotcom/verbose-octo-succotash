@@ -41,11 +41,11 @@ public class LevelManager : MonoBehaviour
     {
         var level = EventSystem.current.currentSelectedGameObject;
         var currentLevelIndex = GetCurrentLevel();
-        var currentSquad = SquadsManager.GetCurrentSquad();
+        var currentSquad = SquadsManager.CurrentSquad;
         // if level is available from current level 
         if (_paths[currentLevelIndex].Contains(Int32.Parse(level.name)) && !SquadsManager.GetSquadsState()[currentSquad])
         {
-            SquadsManager.MoveSquad( SquadsManager.GetCurrentSquad(), Int32.Parse(level.name), false);
+            SquadsManager.MoveSquad( SquadsManager.CurrentSquad, Int32.Parse(level.name), false);
             // if squad moved to another level  
             if (SquadsManager.GetSquadsState()[currentSquad])
             {
@@ -61,7 +61,7 @@ public class LevelManager : MonoBehaviour
 
     public static int GetCurrentLevel()
     {
-        return SquadsManager.GetSquadsLocation()[SquadsManager.GetCurrentSquad()];
+        return SquadsManager.GetSquadsLocation()[SquadsManager.CurrentSquad];
     }
     
     public static void UpdateLevels(GameObject levelsParent)
@@ -76,12 +76,12 @@ public class LevelManager : MonoBehaviour
             if (level.name != currentLevelIndex.ToString())
             {
                 level.Find("OnActive").gameObject.SetActive(false);
-                level.Find("Squad_"+SquadsManager.GetCurrentSquad()).gameObject.SetActive(false);
+                level.Find("Squad_"+SquadsManager.CurrentSquad).gameObject.SetActive(false);
             }
             else
             {
                 level.Find("OnActive").gameObject.SetActive(true);
-                level.Find("Squad_"+SquadsManager.GetCurrentSquad()).gameObject.SetActive(true);
+                level.Find("Squad_"+SquadsManager.CurrentSquad).gameObject.SetActive(true);
             }
             
             // if level available
@@ -111,12 +111,12 @@ public class LevelManager : MonoBehaviour
             if (level.name != currentLevelIndex.ToString())
             {
                 level.Find("OnActive").gameObject.SetActive(false);
-                level.Find("Squad_"+SquadsManager.GetCurrentSquad()).gameObject.SetActive(false);
+                level.Find("Squad_"+SquadsManager.CurrentSquad).gameObject.SetActive(false);
             }
             else
             {
                 level.Find("OnActive").gameObject.SetActive(true);
-                level.Find("Squad_"+SquadsManager.GetCurrentSquad()).gameObject.SetActive(true);
+                level.Find("Squad_"+SquadsManager.CurrentSquad).gameObject.SetActive(true);
             }
             level.Find("OnAvailable").gameObject.SetActive(false);
         }
