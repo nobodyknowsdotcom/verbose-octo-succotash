@@ -573,6 +573,7 @@ MonoBehaviour:
   cellPrefab: {fileID: 8504819267213613518, guid: 2fb25dc389dddad49919494087b6dfda, type: 3}
   cellsField: {fileID: 841761802}
   wariorPrefab: {fileID: 8454979708811358685, guid: 15c841c8e60f4d44d91a627193a48367, type: 3}
+  currentWarriorCard: {fileID: 1384733460}
 --- !u!1 &189707886
 GameObject:
   m_ObjectHideFlags: 0
@@ -3282,7 +3283,7 @@ GameObject:
   - component: {fileID: 1096943353}
   - component: {fileID: 1096943352}
   m_Layer: 5
-  m_Name: Art
+  m_Name: Icon
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

@@ -13,6 +13,8 @@ public class Warrior : MonoBehaviour
     public double Accuracy { get;}
 
     public Sprite Sprite { get; set; }
+
+    public int Stamia { get; set; }
     
     public Warrior(string name, int level, int maintenancePrice, int damage, int health, int defense, double dodgeChance, double accuracy, Sprite sprite)
     {
@@ -25,5 +27,6 @@ public class Warrior : MonoBehaviour
         DodgeChance = dodgeChance;
         Accuracy = accuracy;
         Sprite = sprite;
+        Stamia = 100;
     }
 }

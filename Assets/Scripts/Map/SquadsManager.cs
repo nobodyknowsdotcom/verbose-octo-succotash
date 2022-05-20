@@ -61,11 +61,11 @@ public class SquadsManager : MonoBehaviour
         
         if (GetSquadsState()[CurrentSquad])
         {
-            LevelManager.UpdateLevelsWithoutAviable(levelsParent, _lineRenderer);
+            Map.UpdateLevelsWithoutAviable(levelsParent, _lineRenderer);
         }
         else
         {
-            LevelManager.UpdateLevels(levelsParent);
+            Map.UpdateLevels(levelsParent);
         }
     }
     

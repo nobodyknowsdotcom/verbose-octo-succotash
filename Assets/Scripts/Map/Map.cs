@@ -5,7 +5,7 @@ using UnityEngine.EventSystems;
 using UnityEngine.Serialization;
 using UnityEngine.UI;
 
-public class LevelManager : MonoBehaviour
+public class Map : MonoBehaviour
 {
     [SerializeField] private GameObject levelsParent;
     [SerializeField] private GameObject popup;
