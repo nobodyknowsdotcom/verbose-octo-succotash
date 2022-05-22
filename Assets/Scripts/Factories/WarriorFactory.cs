@@ -4,7 +4,7 @@ namespace Factories
 {
     public class WarriorFactory : Warrior
     {
-        public static Warrior ConvertToEnemy(Warrior warrior,int iconIndex)
+        public static Warrior ConvertToEnemy(Warrior warrior, int iconIndex)
         {
             var enemyWarrior = warrior;
             enemyWarrior.Sprite = SquadsManager.StaticWarriorIcons[iconIndex];
@@ -12,7 +12,7 @@ namespace Factories
             return enemyWarrior;
         }
 
-        public WarriorFactory(string name, int level, int maintenancePrice, int damage, int health, int defense, double dodgeChance, double accuracy, Sprite sprite) : base(name, level, maintenancePrice, damage, health, defense, dodgeChance, accuracy, sprite)
+        public WarriorFactory(string name, int level, int maintenancePrice, int damage, int health, int armor, double dodgeChance, double accuracy, Sprite sprite) : base(name, level, maintenancePrice, damage, health, armor, dodgeChance, accuracy, sprite)
         {
         }
 

@@ -16,7 +16,7 @@ public class SquadsManager : MonoBehaviour
     public static Dictionary<int, List<Warrior>> Squads;
     
     private static LineRenderer _lineRenderer;
-    private static int _previouslevel;
+    private static int _previousLevel;
     public static int CurrentSquad { get; set; }
     private static Dictionary<int, int> _squadsLocation;
     private static Dictionary<int, bool> _squadsState;
@@ -88,7 +88,7 @@ public class SquadsManager : MonoBehaviour
     
     public static void MoveSquad(int index, int levelIndex, bool isRollback)
     {
-        _previouslevel = _squadsLocation[CurrentSquad];
+        _previousLevel = _squadsLocation[CurrentSquad];
         _squadsLocation[index] = levelIndex;
         if (isRollback)
         {
@@ -130,7 +130,7 @@ public class SquadsManager : MonoBehaviour
             damage.text = squad[i].Damage.ToString();
             
             var defense = warrior.Find("Stats").Find("Defense").Find("Stat").GetComponent<Text>();
-            defense.text = squad[i].Defense.ToString();
+            defense.text = squad[i].Armor.ToString();
             
             var dodge = warrior.Find("Stats").Find("Dodge").Find("Stat").GetComponent<Text>();
             dodge.text = squad[i].DodgeChance*100 + " %";
@@ -188,7 +188,7 @@ public class SquadsManager : MonoBehaviour
 
     public static int GetSquadsLocationBuffer()
     {
-        return _previouslevel;
+        return _previousLevel;
     }
 
     public static Dictionary<int, bool> GetSquadsState()

@@ -8,25 +8,22 @@ public class Warrior : MonoBehaviour
     public int MaintenancePrice { get; }
     public int Damage { get; set; }
     public int Health { get; set; }
-    public int Defense { get; set; }
+    public int Armor { get; set; }
     public double DodgeChance { get;}
     public double Accuracy { get;}
 
     public Sprite Sprite { get; set; }
-
-    public int Stamia { get; set; }
     
-    public Warrior(string name, int level, int maintenancePrice, int damage, int health, int defense, double dodgeChance, double accuracy, Sprite sprite)
+    public Warrior(string name, int level, int maintenancePrice, int damage, int health, int armor, double dodgeChance, double accuracy, Sprite sprite)
     {
         Name = name;
         Level = level;
         MaintenancePrice = maintenancePrice;
         Damage = damage;
         Health = health;
-        Defense = defense;
+        Armor = armor;
         DodgeChance = dodgeChance;
         Accuracy = accuracy;
         Sprite = sprite;
-        Stamia = 100;
     }
 }

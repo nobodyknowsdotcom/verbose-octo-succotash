@@ -2,14 +2,13 @@ using System;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
-using UnityEngine.Serialization;
 using UnityEngine.UI;
 
 public class Map : MonoBehaviour
 {
     [SerializeField] private GameObject levelsParent;
     [SerializeField] private GameObject popup;
-    [FormerlySerializedAs("stepText")] [SerializeField] private GameObject turnText;
+    [SerializeField] private GameObject turnText;
     private static int _turn;
     private static LineRenderer _lineRenderer;
     private static Dictionary<int, List<int>> _paths;
@@ -59,7 +58,7 @@ public class Map : MonoBehaviour
         }
     }
 
-    public static int GetCurrentLevel()
+    private static int GetCurrentLevel()
     {
         return SquadsManager.GetSquadsLocation()[SquadsManager.CurrentSquad];
     }
@@ -122,7 +121,7 @@ public class Map : MonoBehaviour
         }
     }
 
-    public void OpenPopup()
+    private void OpenPopup()
     {
         popup.SetActive(true);
     }
@@ -135,7 +134,7 @@ public class Map : MonoBehaviour
         UpdateLevels(levelsParent);
     }
 
-    public static void DrawLine(LineRenderer lineRenderer, params GameObject[] objectsList)
+    private static void DrawLine(LineRenderer lineRenderer, params GameObject[] objectsList)
     {
         lineRenderer.positionCount = objectsList.Length;
         for (int i = 0; i< objectsList.Length; i+=2)
