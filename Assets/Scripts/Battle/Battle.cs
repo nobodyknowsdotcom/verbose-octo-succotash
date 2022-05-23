@@ -162,15 +162,15 @@ public class Battle : MonoBehaviour
     {
         var result = new Dictionary<int, Point>();
 
-        for (int i = 0; i < len; i++)
+        for (var i = 0; i < len; i++)
         {
             var x = m_Rnd.Next(end.X - start.X);
             var y = m_Rnd.Next(end.Y - start.Y);
-            var point = new Point(x, y);
+            var point = new Point(x + start.X, y + start.Y);
 
             if (!result.ContainsValue(point) && !restrictedPoints.Contains(point))
-                result[i] = new Point(point.X + start.X, point.Y + start.Y);
-            else 
+                result[i] = point;
+            else
                 i--;
         }
 
