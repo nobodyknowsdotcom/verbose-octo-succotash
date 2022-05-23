@@ -3,7 +3,6 @@ using System.Drawing;
 using System.Linq;
 using UnityEngine;
 using UnityEngine.EventSystems;
-using UnityEngine.Serialization;
 using UnityEngine.UI;
 using Random = System.Random;
 
@@ -22,7 +21,7 @@ public class Battle : MonoBehaviour
     private GameObject[,] m_CellsGrid;
     private GameObject m_CurrentCell;
     private GameObject m_TargetCell;
-    
+    private GameObject m_ExitCell;
     private int m_Width;
     private int m_Height;
     private const float CellSize = 1.2f;
@@ -120,9 +119,12 @@ public class Battle : MonoBehaviour
     
     private void InitWarriorsOnField()
     {
-        var allyPositions = RndArray(3, new Point(2,2), new Point(6, 6), new List<Point>());
-        var enemyPositions = RndArray(3, new Point(0,0), new Point(8, 8), allyPositions.Values.ToList());
+        var exitPosition = RndArray(1, new Point(3, 3), new Point(4, 4), new List<Point>())[0];
+        var allyPositions = RndArray(3, new Point(2,2), new Point(6, 6), new List<Point>{exitPosition});
+        var enemyPositions = RndArray(3, new Point(0,0), new Point(8, 8), allyPositions.Values.Append(exitPosition).ToList());
 
+        m_CellsGrid[exitPosition.X, exitPosition.Y].transform.Find("Exit").gameObject.SetActive(true);
+        
         for (int i=0; i<_squads[SquadsManager.CurrentSquad].Count; i++)
         {
             var allyPrefab = warriorPrefab;
