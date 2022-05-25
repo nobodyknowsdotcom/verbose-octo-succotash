@@ -6,8 +6,14 @@ namespace Entities
     public class Sniper : Unit
     {
         private readonly Random m_Random = new Random();
-        protected Sniper(string name, int maintenancePrice, int damage, int health, int armor, double dodgeChance, double accuracy, Sprite sprite) : base(name, maintenancePrice, damage, health, armor, dodgeChance, accuracy, sprite)
+        protected Sniper(string name, bool isAlly, int maintenancePrice, int damage, int health, int armor, double dodgeChance, double accuracy, Sprite sprite) : base(name, isAlly, maintenancePrice, damage, health, armor, dodgeChance, accuracy, sprite)
         {
+        }
+        
+        public static Sniper CreateInstance(string name, bool isAlly, int maintenancePrice, int damage, int health, int armor, double dodgeChance, double accuracy)
+        {
+            var sprite = Resources.Load<Sprite>(isAlly ? "Warriors/ally_sniper" : "Warriors/enemy_sniper");
+            return new Sniper(name, isAlly, maintenancePrice, damage, health, armor, dodgeChance, accuracy, sprite);
         }
 
         public string OffhandShot(Unit enemy)

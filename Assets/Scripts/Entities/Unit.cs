@@ -16,7 +16,7 @@ public class Unit : MonoBehaviour
 
     public Sprite Sprite { get; set; }
 
-    protected Unit(string name, int maintenancePrice, int damage, int health, int armor, double dodgeChance, double accuracy, Sprite sprite)
+    protected Unit(string name, bool isAlly, int maintenancePrice, int damage, int health, int armor, double dodgeChance, double accuracy, Sprite sprite)
     {
         Name = name;
         MaintenancePrice = maintenancePrice;
@@ -26,10 +26,11 @@ public class Unit : MonoBehaviour
         DodgeChance = dodgeChance;
         Accuracy = accuracy;
         Sprite = sprite;
+        IsAlly = isAlly;
     }
 
-    public static Unit CreateInstance(string name, int maintenancePrice, int damage, int health, int armor, double dodgeChance, double accuracy, Sprite sprite)
+    public static Unit CreateInstance(string name, bool isAlly, int maintenancePrice, int damage, int health, int armor, double dodgeChance, double accuracy, Sprite sprite)
     {
-        return new Unit(name, maintenancePrice, damage, health, armor, dodgeChance, accuracy, sprite);
+        return new Unit(name, isAlly, maintenancePrice, damage, health, armor, dodgeChance, accuracy, sprite);
     }
 }

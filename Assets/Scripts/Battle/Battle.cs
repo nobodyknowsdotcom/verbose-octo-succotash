@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
+using Entities;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
@@ -172,9 +173,9 @@ public class Battle : MonoBehaviour
     {
         m_EnemySquad = new List<Unit>
         {
-            Unit.CreateInstance("Супер монстр",  25, 24, 65, 12, 0.1, 0.7, SquadsManager.StaticUnitsIcons[3]),
-            Unit.CreateInstance("Чудовище", 8, 10, 35, 6, 0.02, 0.7, SquadsManager.StaticUnitsIcons[4]),
-            Unit.CreateInstance("Мясо",  5, 8, 20, 5, 0.1, 0.7, SquadsManager.StaticUnitsIcons[5])
+            Swordsman.CreateInstance("Супер монстр", false,  25, 24, 65, 12, 0.1, 0.7),
+            Assault.CreateInstance("Чудовище", false, 8, 10, 35, 6, 0.02, 0.7),
+            Sniper.CreateInstance("Мясо", false, 5, 8, 20, 5, 0.1, 0.7)
         };
     }
     

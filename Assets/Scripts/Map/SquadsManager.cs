@@ -10,10 +10,7 @@ public class SquadsManager : MonoBehaviour
     [SerializeField] private GameObject squadsPanel;
     [SerializeField] private GameObject squadPopup;
     [SerializeField] private GameObject levelsParent;
-    // [allyAssault, allyKnight, allySniper, enemyAssault, enemy...]
-    public Sprite[] unitsIcons;
-    
-    public static Sprite[] StaticUnitsIcons;
+
     public static Dictionary<int, List<Unit>> Squads;
     
     private static LineRenderer _lineRenderer;
@@ -26,7 +23,6 @@ public class SquadsManager : MonoBehaviour
     {
         CurrentSquad = 0;
         _lineRenderer = GetComponent<LineRenderer>();
-        StaticUnitsIcons = unitsIcons;
         _squadsLocation = new Dictionary<int, int>
         {
             {0, 0},
@@ -147,15 +143,15 @@ public class SquadsManager : MonoBehaviour
         {
             [0] = new List<Unit>
             {
-                Assault.CreateInstance("Убийца нечисти",  25, 24, 70, 12, 0.1, 0.85, StaticUnitsIcons[0]),
-                Unit.CreateInstance("Чебупицца", 8, 10, 40, 6, 0.02, 0.8, StaticUnitsIcons[1]),
-                Unit.CreateInstance("Бульмени", 5, 8, 35, 5, 0.1, 0.7, StaticUnitsIcons[2])
+                Assault.CreateInstance("Убийца нечисти", true, 25, 24, 70, 12, 0.1, 0.85),
+                Assault.CreateInstance("Чебупицца", true,  8, 10, 40, 6, 0.02, 0.8),
+                Sniper.CreateInstance("Бульмени", true, 5, 8, 35, 5, 0.1, 0.7)
             },
             [1] = new List<Unit>
             {
-                Unit.CreateInstance("Рекрутер", 2, 2, 12, 1, 0.01, 0.2, StaticUnitsIcons[2]),
-                Unit.CreateInstance("Ветеран", 600, 160, 560, 45, 0.021, 0.92, StaticUnitsIcons[2]),
-                Unit.CreateInstance("Мужик", 60, 47, 140, 18, 0.13, 0.85, StaticUnitsIcons[1])
+                Swordsman.CreateInstance("Рекрутер", true, 2, 2, 12, 1, 0.01, 0.2),
+                Sniper.CreateInstance("Ветеран", true, 600, 160, 560, 45, 0.021, 0.92),
+                Swordsman.CreateInstance("Мужик", true, 60, 47, 140, 18, 0.13, 0.85)
             }
         };
     }

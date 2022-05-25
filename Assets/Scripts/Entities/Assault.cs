@@ -4,8 +4,14 @@ namespace Entities
 {
     public class Assault : Unit
     {
-        protected Assault(string name, int maintenancePrice, int damage, int health, int armor, double dodgeChance, double accuracy, Sprite sprite) : base(name, maintenancePrice, damage, health, armor, dodgeChance, accuracy, sprite)
+        protected Assault(string name, bool isAlly, int maintenancePrice, int damage, int health, int armor, double dodgeChance, double accuracy, Sprite sprite) : base(name, isAlly, maintenancePrice, damage, health, armor, dodgeChance, accuracy, sprite)
         {
+        }
+        
+        public static Assault CreateInstance(string name, bool isAlly, int maintenancePrice, int damage, int health, int armor, double dodgeChance, double accuracy)
+        {
+            var sprite = Resources.Load<Sprite>(isAlly ? "Warriors/ally_assault" : "Warriors/enemy_assault");
+            return new Assault(name, isAlly, maintenancePrice, damage, health, armor, dodgeChance, accuracy, sprite);
         }
 
         public void FirstAid()

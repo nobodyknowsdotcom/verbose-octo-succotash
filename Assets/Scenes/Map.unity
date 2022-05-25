@@ -14130,13 +14130,6 @@ MonoBehaviour:
   squadsPanel: {fileID: 1541703070}
   squadPopup: {fileID: 1847767253}
   levelsParent: {fileID: 467054348}
-  unitsIcons:
-  - {fileID: 21300000, guid: a649283a27a2d0241a1d9d268520be77, type: 3}
-  - {fileID: 21300000, guid: c60f6a31ea78b4e4cb594fa6e301621b, type: 3}
-  - {fileID: 21300000, guid: 4584b7e239f268c408eea41030a0fc18, type: 3}
-  - {fileID: 21300000, guid: 49033f4c33d3ea141a62efa141a68602, type: 3}
-  - {fileID: 21300000, guid: 25031a8c247bc3540b5552858a8d0f60, type: 3}
-  - {fileID: 21300000, guid: 8998b303bb79457409293976a39bae05, type: 3}
 --- !u!120 &1524818939
 LineRenderer:
   m_ObjectHideFlags: 0
