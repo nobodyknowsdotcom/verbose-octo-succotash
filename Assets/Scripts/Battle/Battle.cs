@@ -120,9 +120,9 @@ public class Battle : MonoBehaviour
 
     private void InitWarriorsOnField()
     {
-        var exitPosition = GetRandomPointsArray(1, new Point(3, 3), new Point(4, 4), new List<Point>())[0];
-        var allyPositions = GetRandomPointsArray(3, new Point(2,2), new Point(6, 6), new List<Point>{exitPosition});
-        var enemyPositions = GetRandomPointsArray(3, new Point(0,0), new Point(8, 8), allyPositions.Values.Append(exitPosition).ToList());
+        var exitPosition = new Point(0, 7);
+        var allyPositions = GetRandomPointsArray(3, new Point(0,3), new Point(4, 7), new List<Point>{exitPosition});
+        var enemyPositions = GetRandomPointsArray(3, new Point(3,0), new Point(7, 4), allyPositions.Values.Append(exitPosition).ToList());
 
         m_ExitCell = m_CellsGrid[exitPosition.X, exitPosition.Y].transform.Find("Exit").gameObject;
         m_ExitCell.SetActive(true);
