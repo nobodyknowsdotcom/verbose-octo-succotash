@@ -47,14 +47,14 @@ public class SquadsManager : MonoBehaviour
         UpdateSquadsPanel();
     }
 
-    public void OnSquadClick()
+    private void OnSquadClick()
     {
         var squadIcon = EventSystem.current.currentSelectedGameObject;
         
         if (Int32.Parse(squadIcon.name) == CurrentSquad)
         {
             squadPopup.SetActive(true);
-            UpdateSquad(squadPopup.transform.Find("SquadsParent"), Squads[CurrentSquad]);
+            UpdateSquadPopup(squadPopup.transform.Find("SquadsParent"), Squads[CurrentSquad]);
         }
         CurrentSquad = Int32.Parse(squadIcon.name);
         UpdateSquadsPanel();
@@ -108,11 +108,11 @@ public class SquadsManager : MonoBehaviour
         }
     }
 
-    public void UpdateSquad(Transform cardsParent, List<Warrior> squad)
+    private void UpdateSquadPopup(Transform popupObj, List<Warrior> squad)
     {
-        for (var i = 0; i < cardsParent.childCount; i++)
+        for (var i = 0; i < popupObj.childCount; i++)
         {
-            var warrior = cardsParent.Find(i.ToString());
+            var warrior = popupObj.Find(i.ToString());
             
             var icon = warrior.Find("ImageContainer").Find("Icon").GetComponent<Image>();
             icon.sprite = squad[i].Sprite;
@@ -140,21 +140,21 @@ public class SquadsManager : MonoBehaviour
         }
     }
 
-    public static void InitSquads()
+    private static void InitSquads()
     {
         Squads = new Dictionary<int, List<Warrior>>
         {
             [0] = new List<Warrior>
             {
-                new Warrior("Убийца нечисти", 7, 25, 24, 70, 12, 0.1, 0.85, StaticWarriorIcons[0]),
-                new Warrior("Чебупицца", 2, 8, 10, 40, 6, 0.02, 0.8, StaticWarriorIcons[1]),
-                new Warrior("Бульмени", 1, 5, 8, 35, 5, 0.1, 0.7, StaticWarriorIcons[2])
+                Warrior.CreateInstance("Убийца нечисти",  25, 24, 70, 12, 0.1, 0.85, StaticWarriorIcons[0]),
+                Warrior.CreateInstance("Чебупицца", 8, 10, 40, 6, 0.02, 0.8, StaticWarriorIcons[1]),
+                Warrior.CreateInstance("Бульмени", 5, 8, 35, 5, 0.1, 0.7, StaticWarriorIcons[2])
             },
             [1] = new List<Warrior>
             {
-                new Warrior("Рекрутер", 1, 2, 2, 12, 1, 0.01, 0.2, StaticWarriorIcons[2]),
-                new Warrior("Ветеран", 34, 600, 160, 560, 45, 0.021, 0.92, StaticWarriorIcons[2]),
-                new Warrior("Мужик", 8, 60, 47, 140, 18, 0.13, 0.85, StaticWarriorIcons[1])
+                Warrior.CreateInstance("Рекрутер", 2, 2, 12, 1, 0.01, 0.2, StaticWarriorIcons[2]),
+                Warrior.CreateInstance("Ветеран", 600, 160, 560, 45, 0.021, 0.92, StaticWarriorIcons[2]),
+                Warrior.CreateInstance("Мужик", 60, 47, 140, 18, 0.13, 0.85, StaticWarriorIcons[1])
             }
         };
     }

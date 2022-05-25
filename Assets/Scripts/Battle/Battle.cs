@@ -3,7 +3,6 @@ using System.Drawing;
 using System.Linq;
 using UnityEngine;
 using UnityEngine.EventSystems;
-using UnityEngine.Serialization;
 using UnityEngine.UI;
 using Random = System.Random;
 
@@ -50,14 +49,14 @@ public class Battle : MonoBehaviour
     {
         var selectedCell = EventSystem.current.currentSelectedGameObject;
         // set active targetCell if currentCell exists and not doubleclicked
-        if (m_CurrentCell != null && m_CurrentCell != selectedCell)
+        if (m_CurrentCell != null && selectedCell != m_CurrentCell)
         {
             m_TargetCell = selectedCell;
         }
         else
         {
             // if currentCell doubleclicked, it will reset current cell and target cells
-            if (m_CurrentCell == selectedCell)
+            if (selectedCell == m_CurrentCell)
             {
                 m_CurrentCell = null;
                 m_TargetCell = null;
@@ -73,7 +72,14 @@ public class Battle : MonoBehaviour
         }
 
         UpdateCells();
-        UpdateCurrentWarriorCard(m_CurrentWarrior);
+        UpdateCurrentWarriorCard();
+    }
+    
+    private void UpdateCurrentWarriorCard()
+    {
+        currentWarriorCard.transform.Find("Icon").GetComponent<Image>().sprite = m_CurrentWarrior.Sprite;
+        currentWarriorCard.transform.Find("Health").GetChild(0).GetComponent<Text>().text = m_CurrentWarrior.Health.ToString();
+        currentWarriorCard.transform.Find("Armor").GetChild(0).GetComponent<Text>().text = m_CurrentWarrior.Armor.ToString();
     }
     
     private void DrawCells()
@@ -101,14 +107,7 @@ public class Battle : MonoBehaviour
             }
         }
     }
-    
-    private void UpdateCurrentWarriorCard(Warrior currentWarrior)
-    {
-        currentWarriorCard.transform.Find("Icon").GetComponent<Image>().sprite = currentWarrior.Sprite;
-        currentWarriorCard.transform.Find("Health").GetChild(0).GetComponent<Text>().text = currentWarrior.Health.ToString();
-        currentWarriorCard.transform.Find("Armor").GetChild(0).GetComponent<Text>().text = currentWarrior.Armor.ToString();
-    }
-    
+
     private void UpdateCells()
     {
         foreach (var cell in m_CellsGrid)
@@ -172,9 +171,9 @@ public class Battle : MonoBehaviour
     {
         m_EnemySquad = new List<Warrior>
         {
-            new Warrior("Супер монстр", 7, 25, 24, 65, 12, 0.1, 0.7, SquadsManager.StaticWarriorIcons[3]),
-            new Warrior("Чудовище", 2, 8, 10, 35, 6, 0.02, 0.7, SquadsManager.StaticWarriorIcons[4]),
-            new Warrior("Мясо", 1, 5, 8, 20, 5, 0.1, 0.7, SquadsManager.StaticWarriorIcons[5])
+            Warrior.CreateInstance("Супер монстр",  25, 24, 65, 12, 0.1, 0.7, SquadsManager.StaticWarriorIcons[3]),
+            Warrior.CreateInstance("Чудовище", 8, 10, 35, 6, 0.02, 0.7, SquadsManager.StaticWarriorIcons[4]),
+            Warrior.CreateInstance("Мясо",  5, 8, 20, 5, 0.1, 0.7, SquadsManager.StaticWarriorIcons[5])
         };
     }
     
