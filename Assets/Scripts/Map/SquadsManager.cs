@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using Entities;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
@@ -146,7 +147,7 @@ public class SquadsManager : MonoBehaviour
         {
             [0] = new List<Unit>
             {
-                Unit.CreateInstance("Убийца нечисти",  25, 24, 70, 12, 0.1, 0.85, StaticUnitsIcons[0]),
+                Assault.CreateInstance("Убийца нечисти",  25, 24, 70, 12, 0.1, 0.85, StaticUnitsIcons[0]),
                 Unit.CreateInstance("Чебупицца", 8, 10, 40, 6, 0.02, 0.8, StaticUnitsIcons[1]),
                 Unit.CreateInstance("Бульмени", 5, 8, 35, 5, 0.1, 0.7, StaticUnitsIcons[2])
             },

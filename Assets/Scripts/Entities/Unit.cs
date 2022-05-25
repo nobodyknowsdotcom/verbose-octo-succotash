@@ -5,7 +5,8 @@ public class Unit : MonoBehaviour
 {
     public string Name { get; }
     public int Level { get; set; } = 1;
-    public bool isAlly { get; set; } = true;
+    public bool IsAlly { get; set; } = true;
+    private int Range { get; set; }
     public int MaintenancePrice { get; }
     public int Damage { get; set; }
     public int Health { get; set; }
