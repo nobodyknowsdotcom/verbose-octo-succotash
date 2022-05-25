@@ -569,8 +569,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 183ae103a7c2e324da330658d739e9b6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  cellsParent: {fileID: 841761802}
   cellPrefab: {fileID: 8504819267213613518, guid: 2fb25dc389dddad49919494087b6dfda, type: 3}
-  cellsField: {fileID: 841761802}
   warriorPrefab: {fileID: 8454979708811358685, guid: 15c841c8e60f4d44d91a627193a48367, type: 3}
   currentWarriorCard: {fileID: 1073405259}
 --- !u!1 &200384749
@@ -1551,7 +1551,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 689580568}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 170558360}
+        m_TargetAssemblyTypeName: Battle, Assembly-CSharp
+        m_MethodName: OnMoveButton
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &689580568
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2330,7 +2342,7 @@ GameObject:
   - component: {fileID: 841761806}
   - component: {fileID: 841761804}
   m_Layer: 0
-  m_Name: Field
+  m_Name: CellsParent
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

@@ -3,18 +3,19 @@ using System.Drawing;
 using System.Linq;
 using UnityEngine;
 using UnityEngine.EventSystems;
+using UnityEngine.Serialization;
 using UnityEngine.UI;
 using Random = System.Random;
 
 public class Battle : MonoBehaviour
 {
+    [SerializeField] private GameObject cellsParent;
     [SerializeField] private GameObject cellPrefab;
-    [SerializeField] private GameObject cellsField;
     [SerializeField] private GameObject warriorPrefab;
     [SerializeField] private GameObject currentWarriorCard;
 
     private static Dictionary<int, List<Warrior>> _squads;
-    private static Dictionary<GameObject, Warrior> _squadsPositions;
+    private static Dictionary<GameObject, Warrior> _warriorsPositions;
     private List<Warrior> m_EnemySquad;
     private Warrior m_CurrentWarrior;
     
@@ -30,7 +31,7 @@ public class Battle : MonoBehaviour
 
     public void Awake()
     {
-        _squadsPositions = new Dictionary<GameObject, Warrior>();
+        _warriorsPositions = new Dictionary<GameObject, Warrior>();
         m_Width = 8;
         m_Height = 8;
         
@@ -47,26 +48,26 @@ public class Battle : MonoBehaviour
 
     public void OnCellCLick()
     {
-        var cell = EventSystem.current.currentSelectedGameObject;
+        var selectedCell = EventSystem.current.currentSelectedGameObject;
         // set active targetCell if currentCell exists and not doubleclicked
-        if (m_CurrentCell != null && m_CurrentCell != cell)
+        if (m_CurrentCell != null && m_CurrentCell != selectedCell)
         {
-            m_TargetCell = cell;
+            m_TargetCell = selectedCell;
         }
         else
         {
             // if currentCell doubleclicked, it will reset current cell and target cells
-            if (m_CurrentCell == cell)
+            if (m_CurrentCell == selectedCell)
             {
                 m_CurrentCell = null;
                 m_TargetCell = null;
             }
             else
             {
-                if (_squadsPositions.Keys.Contains(cell))
+                if (_warriorsPositions.Keys.Contains(selectedCell))
                 {
-                    m_CurrentWarrior = _squadsPositions[cell];
-                    m_CurrentCell = cell;
+                    m_CurrentWarrior = _warriorsPositions[selectedCell];
+                    m_CurrentCell = selectedCell;
                 }
             }
         }
@@ -84,7 +85,7 @@ public class Battle : MonoBehaviour
         }
 
         m_CellsGrid = new GameObject[m_Width, m_Height];
-        var startPos = cellsField.transform.position + new Vector3(CellSize/2, CellSize/2);
+        var startPos = cellsParent.transform.position + new Vector3(CellSize/2, CellSize/2);
 
         for (int i = 0; i < m_Height; i++)
         {
@@ -94,7 +95,7 @@ public class Battle : MonoBehaviour
                     cellPrefab, 
                     startPos + new Vector3(i * CellSize, j * CellSize, 0),
                     Quaternion.identity);
-                m_CellsGrid[i, j].transform.SetParent(cellsField.transform);
+                m_CellsGrid[i, j].transform.SetParent(cellsParent.transform);
                 m_CellsGrid[i, j].gameObject.name = i + "_" + j;
                 m_CellsGrid[i, j].GetComponent<Button>().onClick.AddListener(OnCellCLick);
             }
@@ -116,36 +117,55 @@ public class Battle : MonoBehaviour
             cell.transform.Find("OnTarget").gameObject.SetActive(cell == m_TargetCell);
         }
     }
-    
+
     private void InitWarriorsOnField()
     {
-        var exitPosition = RndArray(1, new Point(3, 3), new Point(4, 4), new List<Point>())[0];
-        var allyPositions = RndArray(3, new Point(2,2), new Point(6, 6), new List<Point>{exitPosition});
-        var enemyPositions = RndArray(3, new Point(0,0), new Point(8, 8), allyPositions.Values.Append(exitPosition).ToList());
+        var exitPosition = GetRandomPointsArray(1, new Point(3, 3), new Point(4, 4), new List<Point>())[0];
+        var allyPositions = GetRandomPointsArray(3, new Point(2,2), new Point(6, 6), new List<Point>{exitPosition});
+        var enemyPositions = GetRandomPointsArray(3, new Point(0,0), new Point(8, 8), allyPositions.Values.Append(exitPosition).ToList());
 
-        m_CellsGrid[exitPosition.X, exitPosition.Y].transform.Find("Exit").gameObject.SetActive(true);
-        
-        for (int i=0; i<_squads[SquadsManager.CurrentSquad].Count; i++)
+        m_ExitCell = m_CellsGrid[exitPosition.X, exitPosition.Y].transform.Find("Exit").gameObject;
+        m_ExitCell.SetActive(true);
+
+        for (var i=0; i<_squads[SquadsManager.CurrentSquad].Count; i++)
         {
             var allyPrefab = warriorPrefab;
-            allyPrefab.transform.GetChild(0).GetComponent<Image>().sprite =
-                _squads[SquadsManager.CurrentSquad][i].Sprite;
-            _squadsPositions.Add(m_CellsGrid[allyPositions[i].X, allyPositions[i].Y], _squads[SquadsManager.CurrentSquad][i]);
-            SpawnWarrior(allyPrefab, i, allyPositions);
+            allyPrefab.transform.GetChild(0).GetComponent<Image>().sprite = _squads[SquadsManager.CurrentSquad][i].Sprite;
+            _warriorsPositions.Add(m_CellsGrid[allyPositions[i].X, allyPositions[i].Y], _squads[SquadsManager.CurrentSquad][i]);
+            SpawnWarrior(allyPrefab, allyPositions[i]);
             
             var enemyPrefab = warriorPrefab;
-            enemyPrefab.transform.GetChild(0).GetComponent<Image>().sprite =
-                m_EnemySquad[i].Sprite;
-            _squadsPositions.Add(m_CellsGrid[enemyPositions[i].X, enemyPositions[i].Y], m_EnemySquad[i]);
-            SpawnWarrior(enemyPrefab, i, enemyPositions);
+            enemyPrefab.transform.GetChild(0).GetComponent<Image>().sprite = m_EnemySquad[i].Sprite;
+            _warriorsPositions.Add(m_CellsGrid[enemyPositions[i].X, enemyPositions[i].Y], m_EnemySquad[i]);
+            SpawnWarrior(enemyPrefab, enemyPositions[i]);
         }
     }
 
-    private void SpawnWarrior(GameObject prefab, int positionIndex, Dictionary<int, Point> positions)
+    private void SpawnWarrior(GameObject prefab, Point position)
     {
         var warrior = Instantiate(prefab,
-            m_CellsGrid[positions[positionIndex].X, positions[positionIndex].Y].transform.position, Quaternion.identity);
-        warrior.transform.SetParent(m_CellsGrid[positions[positionIndex].X, positions[positionIndex].Y].transform);
+            m_CellsGrid[position.X, position.Y].transform.position, Quaternion.identity);
+        warrior.transform.SetParent(m_CellsGrid[position.X, position.Y].transform);
+    }
+    
+    public void OnMoveButton()
+    {
+        var warrior = m_CurrentCell.transform.Find("Warrior(Clone)").gameObject;
+        
+        _warriorsPositions[m_TargetCell] = m_CurrentWarrior;
+        _warriorsPositions.Remove(m_CurrentCell);
+        Move(warrior, m_TargetCell);
+
+        m_CurrentCell = m_TargetCell;
+        m_TargetCell = null;
+        
+        UpdateCells();
+    }
+    
+    private void Move(GameObject warrior, GameObject targetCell)
+    {
+        warrior.transform.position = targetCell.transform.position;
+        warrior.transform.parent = targetCell.transform;
     }
     
     private void InitEnemySquad()
@@ -158,7 +178,7 @@ public class Battle : MonoBehaviour
         };
     }
     
-    private Dictionary<int, Point> RndArray(int len, Point start, Point end, List<Point> restrictedPoints)
+    private Dictionary<int, Point> GetRandomPointsArray(int len, Point start, Point end, List<Point> restrictedPoints)
     {
         var result = new Dictionary<int, Point>();
 
