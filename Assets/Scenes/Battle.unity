@@ -233,7 +233,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 101.70003, y: -47.7}
+  m_AnchoredPosition: {x: 101.70003, y: -47.699997}
   m_SizeDelta: {x: 180, y: 60}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &22972826
@@ -306,11 +306,11 @@ RectTransform:
   - {fileID: 844787233}
   - {fileID: 1118662919}
   m_Father: {fileID: 771890969}
-  m_RootOrder: 3
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 1, y: 0}
   m_AnchorMax: {x: 1, y: 0}
-  m_AnchoredPosition: {x: -0.015197754, y: 0}
+  m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 419.94, y: 215.52}
   m_Pivot: {x: 1, y: 0}
 --- !u!114 &48691251
@@ -412,7 +412,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 1, y: 1}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -0.000015258789, y: 0}
+  m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 420, y: 200}
   m_Pivot: {x: 1, y: 1}
 --- !u!1 &129623071
@@ -571,8 +571,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   cellsParent: {fileID: 841761802}
   cellPrefab: {fileID: 8504819267213613518, guid: 2fb25dc389dddad49919494087b6dfda, type: 3}
-  warriorPrefab: {fileID: 8454979708811358685, guid: 15c841c8e60f4d44d91a627193a48367, type: 3}
-  currentWarriorCard: {fileID: 1073405259}
+  unitPrefab: {fileID: 8454979708811358685, guid: 15c841c8e60f4d44d91a627193a48367, type: 3}
+  currentUnitCard: {fileID: 1073405259}
+  abilitiesPanel: {fileID: 1384733460}
 --- !u!1 &200384749
 GameObject:
   m_ObjectHideFlags: 0
@@ -992,7 +993,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 101.70003, y: -47.7}
+  m_AnchoredPosition: {x: 101.70003, y: -47.699997}
   m_SizeDelta: {x: 180, y: 60}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &396356956
@@ -1068,7 +1069,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 101.70003, y: -47.7}
+  m_AnchoredPosition: {x: 101.70003, y: -47.699997}
   m_SizeDelta: {x: 180, y: 60}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &442789471
@@ -1461,7 +1462,7 @@ RectTransform:
   - {fileID: 841761803}
   - {fileID: 930684350}
   m_Father: {fileID: 771890969}
-  m_RootOrder: 4
+  m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
@@ -2025,6 +2026,7 @@ RectTransform:
   m_Children:
   - {fileID: 336199835}
   - {fileID: 1384733461}
+  - {fileID: 1073405260}
   - {fileID: 1928627068}
   - {fileID: 48691250}
   - {fileID: 592329387}
@@ -2210,8 +2212,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0.124938965, y: -178.46999}
-  m_SizeDelta: {x: 419.75, y: 722.94}
+  m_AnchoredPosition: {x: 0.124938965, y: -185.46999}
+  m_SizeDelta: {x: 419.75, y: 708.94}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &817091422
 MonoBehaviour:
@@ -2754,7 +2756,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1073405260}
   m_Layer: 5
-  m_Name: WarriorCard
+  m_Name: SelectedUnitCard
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2767,22 +2769,22 @@ RectTransform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1073405259}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 1.0000798, y: 1.0000798, z: 1.0000798}
   m_Children:
   - {fileID: 13834358}
   - {fileID: 1096943351}
   - {fileID: 200384750}
   - {fileID: 1119156898}
-  m_Father: {fileID: 1384733461}
-  m_RootOrder: 3
+  m_Father: {fileID: 771890969}
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.5, y: 0.5}
-  m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 439.8}
+  m_AnchorMin: {x: 0, y: 1}
+  m_AnchorMax: {x: 0, y: 1}
+  m_AnchoredPosition: {x: -0.23321533, y: -0.16491699}
   m_SizeDelta: {x: 420, y: 200}
-  m_Pivot: {x: 0.5, y: 0.5}
+  m_Pivot: {x: 0, y: 1}
 --- !u!1 &1096943350
 GameObject:
   m_ObjectHideFlags: 0
@@ -2817,7 +2819,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -110, y: -0.000022635}
+  m_AnchoredPosition: {x: -110, y: -0.000030517578}
   m_SizeDelta: {x: 180, y: 180}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1096943352
@@ -3254,7 +3256,7 @@ GameObject:
   - component: {fileID: 1384733463}
   - component: {fileID: 1384733462}
   m_Layer: 5
-  m_Name: CurrentWarrior
+  m_Name: SelectedUnitAbilities
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -3274,14 +3276,13 @@ RectTransform:
   - {fileID: 689580566}
   - {fileID: 817091421}
   - {fileID: 1805787635}
-  - {fileID: 1073405260}
   m_Father: {fileID: 771890969}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 419.5, y: 0}
+  m_AnchoredPosition: {x: 0, y: -0.021606445}
+  m_SizeDelta: {x: 419.5, y: -0.043091}
   m_Pivot: {x: 0, y: 0.5}
 --- !u!114 &1384733462
 MonoBehaviour:
@@ -4003,7 +4004,7 @@ GameObject:
   - component: {fileID: 1928627070}
   - component: {fileID: 1928627069}
   m_Layer: 5
-  m_Name: AllWarriors
+  m_Name: AllUnits
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -4024,13 +4025,13 @@ RectTransform:
   - {fileID: 1002406411}
   - {fileID: 2110820481}
   m_Father: {fileID: 771890969}
-  m_RootOrder: 2
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMin: {x: 1, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 750, y: 107.76001}
-  m_SizeDelta: {x: -1500.03, y: -215.56}
-  m_Pivot: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: -0.015197754, y: 107.76001}
+  m_SizeDelta: {x: 419.96997, y: -215.56}
+  m_Pivot: {x: 1, y: 0.5}
 --- !u!114 &1928627069
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -1,7 +1,7 @@
 using UnityEngine;
 using UnityEngine.Serialization;
 
-public class Warrior : MonoBehaviour
+public class Unit : MonoBehaviour
 {
     public string Name { get; }
     public int Level { get; set; } = 1;
@@ -15,7 +15,7 @@ public class Warrior : MonoBehaviour
 
     public Sprite Sprite { get; set; }
 
-    protected Warrior(string name, int maintenancePrice, int damage, int health, int armor, double dodgeChance, double accuracy, Sprite sprite)
+    protected Unit(string name, int maintenancePrice, int damage, int health, int armor, double dodgeChance, double accuracy, Sprite sprite)
     {
         Name = name;
         MaintenancePrice = maintenancePrice;
@@ -27,8 +27,8 @@ public class Warrior : MonoBehaviour
         Sprite = sprite;
     }
 
-    public static Warrior CreateInstance(string name, int maintenancePrice, int damage, int health, int armor, double dodgeChance, double accuracy, Sprite sprite)
+    public static Unit CreateInstance(string name, int maintenancePrice, int damage, int health, int armor, double dodgeChance, double accuracy, Sprite sprite)
     {
-        return new Warrior(name, maintenancePrice, damage, health, armor, dodgeChance, accuracy, sprite);
+        return new Unit(name, maintenancePrice, damage, health, armor, dodgeChance, accuracy, sprite);
     }
 }

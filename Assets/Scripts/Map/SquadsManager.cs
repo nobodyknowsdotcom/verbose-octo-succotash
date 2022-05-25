@@ -10,10 +10,10 @@ public class SquadsManager : MonoBehaviour
     [SerializeField] private GameObject squadPopup;
     [SerializeField] private GameObject levelsParent;
     // [allyAssault, allyKnight, allySniper, enemyAssault, enemy...]
-    public Sprite[] warriorIcons;
+    public Sprite[] unitsIcons;
     
-    public static Sprite[] StaticWarriorIcons;
-    public static Dictionary<int, List<Warrior>> Squads;
+    public static Sprite[] StaticUnitsIcons;
+    public static Dictionary<int, List<Unit>> Squads;
     
     private static LineRenderer _lineRenderer;
     private static int _previousLevel;
@@ -25,7 +25,7 @@ public class SquadsManager : MonoBehaviour
     {
         CurrentSquad = 0;
         _lineRenderer = GetComponent<LineRenderer>();
-        StaticWarriorIcons = warriorIcons;
+        StaticUnitsIcons = unitsIcons;
         _squadsLocation = new Dictionary<int, int>
         {
             {0, 0},
@@ -108,53 +108,53 @@ public class SquadsManager : MonoBehaviour
         }
     }
 
-    private void UpdateSquadPopup(Transform popupObj, List<Warrior> squad)
+    private void UpdateSquadPopup(Transform popupObj, List<Unit> squad)
     {
         for (var i = 0; i < popupObj.childCount; i++)
         {
-            var warrior = popupObj.Find(i.ToString());
+            var unitCard = popupObj.Find(i.ToString());
             
-            var icon = warrior.Find("ImageContainer").Find("Icon").GetComponent<Image>();
+            var icon = unitCard.Find("ImageContainer").Find("Icon").GetComponent<Image>();
             icon.sprite = squad[i].Sprite;
             
-            var name = warrior.Find("NameContainer").Find("Name").GetComponent<Text>();
+            var name = unitCard.Find("NameContainer").Find("Name").GetComponent<Text>();
             name.text = squad[i].Name;
             
-            var maintenancePrice = warrior.Find("Stats").Find("Price").Find("Stat").GetComponent<Text>();
+            var maintenancePrice = unitCard.Find("Stats").Find("Price").Find("Stat").GetComponent<Text>();
             maintenancePrice.text = squad[i].MaintenancePrice.ToString();
             
-            var health = warrior.Find("Stats").Find("Health").Find("Stat").GetComponent<Text>();
+            var health = unitCard.Find("Stats").Find("Health").Find("Stat").GetComponent<Text>();
             health.text = squad[i].Health.ToString();
             
-            var damage = warrior.Find("Stats").Find("Damage").Find("Stat").GetComponent<Text>();
+            var damage = unitCard.Find("Stats").Find("Damage").Find("Stat").GetComponent<Text>();
             damage.text = squad[i].Damage.ToString();
             
-            var defense = warrior.Find("Stats").Find("Defense").Find("Stat").GetComponent<Text>();
+            var defense = unitCard.Find("Stats").Find("Defense").Find("Stat").GetComponent<Text>();
             defense.text = squad[i].Armor.ToString();
             
-            var dodge = warrior.Find("Stats").Find("Dodge").Find("Stat").GetComponent<Text>();
+            var dodge = unitCard.Find("Stats").Find("Dodge").Find("Stat").GetComponent<Text>();
             dodge.text = squad[i].DodgeChance*100 + " %";
             
-            var accuracy = warrior.Find("Stats").Find("Accuracy").Find("Stat").GetComponent<Text>();
+            var accuracy = unitCard.Find("Stats").Find("Accuracy").Find("Stat").GetComponent<Text>();
             accuracy.text = squad[i].Accuracy*100 + " %";
         }
     }
 
     private static void InitSquads()
     {
-        Squads = new Dictionary<int, List<Warrior>>
+        Squads = new Dictionary<int, List<Unit>>
         {
-            [0] = new List<Warrior>
+            [0] = new List<Unit>
             {
-                Warrior.CreateInstance("Убийца нечисти",  25, 24, 70, 12, 0.1, 0.85, StaticWarriorIcons[0]),
-                Warrior.CreateInstance("Чебупицца", 8, 10, 40, 6, 0.02, 0.8, StaticWarriorIcons[1]),
-                Warrior.CreateInstance("Бульмени", 5, 8, 35, 5, 0.1, 0.7, StaticWarriorIcons[2])
+                Unit.CreateInstance("Убийца нечисти",  25, 24, 70, 12, 0.1, 0.85, StaticUnitsIcons[0]),
+                Unit.CreateInstance("Чебупицца", 8, 10, 40, 6, 0.02, 0.8, StaticUnitsIcons[1]),
+                Unit.CreateInstance("Бульмени", 5, 8, 35, 5, 0.1, 0.7, StaticUnitsIcons[2])
             },
-            [1] = new List<Warrior>
+            [1] = new List<Unit>
             {
-                Warrior.CreateInstance("Рекрутер", 2, 2, 12, 1, 0.01, 0.2, StaticWarriorIcons[2]),
-                Warrior.CreateInstance("Ветеран", 600, 160, 560, 45, 0.021, 0.92, StaticWarriorIcons[2]),
-                Warrior.CreateInstance("Мужик", 60, 47, 140, 18, 0.13, 0.85, StaticWarriorIcons[1])
+                Unit.CreateInstance("Рекрутер", 2, 2, 12, 1, 0.01, 0.2, StaticUnitsIcons[2]),
+                Unit.CreateInstance("Ветеран", 600, 160, 560, 45, 0.021, 0.92, StaticUnitsIcons[2]),
+                Unit.CreateInstance("Мужик", 60, 47, 140, 18, 0.13, 0.85, StaticUnitsIcons[1])
             }
         };
     }
@@ -170,9 +170,9 @@ public class SquadsManager : MonoBehaviour
     
     private void SetListeners()
     {
-        foreach (Transform squadBttn in squadsPanel.transform)
+        foreach (Transform squadButton in squadsPanel.transform)
         {
-            squadBttn.GetComponent<Button>().onClick.AddListener(OnSquadClick);
+            squadButton.GetComponent<Button>().onClick.AddListener(OnSquadClick);
         }
     }
 

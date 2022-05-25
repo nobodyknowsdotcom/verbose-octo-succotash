@@ -10,13 +10,14 @@ public class Battle : MonoBehaviour
 {
     [SerializeField] private GameObject cellsParent;
     [SerializeField] private GameObject cellPrefab;
-    [SerializeField] private GameObject warriorPrefab;
-    [SerializeField] private GameObject currentWarriorCard;
+    [SerializeField] private GameObject unitPrefab;
+    [SerializeField] private GameObject currentUnitCard;
+    [SerializeField] private GameObject abilitiesPanel;
 
-    private static Dictionary<int, List<Warrior>> _squads;
-    private static Dictionary<GameObject, Warrior> _warriorsPositions;
-    private List<Warrior> m_EnemySquad;
-    private Warrior m_CurrentWarrior;
+    private static Dictionary<int, List<Unit>> _squads;
+    private static Dictionary<GameObject, Unit> _unitsPositions;
+    private List<Unit> m_EnemySquad;
+    private Unit m_CurrentUnit;
     
     private GameObject[,] m_CellsGrid;
     private GameObject m_CurrentCell;
@@ -30,7 +31,7 @@ public class Battle : MonoBehaviour
 
     public void Awake()
     {
-        _warriorsPositions = new Dictionary<GameObject, Warrior>();
+        _unitsPositions = new Dictionary<GameObject, Unit>();
         m_Width = 8;
         m_Height = 8;
         
@@ -41,8 +42,8 @@ public class Battle : MonoBehaviour
     public void Start()
     {
         _squads = SquadsManager.Squads;
-        m_CurrentWarrior = _squads[SquadsManager.CurrentSquad][0];
-        InitWarriorsOnField();
+        m_CurrentUnit = _squads[SquadsManager.CurrentSquad][0];
+        InitUnitsOnField();
     }
 
     public void OnCellCLick()
@@ -63,23 +64,32 @@ public class Battle : MonoBehaviour
             }
             else
             {
-                if (_warriorsPositions.Keys.Contains(selectedCell))
+                if (_unitsPositions.Keys.Contains(selectedCell))
                 {
-                    m_CurrentWarrior = _warriorsPositions[selectedCell];
+                    m_CurrentUnit = _unitsPositions[selectedCell];
                     m_CurrentCell = selectedCell;
                 }
             }
         }
 
         UpdateCells();
-        UpdateCurrentWarriorCard();
+        UpdateCurrentUnitCard();
     }
     
-    private void UpdateCurrentWarriorCard()
+    private void UpdateCells()
     {
-        currentWarriorCard.transform.Find("Icon").GetComponent<Image>().sprite = m_CurrentWarrior.Sprite;
-        currentWarriorCard.transform.Find("Health").GetChild(0).GetComponent<Text>().text = m_CurrentWarrior.Health.ToString();
-        currentWarriorCard.transform.Find("Armor").GetChild(0).GetComponent<Text>().text = m_CurrentWarrior.Armor.ToString();
+        foreach (var cell in m_CellsGrid)
+        {
+            cell.transform.Find("OnActive").gameObject.SetActive(cell == m_CurrentCell);
+            cell.transform.Find("OnTarget").gameObject.SetActive(cell == m_TargetCell);
+        }
+    }
+    
+    private void UpdateCurrentUnitCard()
+    {
+        currentUnitCard.transform.Find("Icon").GetComponent<Image>().sprite = m_CurrentUnit.Sprite;
+        currentUnitCard.transform.Find("Health").GetChild(0).GetComponent<Text>().text = m_CurrentUnit.Health.ToString();
+        currentUnitCard.transform.Find("Armor").GetChild(0).GetComponent<Text>().text = m_CurrentUnit.Armor.ToString();
     }
     
     private void DrawCells()
@@ -108,16 +118,7 @@ public class Battle : MonoBehaviour
         }
     }
 
-    private void UpdateCells()
-    {
-        foreach (var cell in m_CellsGrid)
-        {
-            cell.transform.Find("OnActive").gameObject.SetActive(cell == m_CurrentCell);
-            cell.transform.Find("OnTarget").gameObject.SetActive(cell == m_TargetCell);
-        }
-    }
-
-    private void InitWarriorsOnField()
+    private void InitUnitsOnField()
     {
         var exitPosition = new Point(0, 7);
         var allyPositions = GetRandomPointsArray(3, new Point(0,3), new Point(4, 7), new List<Point>{exitPosition});
@@ -128,32 +129,32 @@ public class Battle : MonoBehaviour
 
         for (var i=0; i<_squads[SquadsManager.CurrentSquad].Count; i++)
         {
-            var allyPrefab = warriorPrefab;
+            var allyPrefab = unitPrefab;
             allyPrefab.transform.GetChild(0).GetComponent<Image>().sprite = _squads[SquadsManager.CurrentSquad][i].Sprite;
-            _warriorsPositions.Add(m_CellsGrid[allyPositions[i].X, allyPositions[i].Y], _squads[SquadsManager.CurrentSquad][i]);
-            SpawnWarrior(allyPrefab, allyPositions[i]);
+            _unitsPositions.Add(m_CellsGrid[allyPositions[i].X, allyPositions[i].Y], _squads[SquadsManager.CurrentSquad][i]);
+            SpawnUnit(allyPrefab, allyPositions[i]);
             
-            var enemyPrefab = warriorPrefab;
+            var enemyPrefab = unitPrefab;
             enemyPrefab.transform.GetChild(0).GetComponent<Image>().sprite = m_EnemySquad[i].Sprite;
-            _warriorsPositions.Add(m_CellsGrid[enemyPositions[i].X, enemyPositions[i].Y], m_EnemySquad[i]);
-            SpawnWarrior(enemyPrefab, enemyPositions[i]);
+            _unitsPositions.Add(m_CellsGrid[enemyPositions[i].X, enemyPositions[i].Y], m_EnemySquad[i]);
+            SpawnUnit(enemyPrefab, enemyPositions[i]);
         }
     }
 
-    private void SpawnWarrior(GameObject prefab, Point position)
+    private void SpawnUnit(GameObject prefab, Point position)
     {
-        var warrior = Instantiate(prefab,
+        var unit = Instantiate(prefab,
             m_CellsGrid[position.X, position.Y].transform.position, Quaternion.identity);
-        warrior.transform.SetParent(m_CellsGrid[position.X, position.Y].transform);
+        unit.transform.SetParent(m_CellsGrid[position.X, position.Y].transform);
     }
     
     public void OnMoveButton()
     {
-        var warrior = m_CurrentCell.transform.Find("Warrior(Clone)").gameObject;
+        var unit = m_CurrentCell.transform.Find("Unit(Clone)").gameObject;
         
-        _warriorsPositions[m_TargetCell] = m_CurrentWarrior;
-        _warriorsPositions.Remove(m_CurrentCell);
-        Move(warrior, m_TargetCell);
+        _unitsPositions[m_TargetCell] = m_CurrentUnit;
+        _unitsPositions.Remove(m_CurrentCell);
+        Move(unit, m_TargetCell);
 
         m_CurrentCell = m_TargetCell;
         m_TargetCell = null;
@@ -161,19 +162,19 @@ public class Battle : MonoBehaviour
         UpdateCells();
     }
     
-    private void Move(GameObject warrior, GameObject targetCell)
+    private void Move(GameObject unit, GameObject targetCell)
     {
-        warrior.transform.position = targetCell.transform.position;
-        warrior.transform.parent = targetCell.transform;
+        unit.transform.position = targetCell.transform.position;
+        unit.transform.parent = targetCell.transform;
     }
     
     private void InitEnemySquad()
     {
-        m_EnemySquad = new List<Warrior>
+        m_EnemySquad = new List<Unit>
         {
-            Warrior.CreateInstance("Супер монстр",  25, 24, 65, 12, 0.1, 0.7, SquadsManager.StaticWarriorIcons[3]),
-            Warrior.CreateInstance("Чудовище", 8, 10, 35, 6, 0.02, 0.7, SquadsManager.StaticWarriorIcons[4]),
-            Warrior.CreateInstance("Мясо",  5, 8, 20, 5, 0.1, 0.7, SquadsManager.StaticWarriorIcons[5])
+            Unit.CreateInstance("Супер монстр",  25, 24, 65, 12, 0.1, 0.7, SquadsManager.StaticUnitsIcons[3]),
+            Unit.CreateInstance("Чудовище", 8, 10, 35, 6, 0.02, 0.7, SquadsManager.StaticUnitsIcons[4]),
+            Unit.CreateInstance("Мясо",  5, 8, 20, 5, 0.1, 0.7, SquadsManager.StaticUnitsIcons[5])
         };
     }
     
