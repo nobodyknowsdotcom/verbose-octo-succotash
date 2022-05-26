@@ -16,18 +16,15 @@ public class SquadsManager : MonoBehaviour
     private static LineRenderer _lineRenderer;
     private static int _previousLevel;
     public static int CurrentSquad { get; set; }
+    public static Dictionary<int, bool> SquadsState;
     private static Dictionary<int, int> _squadsLocation;
-    private static Dictionary<int, bool> _squadsState;
 
     public void Awake()
     {
-        CurrentSquad = 0;
         _lineRenderer = GetComponent<LineRenderer>();
-        _squadsState = new Dictionary<int, bool>
-        {
-            {0, false},
-            {1, false}
-        }; 
+        
+        LoadCurrentSquad();
+        LoadSquadsState();
         LoadSquadsPosition();
 
         InitSquadsOnMap();
@@ -44,8 +41,15 @@ public class SquadsManager : MonoBehaviour
     {
         foreach (var squad in _squadsLocation)
         {
-            PlayerPrefs.SetString(squad.Key.ToString(), squad.Value.ToString());
+            PlayerPrefs.SetString("position"+squad.Key, squad.Value.ToString());
         }
+        
+        foreach (var squad in SquadsState)
+        {
+            PlayerPrefs.SetString("state"+squad.Key, squad.Value.ToString());
+        }
+        
+        PlayerPrefs.SetString("current_squad", CurrentSquad.ToString());
     }
     
     private void LoadSquadsPosition()
@@ -54,8 +58,8 @@ public class SquadsManager : MonoBehaviour
         {
             _squadsLocation = new Dictionary<int, int>
             {
-                {0, Int32.Parse(PlayerPrefs.GetString("0"))},
-                {1, Int32.Parse(PlayerPrefs.GetString("1"))}
+                {0, Int32.Parse(PlayerPrefs.GetString("position0"))},
+                {1, Int32.Parse(PlayerPrefs.GetString("position1"))}
             };
         }
         catch
@@ -65,6 +69,38 @@ public class SquadsManager : MonoBehaviour
                 {0, 0},
                 {1, 0}
             };
+        }
+    }
+
+    private void LoadSquadsState()
+    {
+        try
+        {
+            SquadsState = new Dictionary<int, bool>
+            {
+                {0, Boolean.Parse(PlayerPrefs.GetString("state0"))},
+                {1, Boolean.Parse(PlayerPrefs.GetString("state1"))}
+            };
+        }
+        catch
+        {
+            SquadsState = new Dictionary<int, bool>
+            {
+                {0, false},
+                {1, false}
+            };
+        }
+    }
+
+    private void LoadCurrentSquad()
+    {
+        try
+        {
+            CurrentSquad = Int32.Parse(PlayerPrefs.GetString("current_squad"));
+        }
+        catch
+        {
+            CurrentSquad = 0;
         }
     }
 
@@ -113,19 +149,19 @@ public class SquadsManager : MonoBehaviour
         _squadsLocation[index] = levelIndex;
         if (isRollback)
         {
-            _squadsState[CurrentSquad] = false;
+            SquadsState[CurrentSquad] = false;
         }
         else
         {
-            _squadsState[CurrentSquad] = true;
+            SquadsState[CurrentSquad] = true;
         }
     }
     
     public static void RefreshSquadsState()
     {
-        for(var i=0; i<_squadsState.Count; i++)
+        for(var i=0; i<SquadsState.Count; i++)
         {
-            _squadsState[i] = false;
+            SquadsState[i] = false;
         }
     }
 
@@ -214,6 +250,6 @@ public class SquadsManager : MonoBehaviour
 
     public static Dictionary<int, bool> GetSquadsState()
     {
-        return _squadsState;
+        return SquadsState;
     }
 }

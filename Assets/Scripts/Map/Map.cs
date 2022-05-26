@@ -65,13 +65,13 @@ public class Map : MonoBehaviour
     
     public static void UpdateLevels(GameObject levelsParent)
     {
-        var drawingList = new List<GameObject>();
         var currentLevel = levelsParent.transform.GetChild(GetCurrentLevel()).gameObject;
         var currentLevelIndex = GetCurrentLevel();
+        var drawingList = new List<GameObject>();
 
         foreach (Transform level in levelsParent.transform)
         {
-            // if level is not current
+            // Если данный уровень не является текущим
             if (level.name != currentLevelIndex.ToString())
             {
                 level.Find("OnActive").gameObject.SetActive(false);
@@ -83,8 +83,8 @@ public class Map : MonoBehaviour
                 level.Find("Squad_"+SquadsManager.CurrentSquad).gameObject.SetActive(true);
             }
             
-            // if level available
-            if (_paths[currentLevelIndex].Contains(Int32.Parse(level.name)))
+            // Если на данный уровень возможно перейти с текущего и текущий отряд еще не ходил
+            if (_paths[currentLevelIndex].Contains(Int32.Parse(level.name)) && !SquadsManager.SquadsState[SquadsManager.CurrentSquad])
             {
                 level.Find("OnAvailable").gameObject.SetActive(true);
                 drawingList.Add(currentLevel);
