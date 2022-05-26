@@ -10,10 +10,11 @@ using Random = System.Random;
 public class Battle : MonoBehaviour
 {
     [SerializeField] private GameObject cellsParent;
-    [SerializeField] private GameObject cellPrefab;
-    [SerializeField] private GameObject unitPrefab;
     [SerializeField] private GameObject currentUnitCard;
     [SerializeField] private GameObject abilitiesPanel;
+    
+    [SerializeField] private GameObject cellPrefab;
+    [SerializeField] private GameObject unitPrefab;
 
     private static Dictionary<int, List<Unit>> _squads;
     private static Dictionary<GameObject, Unit> _unitsPositions;
@@ -24,8 +25,9 @@ public class Battle : MonoBehaviour
     private GameObject m_CurrentCell;
     private GameObject m_TargetCell;
     private GameObject m_ExitCell;
-    private int m_Width;
-    private int m_Height;
+
+    private const int Width = 8;
+    private const int Height = 8;
     private const float CellSize = 1.2f;
 
     private readonly Random m_Rnd = new Random();
@@ -33,9 +35,7 @@ public class Battle : MonoBehaviour
     public void Awake()
     {
         _unitsPositions = new Dictionary<GameObject, Unit>();
-        m_Width = 8;
-        m_Height = 8;
-        
+
         DrawCells();
         InitEnemySquad();
     }
@@ -45,19 +45,23 @@ public class Battle : MonoBehaviour
         _squads = SquadsManager.Squads;
         m_CurrentUnit = _squads[SquadsManager.CurrentSquad][0];
         InitUnitsOnField();
+
+        m_CurrentCell = _unitsPositions.FirstOrDefault(x => x.Value == m_CurrentUnit).Key;
+        UpdateCells();
+        UpdateCurrentUnitCard();
     }
 
     public void OnCellCLick()
     {
         var selectedCell = EventSystem.current.currentSelectedGameObject;
-        // set active targetCell if currentCell exists and not doubleclicked
+        // Если уже существует текущая клетка (подсвечивается зеленым), то назначаем targetCell
         if (m_CurrentCell != null && selectedCell != m_CurrentCell)
         {
             m_TargetCell = selectedCell;
         }
         else
         {
-            // if currentCell doubleclicked, it will reset current cell and target cells
+            // Если игрок выбрал текущаю клетку (произошел даблклик) -- обнуляем currentCell и targetCell 
             if (selectedCell == m_CurrentCell)
             {
                 m_CurrentCell = null;
@@ -65,7 +69,8 @@ public class Battle : MonoBehaviour
             }
             else
             {
-                if (_unitsPositions.Keys.Contains(selectedCell))
+                // Если текущая клетка ещё не назначена, то назначаем выбранную клетку текущей (если в ней находится союзный юнит)
+                if (_unitsPositions.Keys.Contains(selectedCell) && _unitsPositions[selectedCell].IsAlly)
                 {
                     m_CurrentUnit = _unitsPositions[selectedCell];
                     m_CurrentCell = selectedCell;
@@ -101,12 +106,12 @@ public class Battle : MonoBehaviour
             return;
         }
 
-        m_CellsGrid = new GameObject[m_Width, m_Height];
+        m_CellsGrid = new GameObject[Width, Height];
         var startPos = cellsParent.transform.position + new Vector3(CellSize/2, CellSize/2);
 
-        for (int i = 0; i < m_Height; i++)
+        for (int i = 0; i < Height; i++)
         {
-            for (int j = 0; j < m_Width; j++)
+            for (int j = 0; j < Width; j++)
             {
                 m_CellsGrid[i, j] = Instantiate(
                     cellPrefab, 
@@ -152,15 +157,29 @@ public class Battle : MonoBehaviour
     public void OnMoveButton()
     {
         var unit = m_CurrentCell.transform.Find("Unit(Clone)").gameObject;
-        
-        _unitsPositions[m_TargetCell] = m_CurrentUnit;
-        _unitsPositions.Remove(m_CurrentCell);
-        Move(unit, m_TargetCell);
 
-        m_CurrentCell = m_TargetCell;
-        m_TargetCell = null;
-        
-        UpdateCells();
+        // Если клетка, в которую хочет переместиться игрок не содержит в себе юнита
+        if (!_unitsPositions.ContainsKey(m_TargetCell))
+        {
+            _unitsPositions[m_TargetCell] = m_CurrentUnit;
+            _unitsPositions.Remove(m_CurrentCell);
+            Move(unit, m_TargetCell);
+            
+            m_CurrentCell = m_TargetCell;
+            m_TargetCell = null;
+            
+            UpdateCells();
+        }
+        // Если клетка, в которую хочет переместиться игрок -- клетка выхода с поля боя
+        else if (m_TargetCell == m_ExitCell)
+        {
+            Destroy(_unitsPositions[m_TargetCell]);
+            m_CurrentUnit = null;
+        }
+        else
+        {
+            Debug.Log("Ты не можешь поставить юнита на эту клетку!");
+        }
     }
     
     private void Move(GameObject unit, GameObject targetCell)
