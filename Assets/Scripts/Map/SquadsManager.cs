@@ -23,17 +23,13 @@ public class SquadsManager : MonoBehaviour
     {
         CurrentSquad = 0;
         _lineRenderer = GetComponent<LineRenderer>();
-        _squadsLocation = new Dictionary<int, int>
-        {
-            {0, 0},
-            {1, 0}
-        };
         _squadsState = new Dictionary<int, bool>
         {
             {0, false},
             {1, false}
-        };
-        
+        }; 
+        LoadSquadsPosition();
+
         InitSquadsOnMap();
         SetListeners();
         InitSquads();
@@ -42,6 +38,34 @@ public class SquadsManager : MonoBehaviour
     public void Start()
     {
         UpdateSquadsPanel();
+    }
+    
+    public void OnDestroy()
+    {
+        foreach (var squad in _squadsLocation)
+        {
+            PlayerPrefs.SetString(squad.Key.ToString(), squad.Value.ToString());
+        }
+    }
+    
+    private void LoadSquadsPosition()
+    {
+        try
+        {
+            _squadsLocation = new Dictionary<int, int>
+            {
+                {0, Int32.Parse(PlayerPrefs.GetString("0"))},
+                {1, Int32.Parse(PlayerPrefs.GetString("1"))}
+            };
+        }
+        catch
+        {
+            _squadsLocation = new Dictionary<int, int>
+            {
+                {0, 0},
+                {1, 0}
+            };
+        }
     }
 
     private void OnSquadClick()

@@ -35,7 +35,7 @@ public class Map : MonoBehaviour
         var firstLevel = levelsParent.transform.GetChild(0).gameObject;
         UpdateLevels(levelsParent);
     }
-    
+
     public void OnClick()
     {
         var level = EventSystem.current.currentSelectedGameObject;
