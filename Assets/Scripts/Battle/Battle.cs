@@ -106,8 +106,8 @@ public class Battle : MonoBehaviour
     {
         var unit = m_CurrentCell.transform.Find("Unit(Clone)").gameObject;
 
-        // Если клетка, в которую хочет переместиться игрок не содержит в себе юнита
-        if (!_unitsPositions.ContainsKey(m_TargetCell) && m_TargetCell != m_ExitCell)
+        // Если клетка, в которую хочет переместиться игрок не содержит в себе юнита и текущий юнит ещё не ходил
+        if (!_unitsPositions.ContainsKey(m_TargetCell) && m_TargetCell != m_ExitCell && !_unitsPositions[m_CurrentCell].IsMoved)
         {
             _unitsPositions[m_TargetCell] = m_CurrentUnit;
             _unitsPositions.Remove(m_CurrentCell);
@@ -115,6 +115,8 @@ public class Battle : MonoBehaviour
             
             m_CurrentCell = m_TargetCell;
             m_TargetCell = null;
+            
+            _unitsPositions[m_CurrentCell].Moved();
         }
         // Если клетка, в которую хочет переместиться игрок -- клетка выхода с поля боя
         else if (m_TargetCell == m_ExitCell)
@@ -129,7 +131,7 @@ public class Battle : MonoBehaviour
         }
         else
         {
-            Debug.Log("Ты не можешь поставить юнита на эту клетку!");
+            Debug.Log("Ты не можешь сходить туда!");
         }
 
         if (m_AllySquad.Count == 0)
@@ -213,6 +215,14 @@ public class Battle : MonoBehaviour
             Assault.CreateInstance("Чудовище", false, 8, 10, 35, 6, 0.02, 0.7),
             Sniper.CreateInstance("Мясо", false, 5, 8, 20, 5, 0.1, 0.7)
         };
+    }
+
+    public void EndTurn()
+    {
+        foreach (var unit in _unitsPositions.Values)
+        {
+            unit.IsMoved = false;
+        }
     }
 
     private void FillEnemyUnitsPanel()
