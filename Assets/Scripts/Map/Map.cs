@@ -23,12 +23,12 @@ public class Map : MonoBehaviour
         
         _paths = new Dictionary<int, List<int>>
         {
-            {0, new List<int>{1, 2, 3}},
-            {1, new List<int>{0, 2, 4}},
-            {2, new List<int>{0, 1, 4}},
-            {3, new List<int>{0, 5}},
-            {4, new List<int>{1, 2, 5, 6}},
-            {5, new List<int>{3, 6}},
+            {0, new List<int>{1, 2}},
+            {1, new List<int>{0, 2, 3}},
+            {2, new List<int>{0, 1, 3}},
+            {3, new List<int>{1, 2, 4}},
+            {4, new List<int>{6}},
+            {5, new List<int>{3, 4, 6}},
             {6, new List<int>{4, 5}}
         };
 
@@ -37,7 +37,6 @@ public class Map : MonoBehaviour
 
     public void Start()
     {
-        var firstLevel = levelsParent.transform.GetChild(0).gameObject;
         UpdateLevels(levelsParent);
     }
 
