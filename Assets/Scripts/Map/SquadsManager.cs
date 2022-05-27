@@ -118,7 +118,7 @@ public class SquadsManager : MonoBehaviour
         
         if (GetSquadsState()[CurrentSquad])
         {
-            Map.UpdateLevelsWithoutAviable(levelsParent, _lineRenderer);
+            Map.UpdateLevelsWithoutAvailable(levelsParent, _lineRenderer);
         }
         else
         {

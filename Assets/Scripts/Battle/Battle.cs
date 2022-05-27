@@ -1,4 +1,3 @@
-using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
@@ -14,9 +13,11 @@ public class Battle : MonoBehaviour
     [SerializeField] private GameObject cellsParent;
     [SerializeField] private GameObject currentUnitCard;
     [SerializeField] private GameObject abilitiesPanel;
+    [SerializeField] private GameObject enemyUnitsPanel;
     
     [SerializeField] private GameObject cellPrefab;
     [SerializeField] private GameObject unitPrefab;
+    [SerializeField] private GameObject enemyCardPrefab;
 
     private static Dictionary<GameObject, Unit> _unitsPositions;
     private List<Unit> m_AllySquad;
@@ -40,6 +41,7 @@ public class Battle : MonoBehaviour
 
         DrawCells();
         InitEnemySquad();
+        FillEnemyUnitsPanel();
     }
 
     public void Start()
@@ -211,6 +213,17 @@ public class Battle : MonoBehaviour
             Assault.CreateInstance("Чудовище", false, 8, 10, 35, 6, 0.02, 0.7),
             Sniper.CreateInstance("Мясо", false, 5, 8, 20, 5, 0.1, 0.7)
         };
+    }
+
+    private void FillEnemyUnitsPanel()
+    {
+        foreach (var unit in m_EnemySquad)
+        {
+            GameObject card = Instantiate(enemyCardPrefab, enemyUnitsPanel.transform.position, Quaternion.identity, enemyUnitsPanel.transform);
+            card.transform.Find("Icon").GetComponent<Image>().sprite = unit.Sprite;
+            card.transform.Find("Health").Find("Value").GetComponent<Text>().text = unit.Health.ToString();
+            card.transform.Find("Armor").Find("Value").GetComponent<Text>().text = unit.Armor.ToString();
+        }
     }
     
     private Dictionary<int, Point> GetRandomPointsArray(int len, Point start, Point end, List<Point> restrictedPoints)
