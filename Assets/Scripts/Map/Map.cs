@@ -4,20 +4,23 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
-public class LevelManager : MonoBehaviour
+public class Map : MonoBehaviour
 {
     [SerializeField] private GameObject levelsParent;
     [SerializeField] private GameObject popup;
-    [SerializeField] private GameObject stepText;
-    private static int _step;
+    [SerializeField] private GameObject turnText;
+    
+    private static int _turn;
+    
     private static LineRenderer _lineRenderer;
+    
     private static Dictionary<int, List<int>> _paths;
 
     public void Awake()
     {
-        _step = 1;
-        stepText.GetComponent<Text>().text = "Ход: " + _step;
+        LoadTurn();
         _lineRenderer = GetComponent<LineRenderer>();
+        
         _paths = new Dictionary<int, List<int>>
         {
             {0, new List<int>{1, 2, 3}},
@@ -26,8 +29,10 @@ public class LevelManager : MonoBehaviour
             {3, new List<int>{0, 5}},
             {4, new List<int>{1, 2, 5, 6}},
             {5, new List<int>{3, 6}},
-            {6, new List<int>{4, 5}},
+            {6, new List<int>{4, 5}}
         };
+
+        UpdateTurnText();
     }
 
     public void Start()
@@ -35,20 +40,37 @@ public class LevelManager : MonoBehaviour
         var firstLevel = levelsParent.transform.GetChild(0).gameObject;
         UpdateLevels(levelsParent);
     }
-    
+
+    public void OnDestroy()
+    {
+        PlayerPrefs.SetString("turn", _turn.ToString());
+    }
+
+    private void LoadTurn()
+    {
+        try
+        {
+            _turn = Int32.Parse(PlayerPrefs.GetString("turn"));
+        }
+        catch
+        {
+            _turn = 1;
+        }
+    }
+
     public void OnClick()
     {
         var level = EventSystem.current.currentSelectedGameObject;
         var currentLevelIndex = GetCurrentLevel();
-        var currentSquad = SquadsManager.GetCurrentSquad();
+        var currentSquad = SquadsManager.CurrentSquad;
         // if level is available from current level 
         if (_paths[currentLevelIndex].Contains(Int32.Parse(level.name)) && !SquadsManager.GetSquadsState()[currentSquad])
         {
-            SquadsManager.MoveSquad( SquadsManager.GetCurrentSquad(), Int32.Parse(level.name), false);
+            SquadsManager.MoveSquad( SquadsManager.CurrentSquad, Int32.Parse(level.name), false);
             // if squad moved to another level  
             if (SquadsManager.GetSquadsState()[currentSquad])
             {
-                UpdateLevelsWithoutAviable(levelsParent, _lineRenderer);
+                UpdateLevelsWithoutAvailable(levelsParent, _lineRenderer);
                 OpenPopup();
             }
             else
@@ -58,33 +80,33 @@ public class LevelManager : MonoBehaviour
         }
     }
 
-    public static int GetCurrentLevel()
+    private static int GetCurrentLevel()
     {
-        return SquadsManager.GetSquadsLocation()[SquadsManager.GetCurrentSquad()];
+        return SquadsManager.GetSquadsLocation()[SquadsManager.CurrentSquad];
     }
     
     public static void UpdateLevels(GameObject levelsParent)
     {
-        var drawingList = new List<GameObject>();
         var currentLevel = levelsParent.transform.GetChild(GetCurrentLevel()).gameObject;
         var currentLevelIndex = GetCurrentLevel();
+        var drawingList = new List<GameObject>();
 
         foreach (Transform level in levelsParent.transform)
         {
-            // if level is not current
+            // Если данный уровень не является текущим
             if (level.name != currentLevelIndex.ToString())
             {
                 level.Find("OnActive").gameObject.SetActive(false);
-                level.Find("Squad_"+SquadsManager.GetCurrentSquad()).gameObject.SetActive(false);
+                level.Find("Squad_"+SquadsManager.CurrentSquad).gameObject.SetActive(false);
             }
             else
             {
                 level.Find("OnActive").gameObject.SetActive(true);
-                level.Find("Squad_"+SquadsManager.GetCurrentSquad()).gameObject.SetActive(true);
+                level.Find("Squad_"+SquadsManager.CurrentSquad).gameObject.SetActive(true);
             }
             
-            // if level available
-            if (_paths[currentLevelIndex].Contains(Int32.Parse(level.name)))
+            // Если на данный уровень возможно перейти с текущего и текущий отряд еще не ходил
+            if (_paths[currentLevelIndex].Contains(Int32.Parse(level.name)) && !SquadsManager.SquadsState[SquadsManager.CurrentSquad])
             {
                 level.Find("OnAvailable").gameObject.SetActive(true);
                 drawingList.Add(currentLevel);
@@ -99,7 +121,7 @@ public class LevelManager : MonoBehaviour
         DrawLine(_lineRenderer, drawingList.ToArray());
     }
 
-    public static void UpdateLevelsWithoutAviable(GameObject parent, LineRenderer lineRenderer)
+    public static void UpdateLevelsWithoutAvailable(GameObject parent, LineRenderer lineRenderer)
     {
         var currentLevelIndex = GetCurrentLevel();
         lineRenderer.positionCount = 0;
@@ -110,31 +132,37 @@ public class LevelManager : MonoBehaviour
             if (level.name != currentLevelIndex.ToString())
             {
                 level.Find("OnActive").gameObject.SetActive(false);
-                level.Find("Squad_"+SquadsManager.GetCurrentSquad()).gameObject.SetActive(false);
+                level.Find("Squad_"+SquadsManager.CurrentSquad).gameObject.SetActive(false);
             }
             else
             {
                 level.Find("OnActive").gameObject.SetActive(true);
-                level.Find("Squad_"+SquadsManager.GetCurrentSquad()).gameObject.SetActive(true);
+                level.Find("Squad_"+SquadsManager.CurrentSquad).gameObject.SetActive(true);
             }
             level.Find("OnAvailable").gameObject.SetActive(false);
         }
     }
 
-    public void OpenPopup()
+    private void OpenPopup()
     {
         popup.SetActive(true);
     }
 
     public void EndStep()
     {
-        _step++;
-        stepText.GetComponent<Text>().text = "Ход: " + _step;
+        _turn++;
         SquadsManager.RefreshSquadsState();
+        
+        UpdateTurnText();
         UpdateLevels(levelsParent);
     }
 
-    public static void DrawLine(LineRenderer lineRenderer, params GameObject[] objectsList)
+    private void UpdateTurnText()
+    {
+        turnText.GetComponent<Text>().text = "Ход: " + _turn;
+    }
+
+    private static void DrawLine(LineRenderer lineRenderer, params GameObject[] objectsList)
     {
         lineRenderer.positionCount = objectsList.Length;
         for (int i = 0; i< objectsList.Length; i+=2)

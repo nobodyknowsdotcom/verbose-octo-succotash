@@ -9,10 +9,10 @@ public class PopupManager : MonoBehaviour
 
     public void CloseLevelPopup()
     {
-        var currentSquad = SquadsManager.GetCurrentSquad();
+        var currentSquad = SquadsManager.CurrentSquad;
         var squadsLocationBufer = SquadsManager.GetSquadsLocationBuffer();
         SquadsManager.MoveSquad(currentSquad, squadsLocationBufer, true);
-        LevelManager.UpdateLevels(levelsParent);
+        Map.UpdateLevels(levelsParent);
         onNewLevelPopup.SetActive(false);
     }
 
