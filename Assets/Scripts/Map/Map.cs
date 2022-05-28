@@ -57,6 +57,11 @@ public class Map : MonoBehaviour
         }
     }
 
+    public void DeletePlayerPrefs()
+    {
+        PlayerPrefs.DeleteAll();
+    }
+
     public void OnClick()
     {
         var level = EventSystem.current.currentSelectedGameObject;

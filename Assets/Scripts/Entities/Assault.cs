@@ -24,46 +24,23 @@ namespace Entities
             Health = (int)(Health * 1.2);
         }
 
-        public void Burst(Unit enemy)
+        public override void Ability1(Unit enemy)
         {
-            HealthCalc(1, 1, 0, 2, enemy);
+            enemy.Health = HealthCalc(1, 1, 0, 2, enemy);
+            IsUsedAbility = true;
         }
 
         public void GrenadeThrow(Unit[] enemies)
         {
             foreach(var enemy in enemies)
             {
-                HealthCalc(2, 1, 0, 1, enemy);
+                enemy.Health = HealthCalc(2, 1, 0, 1, enemy);
             }
         }
 
         public void LeadRain(Unit enemy)
         {
-            HealthCalc(1, 1, -0.15, 5, enemy);
-        }
-
-        private void HealthCalc(double coofDamage, int armCoofDamage, double coofAccuracy, int count, Unit enemy)
-        {
-            int damage = 0;
-
-            for (int i = 0; i < count; i++)
-            {
-                if (m_Random.NextDouble() <= (Accuracy + coofAccuracy) * (1 - enemy.DodgeChance)) 
-                    damage += (int) (Damage * coofDamage);
-            }
-
-            if (damage * armCoofDamage > enemy.Armor)
-            {
-                damage = (damage * armCoofDamage - enemy.Armor) / armCoofDamage;
-                enemy.Armor = 0;
-            }
-            else
-            {
-                enemy.Armor -= damage * armCoofDamage;
-                damage = 0;
-            }
-
-            enemy.Health = enemy.Health - damage > 0 ? enemy.Health - damage : 0;
+            enemy.Health = HealthCalc(1, 1, -0.15, 5, enemy);
         }
     }
 }

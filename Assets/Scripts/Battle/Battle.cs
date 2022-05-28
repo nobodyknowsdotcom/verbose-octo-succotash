@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
+using System.Security.Cryptography;
 using Entities;
 using UnityEngine;
 using UnityEngine.EventSystems;
@@ -59,7 +60,7 @@ public class Battle : MonoBehaviour
     {
         var selectedCell = EventSystem.current.currentSelectedGameObject;
         // Если уже существует текущая клетка (подсвечивается зеленым), то назначаем targetCell
-        if (m_CurrentCell != null && selectedCell != m_CurrentCell)
+        if (m_CurrentCell != null && selectedCell != m_CurrentCell && !(_unitsPositions[m_CurrentCell].IsUsedAbility & _unitsPositions[m_CurrentCell].IsMoved))
         {
             m_TargetCell = selectedCell;
         }
@@ -142,6 +143,22 @@ public class Battle : MonoBehaviour
         UpdateCells();
     }
 
+    public void OnAbility1Button()
+    {
+        if (_unitsPositions.ContainsKey(m_TargetCell) && !_unitsPositions[m_TargetCell].IsAlly && !_unitsPositions[m_CurrentCell].IsUsedAbility)
+        {
+            var unit = _unitsPositions[m_CurrentCell];
+            var enemyUnit = _unitsPositions[m_TargetCell];
+            unit.Ability1(enemyUnit);
+
+            m_TargetCell = null;
+            m_CurrentCell = null;
+            
+            FillEnemyUnitsPanel();
+            UpdateCells();
+        }
+    }
+
     private void InitUnitsOnField()
     {
         var exitPosition = new Point(0, 7);
@@ -221,21 +238,29 @@ public class Battle : MonoBehaviour
     {
         foreach (var unit in _unitsPositions.Values)
         {
-            unit.IsMoved = false;
+            unit.RefreshAbilitiesAndMoving();
+        }
+    }
+    private void FillEnemyUnitsPanel()
+    {
+        foreach (Transform child in enemyUnitsPanel.transform)
+        {
+            Destroy(child.gameObject);
+        }
+        
+        foreach (var unit in m_EnemySquad)
+        {
+            if (unit.Health > 0)
+            {
+                GameObject card = Instantiate(enemyCardPrefab, enemyUnitsPanel.transform.position, Quaternion.identity, enemyUnitsPanel.transform);
+                card.transform.Find("Icon").GetComponent<Image>().sprite = unit.Sprite;
+                card.transform.Find("Health").Find("Value").GetComponent<Text>().text = unit.Health.ToString();
+                card.transform.Find("Armor").Find("Value").GetComponent<Text>().text = unit.Armor.ToString();
+            }
+            
         }
     }
 
-    private void FillEnemyUnitsPanel()
-    {
-        foreach (var unit in m_EnemySquad)
-        {
-            GameObject card = Instantiate(enemyCardPrefab, enemyUnitsPanel.transform.position, Quaternion.identity, enemyUnitsPanel.transform);
-            card.transform.Find("Icon").GetComponent<Image>().sprite = unit.Sprite;
-            card.transform.Find("Health").Find("Value").GetComponent<Text>().text = unit.Health.ToString();
-            card.transform.Find("Armor").Find("Value").GetComponent<Text>().text = unit.Armor.ToString();
-        }
-    }
-    
     private Dictionary<int, Point> GetRandomPointsArray(int len, Point start, Point end, List<Point> restrictedPoints)
     {
         var result = new Dictionary<int, Point>();
