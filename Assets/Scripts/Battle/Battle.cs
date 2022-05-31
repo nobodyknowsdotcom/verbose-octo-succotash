@@ -165,6 +165,7 @@ public class Battle : MonoBehaviour
         var allyPositions = GetRandomPointsArray(3, new Point(0,3), new Point(4, 7), new List<Point>{exitPosition});
         var enemyPositions = GetRandomPointsArray(3, new Point(3,0), new Point(7, 4), allyPositions.Values.Append(exitPosition).ToList());
 
+        
         m_ExitCell = m_CellsGrid[exitPosition.X, exitPosition.Y];
         m_ExitCell.transform.Find("Exit").gameObject.SetActive(true);
 
@@ -228,9 +229,9 @@ public class Battle : MonoBehaviour
     {
         m_EnemySquad = new List<Unit>
         {
-            Swordsman.CreateInstance("Супер монстр", false,  25, 24, 65, 12, 0.1, 0.7),
-            Assault.CreateInstance("Чудовище", false, 8, 10, 35, 6, 0.02, 0.7),
-            Sniper.CreateInstance("Мясо", false, 5, 8, 20, 5, 0.1, 0.7)
+            Swordsman.CreateInstance(false,  25, 24, 65, 12, 0.1, 0.7),
+            Assault.CreateInstance(false, 8, 10, 35, 6, 0.02, 0.7),
+            Sniper.CreateInstance(false, 5, 8, 20, 5, 0.1, 0.7)
         };
     }
 

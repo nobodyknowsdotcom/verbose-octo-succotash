@@ -10,10 +10,11 @@ namespace Entities
         {
         }
         
-        public static Assault CreateInstance(string name, bool isAlly, int maintenancePrice, int damage, int health, int armor, double dodgeChance, double accuracy)
+        public static Assault CreateInstance(bool isAlly, int maintenancePrice, int damage, int health, int armor, double dodgeChance, double accuracy)
         {
             var sprite = Resources.Load<Sprite>(isAlly ? "Warriors/ally_assault" : "Warriors/enemy_assault");
             var movingRange = 3;
+            var name = "Штурмовик";
             return new Assault(name, isAlly, maintenancePrice, damage, health, armor, dodgeChance, accuracy, movingRange, sprite);
         }
 

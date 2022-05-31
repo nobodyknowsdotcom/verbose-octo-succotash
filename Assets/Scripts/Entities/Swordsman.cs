@@ -10,10 +10,11 @@ namespace Entities
         {
         }
         
-        public static Swordsman CreateInstance(string name, bool isAlly, int maintenancePrice, int damage, int health, int armor, double dodgeChance, double accuracy)
+        public static Swordsman CreateInstance(bool isAlly, int maintenancePrice, int damage, int health, int armor, double dodgeChance, double accuracy)
         {
             var sprite = Resources.Load<Sprite>(isAlly ? "Warriors/ally_knight" : "Warriors/enemy_knight");
             var movingRange = 4;
+            var name = "Мечник";
             return new Swordsman(name, isAlly, maintenancePrice, damage, health, armor, dodgeChance, accuracy, movingRange, sprite);
         }
 

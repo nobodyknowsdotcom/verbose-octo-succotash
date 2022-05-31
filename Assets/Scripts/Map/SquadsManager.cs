@@ -203,15 +203,15 @@ public class SquadsManager : MonoBehaviour
         {
             [0] = new List<Unit>
             {
-                Assault.CreateInstance("Убийца нечисти", true, 25, 24, 70, 12, 0.1, 0.85),
-                Assault.CreateInstance("Чебупицца", true,  8, 15, 40, 6, 0.02, 0.8),
-                Sniper.CreateInstance("Бульмени", true, 5, 26, 35, 5, 0.1, 0.7)
+                Assault.CreateInstance(true, 25, 24, 70, 12, 0.1, 0.85),
+                Assault.CreateInstance(true,  8, 15, 40, 6, 0.02, 0.8),
+                Sniper.CreateInstance(true, 5, 26, 35, 5, 0.1, 0.7)
             },
             [1] = new List<Unit>
             {
-                Swordsman.CreateInstance("Рекрутер", true, 2, 20, 12, 1, 0.01, 0.2),
-                Sniper.CreateInstance("Ветеран", true, 90, 80, 560, 45, 0.021, 0.92),
-                Swordsman.CreateInstance("Мужик", true, 60, 47, 140, 18, 0.13, 0.85)
+                Swordsman.CreateInstance(true, 2, 20, 12, 1, 0.01, 0.2),
+                Sniper.CreateInstance(true, 90, 80, 560, 45, 0.021, 0.92),
+                Swordsman.CreateInstance(true, 60, 47, 140, 18, 0.13, 0.85)
             }
         };
     }

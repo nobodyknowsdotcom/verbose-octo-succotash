@@ -10,10 +10,11 @@ namespace Entities
         {
         }
 
-        public static Sniper CreateInstance(string name, bool isAlly, int maintenancePrice, int damage, int health, int armor, double dodgeChance, double accuracy)
+        public static Sniper CreateInstance(bool isAlly, int maintenancePrice, int damage, int health, int armor, double dodgeChance, double accuracy)
         {
             var sprite = Resources.Load<Sprite>(isAlly ? "Warriors/ally_sniper" : "Warriors/enemy_sniper");
             var movingRange = 3;
+            var name = "Снайпер";
             return new Sniper(name, isAlly, maintenancePrice, damage, health, armor, dodgeChance, accuracy, movingRange, sprite);
         }
 

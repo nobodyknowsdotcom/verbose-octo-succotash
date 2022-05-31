@@ -17,6 +17,7 @@ public class Unit : MonoBehaviour
     private int AttackRange { get; set; }
     public int MovingRange { get; set; }
 
+    public GameObject gameObject { get; set; }
     public Sprite Sprite { get; set; }
 
     protected Unit(string name, bool isAlly, int maintenancePrice, int damage, int health, int armor, double dodgeChance, double accuracy, int movingRange, Sprite sprite)
