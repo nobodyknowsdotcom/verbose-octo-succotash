@@ -72,15 +72,7 @@ public class Map : MonoBehaviour
         {
             SquadsManager.MoveSquad( SquadsManager.CurrentSquad, Int32.Parse(level.name), false);
             // if squad moved to another level  
-            if (SquadsManager.GetSquadsState()[currentSquad])
-            {
-                UpdateLevelsWithoutAvailable(levelsParent, _lineRenderer);
-                OpenPopup();
-            }
-            else
-            {
-                UpdateLevels(levelsParent);
-            }
+            UpdateLevels(levelsParent);
         }
     }
 
@@ -147,7 +139,7 @@ public class Map : MonoBehaviour
         }
     }
 
-    private void OpenPopup()
+    public void OpenPopup()
     {
         popup.SetActive(true);
     }
