@@ -16,8 +16,6 @@ public class Unit : MonoBehaviour
     public double Accuracy { get;}
     private int AttackRange { get; set; }
     public int MovingRange { get; set; }
-
-    public GameObject gameObject { get; set; }
     public Sprite Sprite { get; set; }
 
     protected Unit(string name, bool isAlly, int maintenancePrice, int damage, int health, int armor, double dodgeChance, double accuracy, int movingRange, Sprite sprite)
@@ -64,8 +62,8 @@ public class Unit : MonoBehaviour
     {
         Debug.Log("This is ability1!");
     }
-    
-    public int HealthCalc(double coofDamage, int armCoofDamage, double coofAccuracy, int count, Unit enemy)
+
+    protected int HealthCalc(double coofDamage, int armCoofDamage, double coofAccuracy, int count, Unit enemy)
     {
         int damage = 0;
         var random = new System.Random();
@@ -78,7 +76,7 @@ public class Unit : MonoBehaviour
 
         if (damage * armCoofDamage > enemy.Armor)
         {
-            damage = (int) ((damage * armCoofDamage - enemy.Armor) / armCoofDamage);
+            damage = (damage * armCoofDamage - enemy.Armor) / armCoofDamage;
             enemy.Armor = 0;
         }
         else

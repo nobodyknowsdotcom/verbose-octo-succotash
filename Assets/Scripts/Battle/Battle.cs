@@ -1,7 +1,6 @@
 using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
-using System.Security.Cryptography;
 using Entities;
 using UnityEngine;
 using UnityEngine.EventSystems;
@@ -35,23 +34,22 @@ public class Battle : MonoBehaviour
     private const float CellSize = 1.2f;
 
     private readonly Random m_Rnd = new Random();
-
+    
     public void Awake()
     {
         _unitsPositions = new Dictionary<GameObject, Unit>();
 
         DrawCells();
-        InitEnemySquad();
-        FillEnemyUnitsPanel();
     }
 
     public void Start()
     {
         m_AllySquad = SquadsManager.Squads[SquadsManager.CurrentSquad];
-        m_CurrentUnit = m_AllySquad[0];
+        
+        InitEnemySquad();
         InitUnitsOnField();
-
-        m_CurrentCell = _unitsPositions.FirstOrDefault(x => x.Value == m_CurrentUnit).Key;
+        UpdateEnemyUnitsPanel();
+        SwitchToNextUnit();
         UpdateCells();
         UpdateCurrentUnitCard();
     }
@@ -86,7 +84,7 @@ public class Battle : MonoBehaviour
         UpdateCells();
         UpdateCurrentUnitCard();
     }
-
+    
     private void UpdateCells()
     {
         foreach (var cell in m_CellsGrid)
@@ -94,8 +92,18 @@ public class Battle : MonoBehaviour
             cell.transform.Find("OnActive").gameObject.SetActive(cell == m_CurrentCell);
             cell.transform.Find("OnTarget").gameObject.SetActive(cell == m_TargetCell);
         }
+
+        if (m_AllySquad.Count == 0 || m_EnemySquad.Count == 0)
+        {
+            SceneManager.LoadScene("Map");
+        }
+
+        foreach (Transform child in abilitiesPanel.transform)
+        {
+            child.gameObject.SetActive(m_CurrentCell != null);
+        }
     }
-    
+
     private void UpdateCurrentUnitCard()
     {
         currentUnitCard.transform.Find("Icon").GetComponent<Image>().sprite = m_CurrentUnit.Sprite;
@@ -126,36 +134,68 @@ public class Battle : MonoBehaviour
             m_AllySquad.Remove(_unitsPositions[m_CurrentCell]);
             _unitsPositions.Remove(m_CurrentCell);
 
-            m_CurrentUnit = _unitsPositions.FirstOrDefault(x => x.Value.IsAlly).Value;
-            m_CurrentCell = _unitsPositions.FirstOrDefault(x => x.Value == m_CurrentUnit).Key;
-            m_TargetCell = null;
+            SwitchToNextUnit();
         }
         else
         {
             Debug.Log("Ты не можешь сходить туда!");
         }
 
-        if (m_AllySquad.Count == 0)
-        {
-            SceneManager.LoadScene("Map");
-        }
-        
         UpdateCells();
+        UpdateAvailableActions();
     }
 
-    public void OnAbility1Button()
+    private void SwitchToNextUnit()
     {
+        m_CurrentUnit = _unitsPositions.FirstOrDefault(x => x.Value.IsAlly && (!x.Value.IsUsedAbility || !x.Value.IsUsedAbility)).Value;
+        m_CurrentCell = _unitsPositions.FirstOrDefault(x => x.Value == m_CurrentUnit).Key;
+        m_TargetCell = null;
+    }
+
+    public void FirstAbilityButton()
+    { 
         if (_unitsPositions.ContainsKey(m_TargetCell) && !_unitsPositions[m_TargetCell].IsAlly && !_unitsPositions[m_CurrentCell].IsUsedAbility)
         {
-            var unit = _unitsPositions[m_CurrentCell];
-            var enemyUnit = _unitsPositions[m_TargetCell];
-            unit.Ability1(enemyUnit);
+            m_CurrentUnit.Ability1(_unitsPositions[m_TargetCell]);
+            Debug.Log("You hit " + _unitsPositions[m_TargetCell].Name);
+
+            if (_unitsPositions[m_TargetCell].Health <= 0)
+            {
+                Destroy(m_TargetCell.transform.Find("Unit(Clone)").gameObject);
+                
+                m_EnemySquad.Remove(_unitsPositions[m_TargetCell]);
+                _unitsPositions.Remove(m_TargetCell);
+            }
 
             m_TargetCell = null;
             m_CurrentCell = null;
             
-            FillEnemyUnitsPanel();
+            SwitchToNextUnit();
+            UpdateEnemyUnitsPanel();
             UpdateCells();
+            UpdateAvailableActions();
+        }
+    }
+
+    private void UpdateAvailableActions()
+    {
+        abilitiesPanel.transform.GetChild(1).GetComponent<Button>().enabled = !m_CurrentUnit.IsMoved;
+        abilitiesPanel.transform.Find("ActiveAbilities").GetChild(0).GetComponent<Button>().enabled = !m_CurrentUnit.IsUsedAbility;
+    }
+    
+    private void UpdateEnemyUnitsPanel()
+    {
+        foreach (Transform child in enemyUnitsPanel.transform)
+        {
+            Destroy(child.gameObject);
+        }
+        
+        foreach (var unit in m_EnemySquad)
+        {
+            GameObject card = Instantiate(enemyCardPrefab, enemyUnitsPanel.transform.position, Quaternion.identity, enemyUnitsPanel.transform);
+            card.transform.Find("Icon").GetComponent<Image>().sprite = unit.Sprite;
+            card.transform.Find("Health").Find("Value").GetComponent<Text>().text = unit.Health.ToString();
+            card.transform.Find("Armor").Find("Value").GetComponent<Text>().text = unit.Armor.ToString();
         }
     }
 
@@ -241,28 +281,12 @@ public class Battle : MonoBehaviour
         {
             unit.RefreshAbilitiesAndMoving();
         }
-    }
-    private void FillEnemyUnitsPanel()
-    {
-        foreach (Transform child in enemyUnitsPanel.transform)
-        {
-            Destroy(child.gameObject);
-        }
         
-        foreach (var unit in m_EnemySquad)
-        {
-            if (unit.Health > 0)
-            {
-                GameObject card = Instantiate(enemyCardPrefab, enemyUnitsPanel.transform.position, Quaternion.identity, enemyUnitsPanel.transform);
-                card.transform.Find("Icon").GetComponent<Image>().sprite = unit.Sprite;
-                card.transform.Find("Health").Find("Value").GetComponent<Text>().text = unit.Health.ToString();
-                card.transform.Find("Armor").Find("Value").GetComponent<Text>().text = unit.Armor.ToString();
-            }
-            
-        }
+        SwitchToNextUnit();
+        UpdateAvailableActions();
     }
 
-    private Dictionary<int, Point> GetRandomPointsArray(int len, Point start, Point end, List<Point> restrictedPoints)
+    private Dictionary<int, Point> GetRandomPointsArray(int len, Point start, Point end, ICollection<Point> restrictedPoints)
     {
         var result = new Dictionary<int, Point>();
 
@@ -280,5 +304,4 @@ public class Battle : MonoBehaviour
 
         return result;
     }
-
 }
