@@ -3,8 +3,50 @@
   <component name="ChangeListManager">
     <list default="true" id="0b3f2042-8aef-4295-9e71-03ff8180e52d" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/.idea.verbose-octo-succotash/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.verbose-octo-succotash/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Assets/Fonts/NunitoSans-Black.ttf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Assets/Fonts/NunitoSans-Black.ttf.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Assets/Fonts/NunitoSans-BlackItalic.ttf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Assets/Fonts/NunitoSans-BlackItalic.ttf.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Assets/Fonts/NunitoSans-Bold.ttf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Assets/Fonts/NunitoSans-Bold.ttf.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Assets/Fonts/NunitoSans-BoldItalic.ttf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Assets/Fonts/NunitoSans-BoldItalic.ttf.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Assets/Fonts/NunitoSans-ExtraBold.ttf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Assets/Fonts/NunitoSans-ExtraBold.ttf.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Assets/Fonts/NunitoSans-ExtraBoldItalic.ttf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Assets/Fonts/NunitoSans-ExtraBoldItalic.ttf.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Assets/Fonts/NunitoSans-ExtraLight.ttf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Assets/Fonts/NunitoSans-ExtraLight.ttf.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Assets/Fonts/NunitoSans-ExtraLightItalic.ttf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Assets/Fonts/NunitoSans-ExtraLightItalic.ttf.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Assets/Fonts/NunitoSans-Italic.ttf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Assets/Fonts/NunitoSans-Italic.ttf.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Assets/Fonts/NunitoSans-Light.ttf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Assets/Fonts/NunitoSans-Light.ttf.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Assets/Fonts/NunitoSans-LightItalic.ttf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Assets/Fonts/NunitoSans-LightItalic.ttf.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Assets/Fonts/NunitoSans-SemiBold.ttf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Assets/Fonts/NunitoSans-SemiBold.ttf.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Assets/Fonts/NunitoSans-SemiBoldItalic.ttf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Assets/Fonts/NunitoSans-SemiBoldItalic.ttf.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Assets/Fonts/RobotoCondensed-Bold.ttf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Assets/Fonts/RobotoCondensed-Bold.ttf.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Assets/Fonts/RobotoCondensed-BoldItalic.ttf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Assets/Fonts/RobotoCondensed-BoldItalic.ttf.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Assets/Fonts/RobotoCondensed-Italic.ttf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Assets/Fonts/RobotoCondensed-Italic.ttf.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Assets/Fonts/RobotoCondensed-Light.ttf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Assets/Fonts/RobotoCondensed-Light.ttf.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Assets/Fonts/RobotoCondensed-LightItalic.ttf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Assets/Fonts/RobotoCondensed-LightItalic.ttf.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Assets/Fonts/RobotoCondensed-Regular.ttf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Assets/Fonts/RobotoCondensed-Regular.ttf.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Prefabs/Tile.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Prefabs/Tile.prefab" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Prefabs/Unit.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Prefabs/Unit.prefab" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/Scenes/Map.unity" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scenes/Map.unity" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Map/Map.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Map/Map.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Battle/Battle.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Battle/Battle.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ProjectSettings/ProjectSettings.asset" beforeDir="false" afterPath="$PROJECT_DIR$/ProjectSettings/ProjectSettings.asset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ProjectSettings/TimelineSettings.asset" beforeDir="false" afterPath="$PROJECT_DIR$/ProjectSettings/TimelineSettings.asset" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -41,8 +83,8 @@
       <option value="$PROJECT_DIR$/Assets/Scripts/Map/SquadsManager.cs" />
       <option value="$PROJECT_DIR$/Assets/Scripts/Entities/Sniper.cs" />
       <option value="$PROJECT_DIR$/Assets/Scripts/Entities/Unit.cs" />
-      <option value="$PROJECT_DIR$/Assets/Scripts/Battle/Battle.cs" />
       <option value="$PROJECT_DIR$/Assets/Scripts/Map/Map.cs" />
+      <option value="$PROJECT_DIR$/Assets/Scripts/Battle/Battle.cs" />
     </changedPaths>
   </component>
   <component name="ProjectId" id="28Swb6SCp9JQooodyj6MSMtxZfz" />
@@ -152,7 +194,8 @@
       <workItem from="1653984665217" duration="2192000" />
       <workItem from="1653996429305" duration="5532000" />
       <workItem from="1654063129307" duration="4478000" />
-      <workItem from="1654085017790" duration="5485000" />
+      <workItem from="1654085017790" duration="6472000" />
+      <workItem from="1654109960948" duration="1156000" />
     </task>
     <servers />
   </component>

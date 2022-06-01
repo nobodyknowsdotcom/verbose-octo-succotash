@@ -31,12 +31,13 @@ public class Battle : MonoBehaviour
 
     private const int Width = 8;
     private const int Height = 8;
-    private const float CellSize = 1.2f;
 
     private readonly Random m_Rnd = new Random();
     
     public void Awake()
     {
+        var rectPrefab = cellPrefab.transform as RectTransform;
+        rectPrefab.sizeDelta = new Vector2 (1.2f * 1080/Screen.height, 1.2f * 1080/Screen.height);
         _unitsPositions = new Dictionary<GameObject, Unit>();
 
         DrawCells();
@@ -241,8 +242,11 @@ public class Battle : MonoBehaviour
             return;
         }
 
+        var rectPrefab = (RectTransform) cellPrefab.transform;
+        var cellSize = rectPrefab.rect.width;
+        
         m_CellsGrid = new GameObject[Width, Height];
-        var startPos = cellsParent.transform.position + new Vector3(CellSize/2, CellSize/2);
+        var startPos = cellsParent.transform.position + new Vector3(cellSize/2, cellSize/2);
 
         for (int i = 0; i < Height; i++)
         {
@@ -250,7 +254,7 @@ public class Battle : MonoBehaviour
             {
                 m_CellsGrid[i, j] = Instantiate(
                     cellPrefab, 
-                    startPos + new Vector3(i * CellSize, j * CellSize, 0),
+                    startPos + new Vector3(i * cellSize, j * cellSize, 0),
                     Quaternion.identity);
                 m_CellsGrid[i, j].transform.SetParent(cellsParent.transform);
                 m_CellsGrid[i, j].gameObject.name = i + "_" + j;
