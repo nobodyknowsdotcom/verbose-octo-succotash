@@ -6,16 +6,23 @@ namespace Entities
     public class Assault : Unit
     {
         private readonly Random m_Random = new Random();
-        protected Assault(string name, bool isAlly, int maintenancePrice, int damage, int health, int armor, double dodgeChance, double accuracy, int movingRange, Sprite sprite) : base(name, isAlly, maintenancePrice, damage, health, armor, dodgeChance, accuracy, movingRange, sprite)
+        protected Assault(string name, bool isAlly, int buyPrice,  int maintenancePrice, int damage, int health, int armor, double dodgeChance, double accuracy,Sprite sprite) : base(name, isAlly, buyPrice, maintenancePrice, damage, health, armor, dodgeChance, accuracy, sprite)
         {
         }
         
-        public static Assault CreateInstance(bool isAlly, int maintenancePrice, int damage, int health, int armor, double dodgeChance, double accuracy)
+        public static Assault CreateInstance(bool isAlly)
         {
             var sprite = Resources.Load<Sprite>(isAlly ? "Warriors/ally_assault" : "Warriors/enemy_assault");
             var movingRange = 3;
             var name = "Штурмовик";
-            return new Assault(name, isAlly, maintenancePrice, damage, health, armor, dodgeChance, accuracy, movingRange, sprite);
+            var buyPrice = 100;
+            var maintenancePrice = 10;
+            var health = 75;
+            var damage = 20;
+            var armor = 100;
+            var dodge = 0.1;
+            var accuracy = 0.75;
+            return new Assault(name, isAlly, buyPrice, maintenancePrice, damage, health, armor, dodge, accuracy, sprite);
         }
 
         public void FirstAid()
@@ -27,7 +34,7 @@ namespace Entities
 
         public override void Ability1(Unit enemy)
         {
-            enemy.Health = HealthCalc(1, 1, 0, 2, enemy);
+            CalculateEnemyHealth(1, 1, 0, 2, enemy);
             IsUsedAbility = true;
         }
 
@@ -35,13 +42,13 @@ namespace Entities
         {
             foreach(var enemy in enemies)
             {
-                enemy.Health = HealthCalc(2, 1, 0, 1, enemy);
+                CalculateEnemyHealth(2, 1, 0, 1, enemy);
             }
         }
 
         public void LeadRain(Unit enemy)
         {
-            enemy.Health = HealthCalc(1, 1, -0.15, 5, enemy);
+            CalculateEnemyHealth(1, 1, -0.15, 5, enemy);
         }
     }
 }

@@ -5,36 +5,43 @@ public class Unit : MonoBehaviour
 {
     public string Name { get; }
     public int Level { get; set; } = 1;
-    public bool IsAlly { get; set; } = true;
-    public bool IsMoved { get; set; } = false;
-    public bool IsUsedAbility { get; set; } = false;
-    public int MaintenancePrice { get; }
+    public int MaintenancePrice { get; set; }
+    public int BuyPrice { get; }
     public int Damage { get; set; }
+    public int ConstHealth { get; set; }
     public int Health { get; set; }
     public int Armor { get; set; }
     public double DodgeChance { get; set; }
     public double Accuracy { get;}
+    
     private int AttackRange { get; set; }
     public int MovingRange { get; set; }
+    
+    public bool IsAlly { get; set; } = true;
+    public bool IsMoved { get; set; } = false;
+    public bool IsUsedAbility { get; set; } = false;
+    
     public Sprite Sprite { get; set; }
 
-    protected Unit(string name, bool isAlly, int maintenancePrice, int damage, int health, int armor, double dodgeChance, double accuracy, int movingRange, Sprite sprite)
+    protected Unit(string name, bool isAlly, int buyPrice, int maintenancePrice, int damage, int health, int armor, double dodgeChance, double accuracy, Sprite sprite)
     {
         Name = name;
+        BuyPrice = buyPrice;
         MaintenancePrice = maintenancePrice;
         Damage = damage;
+        ConstHealth = health;
         Health = health;
         Armor = armor;
         DodgeChance = dodgeChance;
         Accuracy = accuracy;
         Sprite = sprite;
+        BuyPrice = buyPrice;
         IsAlly = isAlly;
-        MovingRange = movingRange;
     }
 
-    public static Unit CreateInstance(string name, bool isAlly, int maintenancePrice, int damage, int health, int armor, double dodgeChance, double accuracy, int movingRange, Sprite sprite)
+    public static Unit CreateInstance(string name, bool isAlly, int buyPrice, int maintenancePrice, int damage, int health, int armor, double dodgeChance, double accuracy, Sprite sprite)
     {
-        return new Unit(name, isAlly, maintenancePrice, damage, health, armor, dodgeChance, accuracy, movingRange, sprite);
+        return new Unit(name, isAlly, buyPrice, maintenancePrice, damage, health, armor, dodgeChance, accuracy, sprite);
     }
 
     public void Moved()
@@ -63,7 +70,7 @@ public class Unit : MonoBehaviour
         Debug.Log("This is ability1!");
     }
 
-    protected int HealthCalc(double coofDamage, int armCoofDamage, double coofAccuracy, int count, Unit enemy)
+    protected void CalculateEnemyHealth(double coofDamage, int armCoofDamage, double coofAccuracy, int count, Unit enemy)
     {
         int damage = 0;
         var random = new System.Random();
@@ -85,6 +92,14 @@ public class Unit : MonoBehaviour
             damage = 0;
         }
 
-        return enemy.Health - damage > 0 ? enemy.Health - damage : 0;
+
+        if (enemy.Health - damage > 0)
+        {
+            enemy.Health -= damage;
+        }
+        else
+        {
+            enemy.Health = 0;
+        }
     }
 }
