@@ -37,8 +37,10 @@ public class Battle : MonoBehaviour
     
     public void Awake()
     {
-        var rectPrefab = cellPrefab.transform as RectTransform;
-        rectPrefab.sizeDelta = new Vector2 (1.2f * 1080/Screen.height, 1.2f * 1080/Screen.height);
+        var cellRect = cellPrefab.transform as RectTransform;
+        cellRect.sizeDelta = new Vector2 (1.2f * 1080/Screen.height, 1.2f * 1080/Screen.height);
+        var unitRect = unitPrefab.transform as RectTransform;
+        unitRect.sizeDelta = new Vector2 (1.19f * 1080/Screen.height, 1.19f * 1080/Screen.height);
         _unitsPositions = new Dictionary<GameObject, Unit>();
 
         DrawCells();
@@ -91,9 +93,15 @@ public class Battle : MonoBehaviour
     {
         foreach (var cell in m_CellsGrid)
         {
-            cell.transform.Find("OnActive").gameObject.SetActive(cell == m_CurrentCell);
+            if (_unitsPositions.ContainsKey(cell))
+            {
+                cell.transform.Find("Unit(Clone)").Find("OnActive").gameObject.SetActive(false);
+            }
+
             cell.transform.Find("OnTarget").gameObject.SetActive(cell == m_TargetCell);
         }
+        
+        m_CurrentCell.transform.Find("Unit(Clone)").Find("OnActive").gameObject.SetActive(true);
 
         if (m_AllySquad.Count == 0 || m_EnemySquad.Count == 0)
         {
