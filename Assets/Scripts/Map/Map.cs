@@ -18,7 +18,8 @@ public class Map : MonoBehaviour
 
     public void Awake()
     {
-        LoadTurn();
+        Application.targetFrameRate = 30;
+        LoadCurrentTurn();
         _lineRenderer = GetComponent<LineRenderer>();
         
         _paths = new Dictionary<int, List<int>>
@@ -45,7 +46,7 @@ public class Map : MonoBehaviour
         PlayerPrefs.SetString("turn", _turn.ToString());
     }
 
-    private void LoadTurn()
+    private void LoadCurrentTurn()
     {
         try
         {

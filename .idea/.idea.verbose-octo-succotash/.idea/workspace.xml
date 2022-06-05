@@ -2,54 +2,8 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="0b3f2042-8aef-4295-9e71-03ff8180e52d" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/.idea.verbose-octo-succotash/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.verbose-octo-succotash/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Assets.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Assets/Resources/Warriors/ally_assault.png" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Assets/Resources/Warriors/ally_assault.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Assets/Resources/Warriors/ally_assault.png.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Assets/Resources/Warriors/ally_assault.png.meta" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Assets/Resources/Warriors/ally_knight.png" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Assets/Resources/Warriors/ally_knight.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Assets/Resources/Warriors/ally_knight.png.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Assets/Resources/Warriors/ally_knight.png.meta" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Assets/Resources/Warriors/ally_sniper.png" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Assets/Resources/Warriors/ally_sniper.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Assets/Resources/Warriors/ally_sniper.png.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Assets/Resources/Warriors/ally_sniper.png.meta" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Assets/Resources/Warriors/enemy_assault.png" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Assets/Resources/Warriors/enemy_assault.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Assets/Resources/Warriors/enemy_assault.png.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Assets/Resources/Warriors/enemy_assault.png.meta" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Assets/Resources/Warriors/enemy_knight.png" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Assets/Resources/Warriors/enemy_knight.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Assets/Resources/Warriors/enemy_knight.png.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Assets/Resources/Warriors/enemy_knight.png.meta" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Assets/Resources/Warriors/enemy_sniper.png" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Assets/Resources/Warriors/enemy_sniper.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Assets/Resources/Warriors/enemy_sniper.png.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Assets/Resources/Warriors/enemy_sniper.png.meta" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Assets/Ui/Blur 2.0.mat" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Assets/Ui/Blur 2.0.mat.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Assets/Ui/Blur.shader" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Assets/Ui/Blur.shader.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Assets/Ui/MaskedUIBlur 1.shader" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Assets/Ui/MaskedUIBlur 1.shader.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Assets/Ui/Round 64px 1.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Assets/Ui/Round 64px 1.png.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Assets/Ui/ally0.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Assets/Ui/ally0.png.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Assets/Ui/back_button.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Assets/Ui/back_button.png.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Assets/Ui/endTurn.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Assets/Ui/endTurn.png.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Assets/Ui/enemy0.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Assets/Ui/enemy0.png.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Assets/Ui/gold_coin.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Assets/Ui/gold_coin.png.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Assets/Ui/person.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Assets/Ui/person.png.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Assets/Ui/person_1.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Assets/Ui/person_1.png.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Assets/Ui/person_2.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Assets/Ui/person_2.png.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Assets/Ui/person_3.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Assets/Ui/person_3.png.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Assets/Ui/round_64px_2.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Assets/Ui/round_64px_2.png.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Assets/Ui/special_value.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Assets/Ui/special_value.png.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Prefabs/Tile.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Prefabs/Tile.prefab" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Prefabs/Unit.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Prefabs/Unit.prefab" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scenes/Battle.unity" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scenes/Battle.unity" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/Scripts/Battle/Battle.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Battle/Battle.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Map/Map.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Map/Map.cs" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -204,6 +158,7 @@
       <workItem from="1654182791046" duration="4111000" />
       <workItem from="1654194913251" duration="1970000" />
       <workItem from="1654269310431" duration="4096000" />
+      <workItem from="1654418447456" duration="194000" />
     </task>
     <servers />
   </component>

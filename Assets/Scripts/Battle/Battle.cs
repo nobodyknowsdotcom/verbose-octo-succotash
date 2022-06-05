@@ -37,6 +37,8 @@ public class Battle : MonoBehaviour
     
     public void Awake()
     {
+        Application.targetFrameRate = 30;
+        
         var cellRect = cellPrefab.transform as RectTransform;
         cellRect.sizeDelta = new Vector2 (1.2f * 1080/Screen.height, 1.2f * 1080/Screen.height);
         var unitRect = unitPrefab.transform as RectTransform;
