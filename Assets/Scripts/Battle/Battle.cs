@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
+using System.Net;
 using Entities;
 using UnityEngine;
 using UnityEngine.EventSystems;
@@ -54,10 +55,15 @@ public class Battle : MonoBehaviour
         
         CreateEnemySquad();
         SpawnUnitsOnField();
-        UpdateEnemyUnitsPanel();
         SwitchToNextUnit();
-        UpdateCurrentUnitCard();
+    }
+
+    public void Update()
+    {
         UpdateCells();
+        UpdateCurrentUnitCard();
+        UpdateAvailableActions();
+        UpdateEnemyUnitsPanel();
     }
 
     public void OnCellCLick()
@@ -86,9 +92,6 @@ public class Battle : MonoBehaviour
                 }
             }
         }
-
-        UpdateCells();
-        UpdateCurrentUnitCard();
     }
     
     private void UpdateCells()
@@ -102,9 +105,12 @@ public class Battle : MonoBehaviour
 
             cell.transform.Find("OnTarget").gameObject.SetActive(cell == m_TargetCell);
         }
-        
-        m_CurrentCell.transform.Find("Unit(Clone)").Find("OnActive").gameObject.SetActive(true);
 
+        if (m_CurrentCell != null)
+        {
+            m_CurrentCell.transform.Find("Unit(Clone)").Find("OnActive").gameObject.SetActive(true);
+        }
+        
         if (m_AllySquad.Count == 0 || m_EnemySquad.Count == 0)
         {
             SceneManager.LoadScene("Map");
@@ -113,9 +119,13 @@ public class Battle : MonoBehaviour
 
     private void UpdateCurrentUnitCard()
     {
-        currentUnitCard.transform.Find("Icon").GetComponent<Image>().sprite = m_CurrentUnit.Sprite;
-        currentUnitCard.transform.Find("Health").GetChild(0).GetComponent<Text>().text = m_CurrentUnit.Health.ToString();
-        currentUnitCard.transform.Find("Armor").GetChild(0).GetComponent<Text>().text = m_CurrentUnit.Armor.ToString();
+        if (m_CurrentCell != null)
+        {
+            currentUnitCard.SetActive(true);
+            currentUnitCard.transform.Find("Icon").GetComponent<Image>().sprite = m_CurrentUnit.Sprite;
+            currentUnitCard.transform.Find("Health").GetChild(0).GetComponent<Text>().text = m_CurrentUnit.Health.ToString();
+            currentUnitCard.transform.Find("Armor").GetChild(0).GetComponent<Text>().text = m_CurrentUnit.Armor.ToString();
+        }
     }
     
     public void OnMoveButton()
@@ -150,9 +160,6 @@ public class Battle : MonoBehaviour
         {
             Debug.Log("Ты не можешь сходить туда!");
         }
-
-        UpdateCells();
-        UpdateAvailableActions();
     }
 
     public void FirstAbilityButton()
@@ -170,11 +177,8 @@ public class Battle : MonoBehaviour
             }
 
             m_TargetCell = null;
-            
+
             SwitchToNextUnit();
-            UpdateEnemyUnitsPanel();
-            UpdateCells();
-            UpdateAvailableActions();
         }
     }
     
@@ -193,12 +197,20 @@ public class Battle : MonoBehaviour
 
     private void UpdateAvailableActions()
     {
-        abilitiesPanel.transform.GetChild(1).GetComponent<Button>().enabled = !m_CurrentUnit.IsMoved;
-        abilitiesPanel.transform.Find("ActiveAbilities").GetChild(0).GetComponent<Button>().enabled = !m_CurrentUnit.IsUsedAbility;
-        
-        foreach (Transform child in abilitiesPanel.transform)
+        if (m_CurrentCell == null)
         {
-            child.gameObject.SetActive(m_CurrentCell != null);
+            abilitiesPanel.SetActive(false);
+        }
+        else
+        {
+            abilitiesPanel.SetActive(true);
+            abilitiesPanel.transform.GetChild(1).GetComponent<Button>().enabled = !m_CurrentUnit.IsMoved;
+            abilitiesPanel.transform.Find("ActiveAbilities").GetChild(0).GetComponent<Button>().enabled = !m_CurrentUnit.IsUsedAbility;
+            
+            foreach (Transform child in abilitiesPanel.transform)
+            {
+                child.gameObject.SetActive(m_CurrentCell != null);
+            }
         }
     }
     
@@ -209,13 +221,15 @@ public class Battle : MonoBehaviour
             Destroy(child.gameObject);
         }
         
-        foreach (var unit in m_EnemySquad)
+        foreach (var unit in m_EnemySquad.Where(x => x.Health > 0))
         {
             GameObject card = Instantiate(enemyCardPrefab, enemyUnitsPanel.transform.position, Quaternion.identity, enemyUnitsPanel.transform);
             card.transform.Find("Icon").GetComponent<Image>().sprite = unit.Sprite;
             card.transform.Find("Health").Find("Value").GetComponent<Text>().text = unit.Health.ToString();
             card.transform.Find("Armor").Find("Value").GetComponent<Text>().text = unit.Armor.ToString();
         }
+
+        m_EnemySquad.RemoveAll(x => x.Health == 0);
     }
 
     private void SpawnUnitsOnField()
@@ -305,7 +319,6 @@ public class Battle : MonoBehaviour
             unit.RefreshAbilitiesAndMoving();
         }
         
-        UpdateAvailableActions();
         SwitchToNextUnit();
     }
 
