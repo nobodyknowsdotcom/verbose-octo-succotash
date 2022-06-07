@@ -41,9 +41,9 @@ public class Battle : MonoBehaviour
         Application.targetFrameRate = 30;
         
         var cellRect = cellPrefab.transform as RectTransform;
-        cellRect.sizeDelta = new Vector2 (1.25f * 1080/Screen.height, 1.25f * 1080/Screen.height);
+        cellRect.sizeDelta = new Vector2 (1.218f * 1080/Screen.height, 1.218f * 1080/Screen.height);
         var unitRect = unitPrefab.transform as RectTransform;
-        unitRect.sizeDelta = new Vector2 (1.19f * 1080/Screen.height, 1.19f * 1080/Screen.height);
+        unitRect.sizeDelta = new Vector2 (1.2f, 1.2f);
         _unitsPositions = new Dictionary<GameObject, Unit>();
         
         m_AllySquad = SquadsManager.Squads[SquadsManager.CurrentSquad];
@@ -73,6 +73,7 @@ public class Battle : MonoBehaviour
         if (m_CurrentCell != null && selectedCell != m_CurrentCell && !(_unitsPositions[m_CurrentCell].IsUsedAbility & _unitsPositions[m_CurrentCell].IsMoved))
         {
             m_TargetCell = selectedCell;
+            Debug.Log("Target cell set");
         }
         else
         {
