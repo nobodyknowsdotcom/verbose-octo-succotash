@@ -41,18 +41,18 @@ public class Battle : MonoBehaviour
         Application.targetFrameRate = 30;
         
         var cellRect = cellPrefab.transform as RectTransform;
-        cellRect.sizeDelta = new Vector2 (1.2f * 1080/Screen.height, 1.2f * 1080/Screen.height);
+        cellRect.sizeDelta = new Vector2 (1.25f * 1080/Screen.height, 1.25f * 1080/Screen.height);
         var unitRect = unitPrefab.transform as RectTransform;
         unitRect.sizeDelta = new Vector2 (1.19f * 1080/Screen.height, 1.19f * 1080/Screen.height);
         _unitsPositions = new Dictionary<GameObject, Unit>();
+        
+        m_AllySquad = SquadsManager.Squads[SquadsManager.CurrentSquad];
 
         DrawCells();
     }
 
     public void Start()
     {
-        m_AllySquad = SquadsManager.Squads[SquadsManager.CurrentSquad];
-        
         CreateEnemySquad();
         SpawnUnitsOnField();
         SwitchToNextUnit();
@@ -123,8 +123,8 @@ public class Battle : MonoBehaviour
         {
             currentUnitCard.SetActive(true);
             currentUnitCard.transform.Find("Icon").GetComponent<Image>().sprite = m_CurrentUnit.Sprite;
-            currentUnitCard.transform.Find("Health").GetChild(0).GetComponent<Text>().text = m_CurrentUnit.Health.ToString();
-            currentUnitCard.transform.Find("Armor").GetChild(0).GetComponent<Text>().text = m_CurrentUnit.Armor.ToString();
+            currentUnitCard.transform.Find("Health").GetChild(1).GetComponent<Text>().text = m_CurrentUnit.Health.ToString();
+            currentUnitCard.transform.Find("Armor").GetChild(1).GetComponent<Text>().text = m_CurrentUnit.Armor.ToString();
         }
     }
     
