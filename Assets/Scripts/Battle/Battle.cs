@@ -168,7 +168,6 @@ public class Battle : MonoBehaviour
         if (_unitsPositions.ContainsKey(m_TargetCell) && !_unitsPositions[m_TargetCell].IsAlly && !_unitsPositions[m_CurrentCell].IsUsedAbility)
         {
             m_CurrentUnit.Ability1(_unitsPositions[m_TargetCell]);
-            Debug.Log("You hit " + _unitsPositions[m_TargetCell].Name);
 
             if (_unitsPositions[m_TargetCell].Health <= 0)
             {

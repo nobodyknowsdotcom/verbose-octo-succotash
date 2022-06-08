@@ -162,7 +162,7 @@ GameObject:
   - component: {fileID: 3423175361652387621}
   - component: {fileID: 3423175361652387620}
   m_Layer: 5
-  m_Name: Health
+  m_Name: Armor
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -176,18 +176,18 @@ RectTransform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3423175361652387618}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0.000009042245}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 0.99981004, y: 0.99981004, z: 0.99981004}
   m_Children:
   - {fileID: 6136425685272779775}
   - {fileID: 3423175361732293646}
   - {fileID: 7507982584347350447}
   m_Father: {fileID: 3423175362130426081}
-  m_RootOrder: 1
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 80, y: 37}
+  m_AnchoredPosition: {x: 80, y: -37}
   m_SizeDelta: {x: 140, y: 40}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &3423175361652387621
@@ -335,7 +335,7 @@ GameObject:
   - component: {fileID: 3423175362101332907}
   - component: {fileID: 3423175362101332906}
   m_Layer: 5
-  m_Name: Armor
+  m_Name: Health
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -349,18 +349,18 @@ RectTransform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3423175362101332904}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0.000009042245}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 0.99981004, y: 0.99981004, z: 0.99981004}
   m_Children:
   - {fileID: 6622644776713264607}
   - {fileID: 3423175362137490624}
   - {fileID: 5468040058390062603}
   m_Father: {fileID: 3423175362130426081}
-  m_RootOrder: 2
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 80, y: -37}
+  m_AnchoredPosition: {x: 80, y: 37}
   m_SizeDelta: {x: 140, y: 40}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &3423175362101332907
@@ -431,8 +431,8 @@ RectTransform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 3423175361063283326}
-  - {fileID: 3423175361652387619}
   - {fileID: 3423175362101332905}
+  - {fileID: 3423175361652387619}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}

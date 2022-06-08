@@ -331,7 +331,7 @@ GameObject:
   - component: {fileID: 200384752}
   - component: {fileID: 200384751}
   m_Layer: 5
-  m_Name: Health
+  m_Name: Armor
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -352,11 +352,11 @@ RectTransform:
   - {fileID: 1416254172}
   - {fileID: 237735635}
   m_Father: {fileID: 1073405260}
-  m_RootOrder: 2
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 90, y: 41.3}
+  m_AnchoredPosition: {x: 90, y: -47}
   m_SizeDelta: {x: 160, y: 60}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &200384751
@@ -2136,8 +2136,8 @@ RectTransform:
   m_Children:
   - {fileID: 13834358}
   - {fileID: 1096943351}
-  - {fileID: 200384750}
   - {fileID: 1080807792}
+  - {fileID: 200384750}
   m_Father: {fileID: 1384733461}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -2158,7 +2158,7 @@ GameObject:
   - component: {fileID: 1080807794}
   - component: {fileID: 1080807793}
   m_Layer: 5
-  m_Name: Armor
+  m_Name: Health
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2179,11 +2179,11 @@ RectTransform:
   - {fileID: 420744893}
   - {fileID: 1866391666}
   m_Father: {fileID: 1073405260}
-  m_RootOrder: 3
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 90, y: -47.69998}
+  m_AnchoredPosition: {x: 90, y: 47}
   m_SizeDelta: {x: 160, y: 60}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1080807793
