@@ -16,7 +16,8 @@ public class SquadsManager : MonoBehaviour
     private static LineRenderer _lineRenderer;
     private static int _previousLevel;
     public static int CurrentSquad { get; set; }
-    public static Dictionary<int, bool> SquadsState;
+    public static Dictionary<int, bool> SquadsMovingState;
+    public static Dictionary<int, bool> SquadsOrderState;
     private static Dictionary<int, int> _squadsLocation;
 
     public void Awake()
@@ -24,7 +25,8 @@ public class SquadsManager : MonoBehaviour
         _lineRenderer = GetComponent<LineRenderer>();
         
         LoadCurrentSquad();
-        LoadSquadsState();
+        LoadSquadsMovingState();
+        LoadSquadsOrderState();
         LoadSquadsPosition();
 
         InitSquadsOnMap();
@@ -44,9 +46,14 @@ public class SquadsManager : MonoBehaviour
             PlayerPrefs.SetString("position"+squad.Key, squad.Value.ToString());
         }
         
-        foreach (var squad in SquadsState)
+        foreach (var squad in SquadsMovingState)
         {
-            PlayerPrefs.SetString("state"+squad.Key, squad.Value.ToString());
+            PlayerPrefs.SetString("is_moved"+squad.Key, squad.Value.ToString());
+        }
+        
+        foreach (var squad in SquadsOrderState)
+        {
+            PlayerPrefs.SetString("is_ordered"+squad.Key, squad.Value.ToString());
         }
         
         PlayerPrefs.SetString("current_squad", CurrentSquad.ToString());
@@ -72,19 +79,39 @@ public class SquadsManager : MonoBehaviour
         }
     }
 
-    private void LoadSquadsState()
+    private void LoadSquadsMovingState()
     {
         try
         {
-            SquadsState = new Dictionary<int, bool>
+            SquadsMovingState = new Dictionary<int, bool>
             {
-                {0, Boolean.Parse(PlayerPrefs.GetString("state0"))},
-                {1, Boolean.Parse(PlayerPrefs.GetString("state1"))}
+                {0, Boolean.Parse(PlayerPrefs.GetString("is_moved0"))},
+                {1, Boolean.Parse(PlayerPrefs.GetString("is_moved1"))}
             };
         }
         catch
         {
-            SquadsState = new Dictionary<int, bool>
+            SquadsMovingState = new Dictionary<int, bool>
+            {
+                {0, false},
+                {1, false}
+            };
+        }
+    }
+    
+    private void LoadSquadsOrderState()
+    {
+        try
+        {
+            SquadsOrderState = new Dictionary<int, bool>
+            {
+                {0, Boolean.Parse(PlayerPrefs.GetString("is_ordered0"))},
+                {1, Boolean.Parse(PlayerPrefs.GetString("is_ordered0"))}
+            };
+        }
+        catch
+        {
+            SquadsOrderState = new Dictionary<int, bool>
             {
                 {0, false},
                 {1, false}
@@ -149,19 +176,20 @@ public class SquadsManager : MonoBehaviour
         _squadsLocation[index] = levelIndex;
         if (isRollback)
         {
-            SquadsState[CurrentSquad] = false;
+            SquadsMovingState[CurrentSquad] = false;
         }
         else
         {
-            SquadsState[CurrentSquad] = true;
+            SquadsMovingState[CurrentSquad] = true;
         }
     }
     
     public static void RefreshSquadsState()
     {
-        for(var i=0; i<SquadsState.Count; i++)
+        for(var i=0; i<SquadsMovingState.Count; i++)
         {
-            SquadsState[i] = false;
+            SquadsMovingState[i] = false;
+            SquadsOrderState[i] = false;
         }
     }
 
@@ -250,6 +278,6 @@ public class SquadsManager : MonoBehaviour
 
     public static Dictionary<int, bool> GetSquadsState()
     {
-        return SquadsState;
+        return SquadsMovingState;
     }
 }

@@ -2,11 +2,12 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="0b3f2042-8aef-4295-9e71-03ff8180e52d" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/Assets/Scripts/Entities/Squad.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Scripts/Entities/Squad.cs.meta" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/.idea.verbose-octo-succotash/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.verbose-octo-succotash/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Prefabs/EnemyCard.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Prefabs/EnemyCard.prefab" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/Scenes/Battle.unity" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scenes/Battle.unity" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Battle/Battle.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Battle/Battle.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/UserSettings/EditorUserSettings.asset" beforeDir="false" afterPath="$PROJECT_DIR$/UserSettings/EditorUserSettings.asset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Map/Map.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Map/Map.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Map/SquadsManager.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Map/SquadsManager.cs" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -38,13 +39,15 @@
       <option value="$PROJECT_DIR$/Assets/Scripts/ScenesManager.cs" />
       <option value="$USER_HOME$/Downloads/Telegram Desktop/Entities/Unit.cs" />
       <option value="$USER_HOME$/Downloads/Telegram Desktop/Entities/Sniper.cs" />
-      <option value="$PROJECT_DIR$/Assets/Scripts/Map/Map.cs" />
       <option value="$PROJECT_DIR$/Assets/Scripts/Entities/Swordsman.cs" />
       <option value="$PROJECT_DIR$/Assets/Scripts/Entities/Sniper.cs" />
-      <option value="$PROJECT_DIR$/Assets/Scripts/Map/SquadsManager.cs" />
       <option value="$PROJECT_DIR$/Assets/Scripts/Entities/Unit.cs" />
       <option value="$PROJECT_DIR$/Assets/Scripts/Entities/Assault.cs" />
       <option value="$PROJECT_DIR$/Assets/Scripts/Battle/Battle.cs" />
+      <option value="$PROJECT_DIR$/Assets/Scripts/Entities/Level.cs" />
+      <option value="$PROJECT_DIR$/Assets/Scripts/Entities/Squad.cs" />
+      <option value="$PROJECT_DIR$/Assets/Scripts/Map/Map.cs" />
+      <option value="$PROJECT_DIR$/Assets/Scripts/Map/SquadsManager.cs" />
     </changedPaths>
   </component>
   <component name="ProjectId" id="28Swb6SCp9JQooodyj6MSMtxZfz" />
@@ -168,6 +171,8 @@
       <workItem from="1654614977059" duration="1537000" />
       <workItem from="1654686445224" duration="561000" />
       <workItem from="1654725272151" duration="410000" />
+      <workItem from="1654789709083" duration="1411000" />
+      <workItem from="1654800821319" duration="610000" />
     </task>
     <servers />
   </component>

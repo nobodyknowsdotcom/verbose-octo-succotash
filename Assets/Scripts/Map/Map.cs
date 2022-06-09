@@ -19,7 +19,6 @@ public class Map : MonoBehaviour
     public void Awake()
     {
         Application.targetFrameRate = 30;
-        LoadCurrentTurn();
         _lineRenderer = GetComponent<LineRenderer>();
         
         _paths = new Dictionary<int, List<int>>
@@ -32,7 +31,8 @@ public class Map : MonoBehaviour
             {5, new List<int>{3, 4, 6}},
             {6, new List<int>{4, 5}}
         };
-
+        
+        LoadCurrentTurn();
         UpdateTurnText();
     }
 
@@ -103,7 +103,7 @@ public class Map : MonoBehaviour
             }
             
             // Если на данный уровень возможно перейти с текущего и текущий отряд еще не ходил
-            if (_paths[currentLevelIndex].Contains(Int32.Parse(level.name)) && !SquadsManager.SquadsState[SquadsManager.CurrentSquad])
+            if (_paths[currentLevelIndex].Contains(Int32.Parse(level.name)) && !SquadsManager.SquadsMovingState[SquadsManager.CurrentSquad])
             {
                 level.Find("OnAvailable").gameObject.SetActive(true);
                 drawingList.Add(currentLevel);
@@ -142,7 +142,9 @@ public class Map : MonoBehaviour
 
     public void OpenPopup()
     {
+        if (SquadsManager.SquadsOrderState[SquadsManager.CurrentSquad]) return;
         popup.SetActive(true);
+        SquadsManager.SquadsOrderState[SquadsManager.CurrentSquad] = true;
     }
 
     public void EndStep()
