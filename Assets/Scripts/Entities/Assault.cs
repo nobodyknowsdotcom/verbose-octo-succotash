@@ -6,7 +6,8 @@ namespace Entities
     public class Assault : Unit
     {
         private readonly Random m_Random = new Random();
-        protected Assault(string name, bool isAlly, int buyPrice,  int maintenancePrice, int damage, int health, int armor, double dodgeChance, double accuracy,Sprite sprite) : base(name, isAlly, buyPrice, maintenancePrice, damage, health, armor, dodgeChance, accuracy, sprite)
+        protected Assault(string name, bool isAlly, int buyPrice, int maintenancePrice, int damage, int health,
+            int armor, double dodgeChance, double accuracy, int movingRange, Sprite sprite) : base(name, isAlly, buyPrice, maintenancePrice, damage, health, armor, dodgeChance, accuracy, movingRange, sprite)
         {
         }
         
@@ -22,7 +23,7 @@ namespace Entities
             var armor = 100;
             var dodge = 0.1;
             var accuracy = 0.75;
-            return new Assault(name, isAlly, buyPrice, maintenancePrice, damage, health, armor, dodge, accuracy, sprite);
+            return new Assault(name, isAlly, buyPrice, maintenancePrice, damage, health, armor, dodge, accuracy, movingRange, sprite);
         }
 
         public void FirstAid()

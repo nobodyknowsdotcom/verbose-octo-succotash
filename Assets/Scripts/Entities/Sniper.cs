@@ -6,7 +6,7 @@ namespace Entities
     public class Sniper : Unit
     {
         private readonly Random m_Random = new Random();
-        protected Sniper(string name, bool isAlly, int buyPrice, int maintenancePrice, int damage, int health, int armor, double dodgeChance, double accuracy, Sprite sprite) : base(name, isAlly, buyPrice, maintenancePrice, damage, health, armor, dodgeChance, accuracy, sprite)
+        protected Sniper(string name, bool isAlly, int buyPrice, int maintenancePrice, int damage, int health, int armor, double dodgeChance, double accuracy, int movingRange, Sprite sprite) : base(name, isAlly, buyPrice, maintenancePrice, damage, health, armor, dodgeChance, accuracy, movingRange, sprite)
         {
         }
 
@@ -22,7 +22,7 @@ namespace Entities
             var armor = 60;
             var dodge = 0.15;
             var accuracy = 0.95;
-            return new Sniper(name, isAlly, buyPrice, maintenancePrice, damage, health, armor, dodge, accuracy, sprite);
+            return new Sniper(name, isAlly, buyPrice, maintenancePrice, damage, health, armor, dodge, accuracy, movingRange, sprite);
         }
 
         public override void Ability1(Unit enemy)

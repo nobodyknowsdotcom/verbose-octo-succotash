@@ -131,24 +131,32 @@ public class Battle : MonoBehaviour
     
     public void OnMoveButton()
     {
-        var unit = m_CurrentCell.transform.Find("Unit(Clone)").gameObject;
+        GameObject unitAsGameObject = m_CurrentCell.transform.Find("Unit(Clone)").gameObject;
+        List<Point> barriers = GetUnitsAsPoints(m_CurrentCell, m_TargetCell);
+        Point currentPosition = ParsePoint(m_CurrentCell);
+        Point targetPosition = ParsePoint(m_TargetCell);
+        List<Point> path = Bts(barriers, currentPosition, targetPosition);
 
-        // Если клетка, в которую хочет переместиться игрок не содержит в себе юнита и текущий юнит ещё не ходил
+        if (m_CurrentUnit.MovingRange < path.Count)
+        {
+            Debug.Log("Слишком далеко, ты не можешь туда сходить!");
+            return;
+        }
+
         if (!_unitsPositions.ContainsKey(m_TargetCell) && m_TargetCell != m_ExitCell && !_unitsPositions[m_CurrentCell].IsMoved)
         {
             _unitsPositions[m_TargetCell] = m_CurrentUnit;
             _unitsPositions.Remove(m_CurrentCell);
-            Move(unit, m_TargetCell);
+            Move(unitAsGameObject, m_TargetCell);
             
             m_CurrentCell = m_TargetCell;
             m_TargetCell = null;
             
             _unitsPositions[m_CurrentCell].Moved();
         }
-        // Если клетка, в которую хочет переместиться игрок -- клетка выхода с поля боя
         else if (m_TargetCell == m_ExitCell)
         {
-            Destroy(unit);
+            Destroy(unitAsGameObject);
             m_AllySquad.Remove(_unitsPositions[m_CurrentCell]);
             _unitsPositions.Remove(m_CurrentCell);
 
@@ -163,8 +171,27 @@ public class Battle : MonoBehaviour
         }
     }
 
+    private List<Point> GetUnitsAsPoints(params GameObject[] exclude)
+    {
+        var result = new List<Point>();
+        foreach (GameObject cell in _unitsPositions.Keys.Where(x => !exclude.Contains(x)))
+        {
+            // Парсим имя клетки формата 4_7 в точку Point(4,7)
+            Point p = ParsePoint(cell);
+            result.Append(p);
+        }
+
+        return result;
+    }
+
+    private Point ParsePoint(GameObject cell)
+    {
+        return new Point(int.Parse(cell.name.Split('_')[0]), int.Parse(cell.name.Split('_')[1]));
+    }
+
     public void FirstAbilityButton()
     {
+        
         if (_unitsPositions.ContainsKey(m_TargetCell) && !_unitsPositions[m_TargetCell].IsAlly && !_unitsPositions[m_CurrentCell].IsUsedAbility)
         {
             m_CurrentUnit.Ability1(_unitsPositions[m_TargetCell]);
@@ -321,6 +348,74 @@ public class Battle : MonoBehaviour
         
         SwitchToNextUnit();
     }
+
+    private static List<Point> Bts(IEnumerable<Point> barriers, Point start, Point end)
+        {
+            var a = new bool[8, 8];
+            var b = new Point[8, 8];
+
+            var q = new Queue<Point>();
+
+            for (int i = 0; i < 8; i++)
+            for (int j = 0; j < 8; j++)
+                a[i, j] = true;
+
+            if (!(barriers is null))
+                foreach (var barrier in barriers)
+                    a[barrier.X, barrier.Y] = false;
+
+            q.Enqueue(start);
+            a[start.X, start.Y] = false;
+            b[start.X, start.Y] = start;
+
+            while (!q.Peek().Equals(end))
+            {
+                var e = q.Dequeue();
+
+                var points = new[]
+                {
+                    new Point(e.X - 1, e.Y),
+                    new Point(e.X + 1, e.Y),
+                    new Point(e.X, e.Y - 1),
+                    new Point(e.X, e.Y + 1),
+                    new Point(e.X + 1, e.Y + 1),
+                    new Point(e.X + 1, e.Y - 1),
+                    new Point(e.X - 1, e.Y + 1),
+                    new Point(e.X - 1, e.Y - 1),
+                };
+
+                foreach (var point in points)
+                {
+                    if (point.X >= 0 && point.X < 8 && point.Y >= 0 && point.Y < 8 && a[point.X, point.Y])
+                    {
+                        q.Enqueue(point);
+                        a[point.X, point.Y] = false;
+                        var p1 = point.X;
+                        var p2 = point.Y;
+                        var e1 = e.X;
+                        var e2 = e.Y;
+                        b[p1, p2] = new Point(e1, e2);
+                    }
+                }
+            }
+
+            var result = new List<Point> {end, b[end.X, end.Y]};
+
+            while (true)
+            {
+                var value = result[result.Count - 1];
+                if (value.Equals(start)) break;
+                var x = value.X;
+                var y = value.Y;
+                var v = b[x, y];
+                result.Add(v);
+            }
+
+            result.ToArray();
+            result.Reverse();
+
+            return result;
+        }
 
     private Dictionary<int, Point> GetRandomPointsArray(int len, Point start, Point end, ICollection<Point> restrictedPoints)
     {

@@ -6,8 +6,8 @@ namespace Entities
     public class Swordsman : Unit
     {
         private Random m_Random = new Random();
-        protected Swordsman(string name, bool isAlly, int buyPrice, int maintenancePrice, int damage, int health, int armor, double dodgeChance, double accuracy, Sprite sprite) 
-            : base(name, isAlly, buyPrice, maintenancePrice, damage, health, armor, dodgeChance, accuracy,sprite)
+        protected Swordsman(string name, bool isAlly, int buyPrice, int maintenancePrice, int damage, int health, int armor, double dodgeChance, double accuracy, int movingRange, Sprite sprite) 
+            : base(name, isAlly, buyPrice, maintenancePrice, damage, health, armor, dodgeChance, accuracy, movingRange, sprite)
         {
         }
         
@@ -24,7 +24,7 @@ namespace Entities
             var dodge = 0.1;
             var accuracy = 0.9;
             
-            return new Swordsman("Мечник", isAlly, buyPrice, maintenancePrice, damage, health, armor, dodge, accuracy, sprite);
+            return new Swordsman("Мечник", isAlly, buyPrice, maintenancePrice, damage, health, armor, dodge, accuracy, movingRange, sprite);
         }
 
         public override void Ability1(Unit enemy)
