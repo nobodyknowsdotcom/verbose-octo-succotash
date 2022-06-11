@@ -23,7 +23,19 @@ namespace Entities
             var armor = 100;
             var dodge = 0.1;
             var accuracy = 0.75;
-            return new Assault(name, isAlly, buyPrice, maintenancePrice, damage, health, armor, dodge, accuracy, movingRange, sprite);
+            var assault = new Assault(name, isAlly, buyPrice, maintenancePrice, damage, health, armor, dodge, accuracy, movingRange, sprite);
+            SetupAbilitiesResources(assault);
+            return assault;
+        }
+
+        private static void SetupAbilitiesResources(Assault assault)
+        {
+            Sprite firstAbility = Resources.Load<Sprite>("Skills/Burst");
+            Sprite secondAbility = Resources.Load<Sprite>("Skills/First Aid");
+            Sprite thirdAbility = Resources.Load<Sprite>("Skills/Grenade Throw");
+            var abilitiesNames = new string[] {"Очередь из автомата", "Первая помощь", "Бросок гранаты"};
+            assault.AbilitiesNames = abilitiesNames;
+            assault.Icons = new[] {firstAbility, secondAbility, thirdAbility};
         }
 
         public void FirstAid()

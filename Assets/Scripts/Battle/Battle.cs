@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
@@ -147,7 +148,7 @@ public class Battle : MonoBehaviour
         {
             _unitsPositions[m_TargetCell] = m_CurrentUnit;
             _unitsPositions.Remove(m_CurrentCell);
-            Move(unitAsGameObject, m_TargetCell);
+            StartCoroutine(Move(unitAsGameObject, path));
             
             m_CurrentCell = m_TargetCell;
             m_TargetCell = null;
@@ -156,9 +157,11 @@ public class Battle : MonoBehaviour
         }
         else if (m_TargetCell == m_ExitCell)
         {
-            Destroy(unitAsGameObject);
+            StartCoroutine(Move(unitAsGameObject, path));
             m_AllySquad.Remove(_unitsPositions[m_CurrentCell]);
             _unitsPositions.Remove(m_CurrentCell);
+            
+            Destroy(unitAsGameObject);
 
             if (m_AllySquad.Count != 0)
             {
@@ -168,6 +171,16 @@ public class Battle : MonoBehaviour
         else
         {
             Debug.Log("Ты не можешь сходить туда!");
+        }
+    }
+    
+    private IEnumerator Move(GameObject unit, List<Point> path)
+    {
+        foreach (var point in path)
+        {
+            unit.transform.position = m_CellsGrid[point.X, point.Y].transform.position;
+            unit.transform.parent = m_CellsGrid[point.X, point.Y].transform;
+            yield return new WaitForSeconds(0.2f);
         }
     }
 
@@ -233,11 +246,22 @@ public class Battle : MonoBehaviour
             abilitiesPanel.SetActive(true);
             abilitiesPanel.transform.GetChild(1).GetComponent<Button>().enabled = !m_CurrentUnit.IsMoved;
             abilitiesPanel.transform.Find("ActiveAbilities").GetChild(0).GetComponent<Button>().enabled = !m_CurrentUnit.IsUsedAbility;
+            SetupAbilitiesPanel();
             
             foreach (Transform child in abilitiesPanel.transform)
             {
                 child.gameObject.SetActive(m_CurrentCell != null);
             }
+        }
+    }
+
+    private void SetupAbilitiesPanel()
+    {
+        var abilitiesParent = abilitiesPanel.transform.Find("ActiveAbilities");
+        for(var i = 0; i < 3; i++)
+        {
+            abilitiesParent.GetChild(i).Find("Text").GetComponent<Text>().text = m_CurrentUnit.AbilitiesNames[i];
+            abilitiesParent.GetChild(i).Find("Image").GetComponent<Image>().sprite = m_CurrentUnit.Icons[i];
         }
     }
     
@@ -323,12 +347,6 @@ public class Battle : MonoBehaviour
         }
     }
 
-    private void Move(GameObject unit, GameObject targetCell)
-    {
-        unit.transform.position = targetCell.transform.position;
-        unit.transform.parent = targetCell.transform;
-    }
-    
     private void CreateEnemySquad()
     {
         m_EnemySquad = new List<Unit>
@@ -410,9 +428,10 @@ public class Battle : MonoBehaviour
                 var v = b[x, y];
                 result.Add(v);
             }
-
+            
             result.ToArray();
             result.Reverse();
+            result.RemoveAt(0);
 
             return result;
         }

@@ -23,10 +23,10 @@ public class Map : MonoBehaviour
         
         _paths = new Dictionary<int, List<int>>
         {
-            {0, new List<int>{1, 2}},
-            {1, new List<int>{0, 2, 3}},
-            {2, new List<int>{0, 1, 3}},
-            {3, new List<int>{1, 2, 4}},
+            {0, new List<int>{1}},
+            {1, new List<int>{0, 2}},
+            {2, new List<int>{1, 3}},
+            {3, new List<int>{2, 4}},
             {4, new List<int>{6}},
             {5, new List<int>{3, 4, 6}},
             {6, new List<int>{4, 5}}

@@ -3,12 +3,14 @@
   <component name="ChangeListManager">
     <list default="true" id="0b3f2042-8aef-4295-9e71-03ff8180e52d" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/.idea.verbose-octo-succotash/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.verbose-octo-succotash/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scenes/Map.unity" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scenes/Map.unity" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scenes/Battle.unity" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scenes/Battle.unity" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/Scripts/Battle/Battle.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Battle/Battle.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/Scripts/Entities/Assault.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Entities/Assault.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/Scripts/Entities/Sniper.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Entities/Sniper.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/Scripts/Entities/Swordsman.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Entities/Swordsman.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/Scripts/Entities/Unit.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Entities/Unit.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Map/Map.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Map/Map.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/UserSettings/EditorUserSettings.asset" beforeDir="false" afterPath="$PROJECT_DIR$/UserSettings/EditorUserSettings.asset" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -42,7 +44,6 @@
       <option value="$USER_HOME$/Downloads/Telegram Desktop/Entities/Sniper.cs" />
       <option value="$PROJECT_DIR$/Assets/Scripts/Entities/Level.cs" />
       <option value="$PROJECT_DIR$/Assets/Scripts/Entities/Squad.cs" />
-      <option value="$PROJECT_DIR$/Assets/Scripts/Map/Map.cs" />
       <option value="$PROJECT_DIR$/Assets/Scripts/Map/SquadsManager.cs" />
       <option value="$PROJECT_DIR$/Assets/Scripts/Entities/Cell.cs" />
       <option value="$PROJECT_DIR$/Assets/Scripts/Entities/Unit.cs" />
@@ -50,6 +51,7 @@
       <option value="$PROJECT_DIR$/Assets/Scripts/Entities/Sniper.cs" />
       <option value="$PROJECT_DIR$/Assets/Scripts/Entities/Swordsman.cs" />
       <option value="$PROJECT_DIR$/Assets/Scripts/Battle/Battle.cs" />
+      <option value="$PROJECT_DIR$/Assets/Scripts/Map/Map.cs" />
     </changedPaths>
   </component>
   <component name="ProjectId" id="28Swb6SCp9JQooodyj6MSMtxZfz" />
@@ -178,6 +180,9 @@
       <workItem from="1654849269182" duration="193000" />
       <workItem from="1654850084791" duration="2569000" />
       <workItem from="1654853480045" duration="1336000" />
+      <workItem from="1654879933006" duration="1054000" />
+      <workItem from="1654886284371" duration="2060000" />
+      <workItem from="1654931473661" duration="1463000" />
     </task>
     <servers />
   </component>

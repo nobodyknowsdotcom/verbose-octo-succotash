@@ -24,7 +24,19 @@ namespace Entities
             var dodge = 0.1;
             var accuracy = 0.9;
             
-            return new Swordsman("Мечник", isAlly, buyPrice, maintenancePrice, damage, health, armor, dodge, accuracy, movingRange, sprite);
+            var swordsman = new Swordsman("Мечник", isAlly, buyPrice, maintenancePrice, damage, health, armor, dodge, accuracy, movingRange, sprite);
+            SetupAbilitiesResources(swordsman);
+            return swordsman;
+        }
+        
+        private static void SetupAbilitiesResources(Swordsman assault)
+        {
+            Sprite firstAbility = Resources.Load<Sprite>("Skills/Warrior Path");
+            Sprite secondAbility = Resources.Load<Sprite>("Skills/Dash");
+            Sprite thirdAbility = Resources.Load<Sprite>("Skills/Defense Stance");
+            var abilitiesNames = new string[] {"Пути война", "Рывок", "Защитная стойка"};
+            assault.AbilitiesNames = abilitiesNames;
+            assault.Icons = new[] {firstAbility, secondAbility, thirdAbility};
         }
 
         public override void Ability1(Unit enemy)
