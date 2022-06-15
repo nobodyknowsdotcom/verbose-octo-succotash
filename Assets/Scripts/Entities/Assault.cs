@@ -7,13 +7,12 @@ namespace Entities
     {
         private readonly Random m_Random = new Random();
         protected Assault(string name, bool isAlly, int buyPrice, int maintenancePrice, int damage, int health,
-            int armor, double dodgeChance, double accuracy, int movingRange, Sprite sprite) : base(name, isAlly, buyPrice, maintenancePrice, damage, health, armor, dodgeChance, accuracy, movingRange, sprite)
+            int armor, double dodgeChance, double accuracy, int movingRange) : base(name, isAlly, buyPrice, maintenancePrice, damage, health, armor, dodgeChance, accuracy, movingRange)
         {
         }
         
         public static Assault CreateInstance(bool isAlly)
         {
-            var sprite = Resources.Load<Sprite>(isAlly ? "Warriors/ally_assault" : "Warriors/enemy_assault");
             var movingRange = 3;
             var name = "Штурмовик";
             var buyPrice = 100;
@@ -23,17 +22,19 @@ namespace Entities
             var armor = 100;
             var dodge = 0.1;
             var accuracy = 0.75;
-            var assault = new Assault(name, isAlly, buyPrice, maintenancePrice, damage, health, armor, dodge, accuracy, movingRange, sprite);
-            SetupAbilitiesResources(assault);
+            var assault = new Assault(name, isAlly, buyPrice, maintenancePrice, damage, health, armor, dodge, accuracy, movingRange);
+            SetupSprites(assault);
             return assault;
         }
 
-        private static void SetupAbilitiesResources(Assault assault)
+        private static void SetupSprites(Assault assault)
         {
+            var sprite = Resources.Load<Sprite>(assault.IsAlly ? "Warriors/ally_assault" : "Warriors/enemy_assault");
             Sprite firstAbility = Resources.Load<Sprite>("Skills/Burst");
             Sprite secondAbility = Resources.Load<Sprite>("Skills/First Aid");
             Sprite thirdAbility = Resources.Load<Sprite>("Skills/Grenade Throw");
             var abilitiesNames = new string[] {"Очередь из автомата", "Первая помощь", "Бросок гранаты"};
+            assault.Sprite = sprite;
             assault.AbilitiesNames = abilitiesNames;
             assault.Icons = new[] {firstAbility, secondAbility, thirdAbility};
         }

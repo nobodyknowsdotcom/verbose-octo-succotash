@@ -25,7 +25,7 @@ public class Unit : MonoBehaviour
     public Sprite[] Icons { get; set; }
     public string[] AbilitiesNames { get; set; }
 
-    protected Unit(string name, bool isAlly, int buyPrice, int maintenancePrice, int damage, int health, int armor, double dodgeChance, double accuracy, int movingRange, Sprite sprite)
+    protected Unit(string name, bool isAlly, int buyPrice, int maintenancePrice, int damage, int health, int armor, double dodgeChance, double accuracy, int movingRange)
     {
         Name = name;
         BuyPrice = buyPrice;
@@ -37,14 +37,13 @@ public class Unit : MonoBehaviour
         DodgeChance = dodgeChance;
         Accuracy = accuracy;
         MovingRange = movingRange;
-        Sprite = sprite;
         BuyPrice = buyPrice;
         IsAlly = isAlly;
     }
 
-    public static Unit CreateInstance(string name, bool isAlly, int buyPrice, int maintenancePrice, int damage, int health, int armor, double dodgeChance, double accuracy, int movingRange, Sprite sprite)
+    public static Unit CreateInstance(string name, bool isAlly, int buyPrice, int maintenancePrice, int damage, int health, int armor, double dodgeChance, double accuracy, int movingRange)
     {
-        return new Unit(name, isAlly, buyPrice, maintenancePrice, damage, health, armor, dodgeChance, accuracy, movingRange, sprite);
+        return new Unit(name, isAlly, buyPrice, maintenancePrice, damage, health, armor, dodgeChance, accuracy, movingRange);
     }
 
     public void Moved()

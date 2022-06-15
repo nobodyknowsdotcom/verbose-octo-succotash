@@ -21,6 +21,7 @@ public class Battle : MonoBehaviour
     [SerializeField] private GameObject cellPrefab;
     [SerializeField] private GameObject unitPrefab;
     [SerializeField] private GameObject enemyCardPrefab;
+    [SerializeField] private GameObject experimentalPrefab;
 
     private static Dictionary<GameObject, Unit> _unitsPositions;
     private List<Unit> m_AllySquad;
@@ -28,6 +29,7 @@ public class Battle : MonoBehaviour
     private Unit m_CurrentUnit;
     
     private GameObject[,] m_CellsGrid;
+    private List<GameObject> m_AvailableCells;
     private GameObject m_CurrentCell;
     private GameObject m_TargetCell;
     private GameObject m_ExitCell;
@@ -36,7 +38,7 @@ public class Battle : MonoBehaviour
     private const int Height = 8;
 
     private readonly Random m_Rnd = new Random();
-    
+
     public void Awake()
     {
         Application.targetFrameRate = 30;
@@ -46,7 +48,7 @@ public class Battle : MonoBehaviour
         var unitRect = unitPrefab.transform as RectTransform;
         unitRect.sizeDelta = new Vector2 (1.2f, 1.2f);
         _unitsPositions = new Dictionary<GameObject, Unit>();
-        
+
         m_AllySquad = SquadsManager.Squads[SquadsManager.CurrentSquad];
 
         DrawCells();
@@ -57,11 +59,14 @@ public class Battle : MonoBehaviour
         CreateEnemySquad();
         SpawnUnitsOnField();
         SwitchToNextUnit();
+
+        m_AvailableCells = GetAvailableCells(m_CurrentCell, m_CurrentUnit.MovingRange);
     }
 
     public void Update()
     {
         UpdateCells();
+        
         UpdateCurrentUnitCard();
         UpdateAvailableActions();
         UpdateEnemyUnitsPanel();
@@ -74,7 +79,8 @@ public class Battle : MonoBehaviour
         if (m_CurrentCell != null && selectedCell != m_CurrentCell && !(_unitsPositions[m_CurrentCell].IsUsedAbility & _unitsPositions[m_CurrentCell].IsMoved))
         {
             m_TargetCell = selectedCell;
-            Debug.Log("Target cell set");
+            
+            m_AvailableCells.Clear();
         }
         else
         {
@@ -83,6 +89,8 @@ public class Battle : MonoBehaviour
             {
                 m_CurrentCell = null;
                 m_TargetCell = null;
+                
+                m_AvailableCells.Clear();
             }
             else
             {
@@ -91,9 +99,34 @@ public class Battle : MonoBehaviour
                 {
                     m_CurrentUnit = _unitsPositions[selectedCell];
                     m_CurrentCell = selectedCell;
+
+                    if (!m_CurrentUnit.IsMoved)
+                        m_AvailableCells = GetAvailableCells(m_CurrentCell, m_CurrentUnit.MovingRange);
                 }
             }
         }
+    }
+    
+    private List<GameObject> GetAvailableCells(GameObject start, int range)
+    {
+        var result = new List<GameObject>();
+        var barriers = GetUnitsAsPoints(m_CurrentCell);
+        foreach (var cell in m_CellsGrid)
+        {
+            var path = Bts(barriers, GameObjectToPoint(start), GameObjectToPoint(cell));
+            
+            if (path.Count <= range)
+            {
+                foreach (var point in path)
+                {
+                    var cellAtPoint = m_CellsGrid[point.X, point.Y];
+                    if (!_unitsPositions.ContainsKey(cellAtPoint) && !result.Contains(cellAtPoint))
+                        result.Add(cellAtPoint);
+                }
+            }
+        }
+
+        return result;
     }
     
     private void UpdateCells()
@@ -104,7 +137,8 @@ public class Battle : MonoBehaviour
             {
                 cell.transform.Find("Unit(Clone)").Find("OnActive").gameObject.SetActive(false);
             }
-
+            
+            cell.transform.Find("OnAvailable").gameObject.SetActive(m_AvailableCells.Contains(cell));
             cell.transform.Find("OnTarget").gameObject.SetActive(cell == m_TargetCell);
         }
 
@@ -129,13 +163,13 @@ public class Battle : MonoBehaviour
             currentUnitCard.transform.Find("Armor").GetChild(1).GetComponent<Text>().text = m_CurrentUnit.Armor.ToString();
         }
     }
-    
+
     public void OnMoveButton()
     {
         GameObject unitAsGameObject = m_CurrentCell.transform.Find("Unit(Clone)").gameObject;
         List<Point> barriers = GetUnitsAsPoints(m_CurrentCell, m_TargetCell);
-        Point currentPosition = ParsePoint(m_CurrentCell);
-        Point targetPosition = ParsePoint(m_TargetCell);
+        Point currentPosition = GameObjectToPoint(m_CurrentCell);
+        Point targetPosition = GameObjectToPoint(m_TargetCell);
         List<Point> path = Bts(barriers, currentPosition, targetPosition);
 
         if (m_CurrentUnit.MovingRange < path.Count)
@@ -189,22 +223,21 @@ public class Battle : MonoBehaviour
         var result = new List<Point>();
         foreach (GameObject cell in _unitsPositions.Keys.Where(x => !exclude.Contains(x)))
         {
-            // Парсим имя клетки формата 4_7 в точку Point(4,7)
-            Point p = ParsePoint(cell);
+            Point p = GameObjectToPoint(cell);
             result.Append(p);
         }
 
         return result;
     }
 
-    private Point ParsePoint(GameObject cell)
+    private Point GameObjectToPoint(GameObject cell)
     {
+        // Парсим имя клетки формата 4_7 в точку Point(4,7)
         return new Point(int.Parse(cell.name.Split('_')[0]), int.Parse(cell.name.Split('_')[1]));
     }
 
     public void FirstAbilityButton()
     {
-        
         if (_unitsPositions.ContainsKey(m_TargetCell) && !_unitsPositions[m_TargetCell].IsAlly && !_unitsPositions[m_CurrentCell].IsUsedAbility)
         {
             m_CurrentUnit.Ability1(_unitsPositions[m_TargetCell]);
@@ -232,6 +265,11 @@ public class Battle : MonoBehaviour
             m_CurrentUnit = null;
             m_CurrentCell = null;
         }
+        else
+        {
+            if (!m_CurrentUnit.IsMoved)
+                m_AvailableCells = GetAvailableCells(m_CurrentCell, m_CurrentUnit.MovingRange);
+        }
         m_TargetCell = null;
     }
 
@@ -246,7 +284,7 @@ public class Battle : MonoBehaviour
             abilitiesPanel.SetActive(true);
             abilitiesPanel.transform.GetChild(1).GetComponent<Button>().enabled = !m_CurrentUnit.IsMoved;
             abilitiesPanel.transform.Find("ActiveAbilities").GetChild(0).GetComponent<Button>().enabled = !m_CurrentUnit.IsUsedAbility;
-            SetupAbilitiesPanel();
+            UpdateAbilitiesPanel();
             
             foreach (Transform child in abilitiesPanel.transform)
             {
@@ -255,7 +293,7 @@ public class Battle : MonoBehaviour
         }
     }
 
-    private void SetupAbilitiesPanel()
+    private void UpdateAbilitiesPanel()
     {
         var abilitiesParent = abilitiesPanel.transform.Find("ActiveAbilities");
         for(var i = 0; i < 3; i++)
@@ -368,73 +406,73 @@ public class Battle : MonoBehaviour
     }
 
     private static List<Point> Bts(IEnumerable<Point> barriers, Point start, Point end)
+    {
+        var a = new bool[8, 8];
+        var b = new Point[8, 8];
+
+        var q = new Queue<Point>();
+
+        for (int i = 0; i < 8; i++)
+        for (int j = 0; j < 8; j++)
+            a[i, j] = true;
+
+        if (!(barriers is null))
+            foreach (var barrier in barriers)
+                a[barrier.X, barrier.Y] = false;
+
+        q.Enqueue(start);
+        a[start.X, start.Y] = false;
+        b[start.X, start.Y] = start;
+
+        while (!q.Peek().Equals(end))
         {
-            var a = new bool[8, 8];
-            var b = new Point[8, 8];
+            var e = q.Dequeue();
 
-            var q = new Queue<Point>();
-
-            for (int i = 0; i < 8; i++)
-            for (int j = 0; j < 8; j++)
-                a[i, j] = true;
-
-            if (!(barriers is null))
-                foreach (var barrier in barriers)
-                    a[barrier.X, barrier.Y] = false;
-
-            q.Enqueue(start);
-            a[start.X, start.Y] = false;
-            b[start.X, start.Y] = start;
-
-            while (!q.Peek().Equals(end))
+            var points = new[]
             {
-                var e = q.Dequeue();
+                new Point(e.X - 1, e.Y),
+                new Point(e.X + 1, e.Y),
+                new Point(e.X, e.Y - 1),
+                new Point(e.X, e.Y + 1),
+                new Point(e.X + 1, e.Y + 1),
+                new Point(e.X + 1, e.Y - 1),
+                new Point(e.X - 1, e.Y + 1),
+                new Point(e.X - 1, e.Y - 1),
+            };
 
-                var points = new[]
+            foreach (var point in points)
+            {
+                if (point.X >= 0 && point.X < 8 && point.Y >= 0 && point.Y < 8 && a[point.X, point.Y])
                 {
-                    new Point(e.X - 1, e.Y),
-                    new Point(e.X + 1, e.Y),
-                    new Point(e.X, e.Y - 1),
-                    new Point(e.X, e.Y + 1),
-                    new Point(e.X + 1, e.Y + 1),
-                    new Point(e.X + 1, e.Y - 1),
-                    new Point(e.X - 1, e.Y + 1),
-                    new Point(e.X - 1, e.Y - 1),
-                };
-
-                foreach (var point in points)
-                {
-                    if (point.X >= 0 && point.X < 8 && point.Y >= 0 && point.Y < 8 && a[point.X, point.Y])
-                    {
-                        q.Enqueue(point);
-                        a[point.X, point.Y] = false;
-                        var p1 = point.X;
-                        var p2 = point.Y;
-                        var e1 = e.X;
-                        var e2 = e.Y;
-                        b[p1, p2] = new Point(e1, e2);
-                    }
+                    q.Enqueue(point);
+                    a[point.X, point.Y] = false;
+                    var p1 = point.X;
+                    var p2 = point.Y;
+                    var e1 = e.X;
+                    var e2 = e.Y;
+                    b[p1, p2] = new Point(e1, e2);
                 }
             }
-
-            var result = new List<Point> {end, b[end.X, end.Y]};
-
-            while (true)
-            {
-                var value = result[result.Count - 1];
-                if (value.Equals(start)) break;
-                var x = value.X;
-                var y = value.Y;
-                var v = b[x, y];
-                result.Add(v);
-            }
-            
-            result.ToArray();
-            result.Reverse();
-            result.RemoveAt(0);
-
-            return result;
         }
+
+        var result = new List<Point> {end, b[end.X, end.Y]};
+
+        while (true)
+        {
+            var value = result[result.Count - 1];
+            if (value.Equals(start)) break;
+            var x = value.X;
+            var y = value.Y;
+            var v = b[x, y];
+            result.Add(v);
+        }
+        
+        result.ToArray();
+        result.Reverse();
+        result.RemoveAt(0);
+
+        return result;
+    }
 
     private Dictionary<int, Point> GetRandomPointsArray(int len, Point start, Point end, ICollection<Point> restrictedPoints)
     {

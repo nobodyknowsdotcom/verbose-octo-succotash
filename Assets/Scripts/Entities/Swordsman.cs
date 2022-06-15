@@ -6,14 +6,13 @@ namespace Entities
     public class Swordsman : Unit
     {
         private Random m_Random = new Random();
-        protected Swordsman(string name, bool isAlly, int buyPrice, int maintenancePrice, int damage, int health, int armor, double dodgeChance, double accuracy, int movingRange, Sprite sprite) 
-            : base(name, isAlly, buyPrice, maintenancePrice, damage, health, armor, dodgeChance, accuracy, movingRange, sprite)
+        protected Swordsman(string name, bool isAlly, int buyPrice, int maintenancePrice, int damage, int health, int armor, double dodgeChance, double accuracy, int movingRange) 
+            : base(name, isAlly, buyPrice, maintenancePrice, damage, health, armor, dodgeChance, accuracy, movingRange)
         {
         }
         
         public static Swordsman CreateInstance(bool isAlly)
         {
-            var sprite = Resources.Load<Sprite>(isAlly ? "Warriors/ally_knight" : "Warriors/enemy_knight");
             var movingRange = 4;
             var name = "Мечник";
             var buyPrice = 120;
@@ -24,19 +23,21 @@ namespace Entities
             var dodge = 0.1;
             var accuracy = 0.9;
             
-            var swordsman = new Swordsman("Мечник", isAlly, buyPrice, maintenancePrice, damage, health, armor, dodge, accuracy, movingRange, sprite);
-            SetupAbilitiesResources(swordsman);
+            var swordsman = new Swordsman("Мечник", isAlly, buyPrice, maintenancePrice, damage, health, armor, dodge, accuracy, movingRange);
+            SetupSprites(swordsman);
             return swordsman;
         }
         
-        private static void SetupAbilitiesResources(Swordsman assault)
+        private static void SetupSprites(Swordsman sniper)
         {
+            var sprite = Resources.Load<Sprite>(sniper.IsAlly ? "Warriors/ally_knight" : "Warriors/enemy_knight");
             Sprite firstAbility = Resources.Load<Sprite>("Skills/Warrior Path");
             Sprite secondAbility = Resources.Load<Sprite>("Skills/Dash");
             Sprite thirdAbility = Resources.Load<Sprite>("Skills/Defense Stance");
-            var abilitiesNames = new string[] {"Пути война", "Рывок", "Защитная стойка"};
-            assault.AbilitiesNames = abilitiesNames;
-            assault.Icons = new[] {firstAbility, secondAbility, thirdAbility};
+            var abilitiesNames = new [] {"Пути война", "Рывок", "Защитная стойка"};
+            sniper.Sprite = sprite;
+            sniper.AbilitiesNames = abilitiesNames;
+            sniper.Icons = new[] {firstAbility, secondAbility, thirdAbility};
         }
 
         public override void Ability1(Unit enemy)
