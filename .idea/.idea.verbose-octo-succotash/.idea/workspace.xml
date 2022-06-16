@@ -3,16 +3,7 @@
   <component name="ChangeListManager">
     <list default="true" id="0b3f2042-8aef-4295-9e71-03ff8180e52d" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/.idea.verbose-octo-succotash/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.verbose-octo-succotash/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Prefabs/Tile.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Prefabs/Tile.prefab" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scenes/Map.unity" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scenes/Map.unity" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/Scripts/Battle/Battle.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Battle/Battle.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Entities/Assault.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Entities/Assault.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Entities/Sniper.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Entities/Sniper.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Entities/Swordsman.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Entities/Swordsman.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Entities/Unit.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Entities/Unit.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Packages/packages-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/Packages/packages-lock.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ProjectSettings/ProjectSettings.asset" beforeDir="false" afterPath="$PROJECT_DIR$/ProjectSettings/ProjectSettings.asset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/UserSettings/EditorUserSettings.asset" beforeDir="false" afterPath="$PROJECT_DIR$/UserSettings/EditorUserSettings.asset" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/UserSettings/Layouts/default-2021.dwlt" beforeDir="false" afterPath="$PROJECT_DIR$/UserSettings/Layouts/default-2021.dwlt" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -190,6 +181,7 @@
       <workItem from="1655194377780" duration="879000" />
       <workItem from="1655209237299" duration="1425000" />
       <workItem from="1655311271018" duration="7450000" />
+      <workItem from="1655387496648" duration="2051000" />
     </task>
     <servers />
   </component>

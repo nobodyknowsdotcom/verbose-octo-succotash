@@ -110,22 +110,32 @@ public class Battle : MonoBehaviour
     private List<GameObject> GetAvailableCells(GameObject start, int range)
     {
         var result = new List<GameObject>();
-        var barriers = GetUnitsAsPoints(m_CurrentCell);
+        List<Point> barriers = GetUnitsAsPoints(start);
+        Debug.Log(barriers.Count);
         foreach (var cell in m_CellsGrid)
         {
-            var path = Bts(barriers, GameObjectToPoint(start), GameObjectToPoint(cell));
-            
-            if (path.Count <= range)
+            try
             {
-                foreach (var point in path)
+                Point currentPosition = GameObjectToPoint(start);
+                Point targetPosition = GameObjectToPoint(cell);
+                List<Point> path = Bts(barriers, currentPosition, targetPosition);
+
+                if (path.Count <= range)
                 {
-                    var cellAtPoint = m_CellsGrid[point.X, point.Y];
-                    if (!_unitsPositions.ContainsKey(cellAtPoint) && !result.Contains(cellAtPoint))
+                    foreach (var point in path)
+                    {
+                        var cellAtPoint = m_CellsGrid[point.X, point.Y];
                         result.Add(cellAtPoint);
+                    }
                 }
+            }
+            catch (InvalidOperationException e)
+            {
+                continue;
             }
         }
 
+        Debug.Log(result.Count);
         return result;
     }
     
@@ -224,7 +234,7 @@ public class Battle : MonoBehaviour
         foreach (GameObject cell in _unitsPositions.Keys.Where(x => !exclude.Contains(x)))
         {
             Point p = GameObjectToPoint(cell);
-            result.Append(p);
+            result.Add(p);
         }
 
         return result;
