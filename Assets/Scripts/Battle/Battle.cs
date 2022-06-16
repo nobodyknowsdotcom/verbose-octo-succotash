@@ -21,7 +21,6 @@ public class Battle : MonoBehaviour
     [SerializeField] private GameObject cellPrefab;
     [SerializeField] private GameObject unitPrefab;
     [SerializeField] private GameObject enemyCardPrefab;
-    [SerializeField] private GameObject experimentalPrefab;
 
     private static Dictionary<GameObject, Unit> _unitsPositions;
     private List<Unit> m_AllySquad;
@@ -106,6 +105,8 @@ public class Battle : MonoBehaviour
 
                     if (!m_CurrentUnit.IsMoved)
                         m_AvailableCells = GetAvailableCells(m_CurrentCell, m_CurrentUnit.MovingRange);
+                    if (!m_CurrentUnit.IsUsedAbility)
+                        m_ReachableCells = GetAvailableCells(m_CurrentCell, m_CurrentUnit.AttackRange);
                 }
             }
         }
@@ -251,7 +252,10 @@ public class Battle : MonoBehaviour
 
     public void FirstAbilityButton()
     {
-        if (_unitsPositions.ContainsKey(m_TargetCell) && !_unitsPositions[m_TargetCell].IsAlly && !_unitsPositions[m_CurrentCell].IsUsedAbility)
+        Point currentPosition = GameObjectToPoint(m_CurrentCell);
+        Point targetPosition = GameObjectToPoint(m_TargetCell);
+        List<Point> path = Bts(new List<Point>(), currentPosition, targetPosition);
+        if (_unitsPositions.ContainsKey(m_TargetCell) && !_unitsPositions[m_TargetCell].IsAlly & !_unitsPositions[m_CurrentCell].IsUsedAbility & path.Count <= m_CurrentUnit.AttackRange)
         {
             m_CurrentUnit.Ability1(_unitsPositions[m_TargetCell]);
 
