@@ -29,7 +29,7 @@ namespace Entities
 
         private static void SetupSprites(Assault assault)
         {
-            var sprite = Resources.Load<Sprite>(assault.IsAlly ? "Warriors/ally_assault" : "Warriors/enemy_assault");
+            var sprite = Resources.Load<Sprite>(assault.IsAlly ? "Warriors/Assault" : "Warriors/Assault Enemy");
             Sprite firstAbility = Resources.Load<Sprite>("Skills/Burst");
             Sprite secondAbility = Resources.Load<Sprite>("Skills/First Aid");
             Sprite thirdAbility = Resources.Load<Sprite>("Skills/Grenade Throw");

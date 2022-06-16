@@ -79,8 +79,8 @@ public class Battle : MonoBehaviour
         if (m_CurrentCell != null && selectedCell != m_CurrentCell && !(_unitsPositions[m_CurrentCell].IsUsedAbility & _unitsPositions[m_CurrentCell].IsMoved))
         {
             m_TargetCell = selectedCell;
-            
-            m_AvailableCells.Clear();
+
+            m_AvailableCells = new List<GameObject>();
         }
         else
         {
@@ -90,7 +90,7 @@ public class Battle : MonoBehaviour
                 m_CurrentCell = null;
                 m_TargetCell = null;
                 
-                m_AvailableCells.Clear();
+                m_AvailableCells = new List<GameObject>();
             }
             else
             {
@@ -110,32 +110,26 @@ public class Battle : MonoBehaviour
     private List<GameObject> GetAvailableCells(GameObject start, int range)
     {
         var result = new List<GameObject>();
-        List<Point> barriers = GetUnitsAsPoints(start);
-        Debug.Log(barriers.Count);
+        var barriers = GetUnitsAsPoints();
+        
         foreach (var cell in m_CellsGrid)
         {
-            try
-            {
-                Point currentPosition = GameObjectToPoint(start);
-                Point targetPosition = GameObjectToPoint(cell);
-                List<Point> path = Bts(barriers, currentPosition, targetPosition);
+            if (barriers.Contains(GameObjectToPoint(cell))) continue;
+            
+            var currentPosition = GameObjectToPoint(start);
+            var targetPosition = GameObjectToPoint(cell);
+            var path = Bts(barriers, currentPosition, targetPosition);
 
-                if (path.Count <= range)
-                {
-                    foreach (var point in path)
-                    {
-                        var cellAtPoint = m_CellsGrid[point.X, point.Y];
-                        result.Add(cellAtPoint);
-                    }
-                }
-            }
-            catch (InvalidOperationException e)
+            if (path.Count <= range)
             {
-                continue;
+                foreach (var point in path)
+                {
+                    var cellAtPoint = m_CellsGrid[point.X, point.Y];
+                    result.Add(cellAtPoint);
+                }
             }
         }
 
-        Debug.Log(result.Count);
         return result;
     }
     
@@ -146,6 +140,7 @@ public class Battle : MonoBehaviour
             if (_unitsPositions.ContainsKey(cell))
             {
                 cell.transform.Find("Unit(Clone)").Find("OnActive").gameObject.SetActive(false);
+                cell.transform.Find("Unit(Clone)").Find("OnActiveBackground").gameObject.SetActive(false);
             }
             
             cell.transform.Find("OnAvailable").gameObject.SetActive(m_AvailableCells.Contains(cell));
@@ -155,6 +150,7 @@ public class Battle : MonoBehaviour
         if (m_CurrentCell != null)
         {
             m_CurrentCell.transform.Find("Unit(Clone)").Find("OnActive").gameObject.SetActive(true);
+            m_CurrentCell.transform.Find("Unit(Clone)").Find("OnActiveBackground").gameObject.SetActive(true);
         }
         
         if (m_AllySquad.Count == 0 || m_EnemySquad.Count == 0)
@@ -192,19 +188,19 @@ public class Battle : MonoBehaviour
         {
             _unitsPositions[m_TargetCell] = m_CurrentUnit;
             _unitsPositions.Remove(m_CurrentCell);
-            StartCoroutine(Move(unitAsGameObject, path));
-            
+
             m_CurrentCell = m_TargetCell;
             m_TargetCell = null;
             
+            StartCoroutine(Move(unitAsGameObject, path));
             _unitsPositions[m_CurrentCell].Moved();
         }
         else if (m_TargetCell == m_ExitCell)
         {
-            StartCoroutine(Move(unitAsGameObject, path));
             m_AllySquad.Remove(_unitsPositions[m_CurrentCell]);
             _unitsPositions.Remove(m_CurrentCell);
             
+            StartCoroutine(Move(unitAsGameObject, path));
             Destroy(unitAsGameObject);
 
             if (m_AllySquad.Count != 0)
@@ -224,7 +220,7 @@ public class Battle : MonoBehaviour
         {
             unit.transform.position = m_CellsGrid[point.X, point.Y].transform.position;
             unit.transform.parent = m_CellsGrid[point.X, point.Y].transform;
-            yield return new WaitForSeconds(0.2f);
+            yield return new WaitForSeconds(0.15f);
         }
     }
 
@@ -343,7 +339,7 @@ public class Battle : MonoBehaviour
         for (var i=0; i<m_AllySquad.Count; i++)
         {
             var allyPrefab = unitPrefab;
-            allyPrefab.transform.GetChild(0).GetComponent<Image>().sprite = m_AllySquad[i].Sprite;
+            allyPrefab.transform.Find("Icon").GetComponent<Image>().sprite = m_AllySquad[i].Sprite;
             _unitsPositions.Add(m_CellsGrid[allyPositions[i].X, allyPositions[i].Y], m_AllySquad[i]);
             
             SpawnUnit(allyPrefab, allyPositions[i]);
@@ -352,7 +348,7 @@ public class Battle : MonoBehaviour
         for (var i=0; i<m_EnemySquad.Count; i++)
         {
             var enemyPrefab = unitPrefab;
-            enemyPrefab.transform.GetChild(0).GetComponent<Image>().sprite = m_EnemySquad[i].Sprite;
+            enemyPrefab.transform.Find("Icon").GetComponent<Image>().sprite = m_EnemySquad[i].Sprite;
             _unitsPositions.Add(m_CellsGrid[enemyPositions[i].X, enemyPositions[i].Y], m_EnemySquad[i]);
             
             SpawnUnit(enemyPrefab, enemyPositions[i]);

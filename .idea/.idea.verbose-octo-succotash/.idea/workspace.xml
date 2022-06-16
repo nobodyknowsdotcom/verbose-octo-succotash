@@ -3,7 +3,72 @@
   <component name="ChangeListManager">
     <list default="true" id="0b3f2042-8aef-4295-9e71-03ff8180e52d" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/.idea.verbose-octo-succotash/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.verbose-octo-succotash/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Assets/Resources/Warriors/ally_assault.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Assets/Resources/Warriors/ally_assault.png.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Assets/Resources/Warriors/ally_knight.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Assets/Resources/Warriors/ally_knight.png.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Assets/Resources/Warriors/ally_sniper.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Assets/Resources/Warriors/ally_sniper.png.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Assets/Resources/Warriors/enemy_assault.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Assets/Resources/Warriors/enemy_assault.png.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Assets/Resources/Warriors/enemy_knight.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Assets/Resources/Warriors/enemy_knight.png.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Assets/Resources/Warriors/enemy_sniper.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Assets/Resources/Warriors/enemy_sniper.png.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/CharacterChip.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/CharacterChip/CharacterChip.prefab" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/CharacterChip/CharacterChip.prefab.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/CharacterChip/Sprites.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/CharacterChip/Sprites/Armor Fill.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/CharacterChip/Sprites/Armor Fill.png.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/CharacterChip/Sprites/Assault Enemy.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/CharacterChip/Sprites/Assault Enemy.png.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/CharacterChip/Sprites/Assault.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/CharacterChip/Sprites/Assault.png.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/CharacterChip/Sprites/Background Gradient.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/CharacterChip/Sprites/Background Gradient.png.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/CharacterChip/Sprites/Background Light.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/CharacterChip/Sprites/Background Light.png.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/CharacterChip/Sprites/Background.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/CharacterChip/Sprites/Background.png.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/CharacterChip/Sprites/Bars Fill Color.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/CharacterChip/Sprites/Bars Fill Color.png.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/CharacterChip/Sprites/Bars Fill Selected.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/CharacterChip/Sprites/Bars Fill Selected.png.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/CharacterChip/Sprites/Bars.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/CharacterChip/Sprites/Bars.png.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/CharacterChip/Sprites/Border.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/CharacterChip/Sprites/Border.png.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/CharacterChip/Sprites/Fill Color.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/CharacterChip/Sprites/Fill Color.png.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/CharacterChip/Sprites/Health Background Fill Ally.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/CharacterChip/Sprites/Health Background Fill Ally.png.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/CharacterChip/Sprites/Health Background Fill Enemy.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/CharacterChip/Sprites/Health Background Fill Enemy.png.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/CharacterChip/Sprites/Health Fill Ally.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/CharacterChip/Sprites/Health Fill Ally.png.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/CharacterChip/Sprites/Health Fill Enemy.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/CharacterChip/Sprites/Health Fill Enemy.png.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/CharacterChip/Sprites/Sniper Enemy.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/CharacterChip/Sprites/Sniper Enemy.png.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/CharacterChip/Sprites/Sniper.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/CharacterChip/Sprites/Sniper.png.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/CharacterChip/Sprites/Swordsman Enemy 2.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/CharacterChip/Sprites/Swordsman Enemy 2.png.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/CharacterChip/Sprites/Swordsman Enemy.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/CharacterChip/Sprites/Swordsman Enemy.png.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/CharacterChip/Sprites/Swordsman.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/CharacterChip/Sprites/Swordsman.png.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/CharacterChip/UI_CharacterChip.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/CharacterChip/UI_CharacterChip.cs.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Prefabs/Tile.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Prefabs/Tile.prefab" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Prefabs/Unit.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Prefabs/Unit.prefab" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scenes/Battle.unity" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scenes/Battle.unity" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/Scripts/Battle/Battle.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Battle/Battle.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Entities/Assault.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Entities/Assault.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Entities/Sniper.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Entities/Sniper.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Entities/Swordsman.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Entities/Swordsman.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/UserSettings/EditorUserSettings.asset" beforeDir="false" afterPath="$PROJECT_DIR$/UserSettings/EditorUserSettings.asset" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/UserSettings/Layouts/default-2021.dwlt" beforeDir="false" afterPath="$PROJECT_DIR$/UserSettings/Layouts/default-2021.dwlt" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -42,11 +107,11 @@
       <option value="$PROJECT_DIR$/Assets/Scripts/Entities/Cell.cs" />
       <option value="$PROJECT_DIR$/Assets/Scripts/Map/Map.cs" />
       <option value="$PROJECT_DIR$/Assets/Scripts/Entities/Unit.cs" />
+      <option value="$PROJECT_DIR$/Assets/CharacterChip/UI_CharacterChip.cs" />
+      <option value="$PROJECT_DIR$/Assets/Scripts/Entities/Swordsman.cs" />
+      <option value="$PROJECT_DIR$/Assets/Scripts/Battle/Battle.cs" />
       <option value="$PROJECT_DIR$/Assets/Scripts/Entities/Assault.cs" />
       <option value="$PROJECT_DIR$/Assets/Scripts/Entities/Sniper.cs" />
-      <option value="$PROJECT_DIR$/Assets/Scripts/Entities/Swordsman.cs" />
-      <option value="$PROJECT_DIR$/Assets/CharacterChip/UI_CharacterChip.cs" />
-      <option value="$PROJECT_DIR$/Assets/Scripts/Battle/Battle.cs" />
     </changedPaths>
   </component>
   <component name="ProjectId" id="28Swb6SCp9JQooodyj6MSMtxZfz" />
@@ -181,7 +246,8 @@
       <workItem from="1655194377780" duration="879000" />
       <workItem from="1655209237299" duration="1425000" />
       <workItem from="1655311271018" duration="7450000" />
-      <workItem from="1655387496648" duration="2051000" />
+      <workItem from="1655387496648" duration="3326000" />
+      <workItem from="1655391697545" duration="2184000" />
     </task>
     <servers />
   </component>
