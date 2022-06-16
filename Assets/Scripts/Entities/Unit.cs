@@ -14,7 +14,7 @@ public class Unit : MonoBehaviour
     public double DodgeChance { get; set; }
     public double Accuracy { get;}
     
-    private int AttackRange { get; set; }
+    public int AttackRange { get; set; }
     public int MovingRange { get; set; }
     
     public bool IsAlly { get; set; } = true;
@@ -25,7 +25,7 @@ public class Unit : MonoBehaviour
     public Sprite[] Icons { get; set; }
     public string[] AbilitiesNames { get; set; }
 
-    protected Unit(string name, bool isAlly, int buyPrice, int maintenancePrice, int damage, int health, int armor, double dodgeChance, double accuracy, int movingRange)
+    protected Unit(string name, bool isAlly, int buyPrice, int maintenancePrice, int damage, int health, int armor, double dodgeChance, double accuracy, int movingRange, int attackRange)
     {
         Name = name;
         BuyPrice = buyPrice;
@@ -37,13 +37,15 @@ public class Unit : MonoBehaviour
         DodgeChance = dodgeChance;
         Accuracy = accuracy;
         MovingRange = movingRange;
+        AttackRange = attackRange;
+        AttackRange = attackRange;
         BuyPrice = buyPrice;
         IsAlly = isAlly;
     }
 
-    public static Unit CreateInstance(string name, bool isAlly, int buyPrice, int maintenancePrice, int damage, int health, int armor, double dodgeChance, double accuracy, int movingRange)
+    public static Unit CreateInstance(string name, bool isAlly, int buyPrice, int maintenancePrice, int damage, int health, int armor, double dodgeChance, double accuracy, int movingRange, int attackRange)
     {
-        return new Unit(name, isAlly, buyPrice, maintenancePrice, damage, health, armor, dodgeChance, accuracy, movingRange);
+        return new Unit(name, isAlly, buyPrice, maintenancePrice, damage, health, armor, dodgeChance, accuracy, movingRange, attackRange);
     }
 
     public void Moved()

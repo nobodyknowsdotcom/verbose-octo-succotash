@@ -231,13 +231,13 @@ public class SquadsManager : MonoBehaviour
         {
             [0] = new List<Unit>
             {
-                Assault.CreateInstance(true),
+                Swordsman.CreateInstance(true),
                 Assault.CreateInstance(true),
                 Sniper.CreateInstance(true)
             },
             [1] = new List<Unit>
             {
-                Swordsman.CreateInstance(true),
+                Assault.CreateInstance(true),
                 Sniper.CreateInstance(true),
                 Swordsman.CreateInstance(true)
             }

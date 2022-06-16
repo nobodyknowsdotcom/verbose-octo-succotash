@@ -30,6 +30,7 @@ public class Battle : MonoBehaviour
     
     private GameObject[,] m_CellsGrid;
     private List<GameObject> m_AvailableCells;
+    private List<GameObject> m_ReachableCells;
     private GameObject m_CurrentCell;
     private GameObject m_TargetCell;
     private GameObject m_ExitCell;
@@ -46,7 +47,7 @@ public class Battle : MonoBehaviour
         var cellRect = cellPrefab.transform as RectTransform;
         cellRect.sizeDelta = new Vector2 (1.218f * 1080/Screen.height, 1.218f * 1080/Screen.height);
         var unitRect = unitPrefab.transform as RectTransform;
-        unitRect.sizeDelta = new Vector2 (1.2f, 1.2f);
+        unitRect.sizeDelta = new Vector2 (1.18f, 1.18f);
         _unitsPositions = new Dictionary<GameObject, Unit>();
 
         m_AllySquad = SquadsManager.Squads[SquadsManager.CurrentSquad];
@@ -61,6 +62,7 @@ public class Battle : MonoBehaviour
         SwitchToNextUnit();
 
         m_AvailableCells = GetAvailableCells(m_CurrentCell, m_CurrentUnit.MovingRange);
+        m_ReachableCells = new List<GameObject>();
     }
 
     public void Update()
@@ -81,6 +83,7 @@ public class Battle : MonoBehaviour
             m_TargetCell = selectedCell;
 
             m_AvailableCells = new List<GameObject>();
+            m_ReachableCells = new List<GameObject>();
         }
         else
         {
@@ -91,6 +94,7 @@ public class Battle : MonoBehaviour
                 m_TargetCell = null;
                 
                 m_AvailableCells = new List<GameObject>();
+                m_ReachableCells = new List<GameObject>();
             }
             else
             {
@@ -143,6 +147,7 @@ public class Battle : MonoBehaviour
                 cell.transform.Find("Unit(Clone)").Find("OnActiveBackground").gameObject.SetActive(false);
             }
             
+            cell.transform.Find("OnReachable").gameObject.SetActive(m_ReachableCells.Contains(cell));
             cell.transform.Find("OnAvailable").gameObject.SetActive(m_AvailableCells.Contains(cell));
             cell.transform.Find("OnTarget").gameObject.SetActive(cell == m_TargetCell);
         }
@@ -222,6 +227,8 @@ public class Battle : MonoBehaviour
             unit.transform.parent = m_CellsGrid[point.X, point.Y].transform;
             yield return new WaitForSeconds(0.15f);
         }
+        
+        m_ReachableCells = GetAvailableCells(m_CurrentCell, m_CurrentUnit.AttackRange);
     }
 
     private List<Point> GetUnitsAsPoints(params GameObject[] exclude)

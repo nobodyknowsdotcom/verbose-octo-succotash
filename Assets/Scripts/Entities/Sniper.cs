@@ -6,13 +6,14 @@ namespace Entities
     public class Sniper : Unit
     {
         private readonly Random m_Random = new Random();
-        protected Sniper(string name, bool isAlly, int buyPrice, int maintenancePrice, int damage, int health, int armor, double dodgeChance, double accuracy, int movingRange) 
-            : base(name, isAlly, buyPrice, maintenancePrice, damage, health, armor, dodgeChance, accuracy, movingRange)
+        protected Sniper(string name, bool isAlly, int buyPrice, int maintenancePrice, int damage, int health, int armor, double dodgeChance, double accuracy, int movingRange,  int attackRange) 
+            : base(name, isAlly, buyPrice, maintenancePrice, damage, health, armor, dodgeChance, accuracy, movingRange, attackRange)
         {
         }
 
         public static Sniper CreateInstance(bool isAlly)
         {
+            var attackRange = 5;
             var movingRange = 3;
             var name = "Снайпер";
             var buyPrice = 200;
@@ -22,7 +23,7 @@ namespace Entities
             var armor = 60;
             var dodge = 0.15;
             var accuracy = 0.95;
-            var sniper = new Sniper(name, isAlly, buyPrice, maintenancePrice, damage, health, armor, dodge, accuracy, movingRange);
+            var sniper = new Sniper(name, isAlly, buyPrice, maintenancePrice, damage, health, armor, dodge, accuracy, movingRange, attackRange);
             SetupSprites(sniper);
             return sniper;
         }

@@ -7,13 +7,14 @@ namespace Entities
     {
         private readonly Random m_Random = new Random();
         protected Assault(string name, bool isAlly, int buyPrice, int maintenancePrice, int damage, int health,
-            int armor, double dodgeChance, double accuracy, int movingRange) : base(name, isAlly, buyPrice, maintenancePrice, damage, health, armor, dodgeChance, accuracy, movingRange)
+            int armor, double dodgeChance, double accuracy, int movingRange, int attackRange) : base(name, isAlly, buyPrice, maintenancePrice, damage, health, armor, dodgeChance, accuracy, movingRange,  attackRange)
         {
         }
         
         public static Assault CreateInstance(bool isAlly)
         {
             var movingRange = 3;
+            var attackRange = 4;
             var name = "Штурмовик";
             var buyPrice = 100;
             var maintenancePrice = 10;
@@ -22,7 +23,7 @@ namespace Entities
             var armor = 100;
             var dodge = 0.1;
             var accuracy = 0.75;
-            var assault = new Assault(name, isAlly, buyPrice, maintenancePrice, damage, health, armor, dodge, accuracy, movingRange);
+            var assault = new Assault(name, isAlly, buyPrice, maintenancePrice, damage, health, armor, dodge, accuracy, movingRange, attackRange);
             SetupSprites(assault);
             return assault;
         }

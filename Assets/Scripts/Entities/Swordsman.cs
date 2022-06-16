@@ -6,13 +6,14 @@ namespace Entities
     public class Swordsman : Unit
     {
         private Random m_Random = new Random();
-        protected Swordsman(string name, bool isAlly, int buyPrice, int maintenancePrice, int damage, int health, int armor, double dodgeChance, double accuracy, int movingRange) 
-            : base(name, isAlly, buyPrice, maintenancePrice, damage, health, armor, dodgeChance, accuracy, movingRange)
+        protected Swordsman(string name, bool isAlly, int buyPrice, int maintenancePrice, int damage, int health, int armor, double dodgeChance, double accuracy, int movingRange, int attackRange) 
+            : base(name, isAlly, buyPrice, maintenancePrice, damage, health, armor, dodgeChance, accuracy, movingRange, attackRange)
         {
         }
         
         public static Swordsman CreateInstance(bool isAlly)
         {
+            var attackRange = 1;
             var movingRange = 4;
             var name = "Мечник";
             var buyPrice = 120;
@@ -23,7 +24,7 @@ namespace Entities
             var dodge = 0.1;
             var accuracy = 0.9;
             
-            var swordsman = new Swordsman("Мечник", isAlly, buyPrice, maintenancePrice, damage, health, armor, dodge, accuracy, movingRange);
+            var swordsman = new Swordsman("Мечник", isAlly, buyPrice, maintenancePrice, damage, health, armor, dodge, accuracy, movingRange, attackRange);
             SetupSprites(swordsman);
             return swordsman;
         }
@@ -34,7 +35,7 @@ namespace Entities
             Sprite firstAbility = Resources.Load<Sprite>("Skills/Warrior Path");
             Sprite secondAbility = Resources.Load<Sprite>("Skills/Dash");
             Sprite thirdAbility = Resources.Load<Sprite>("Skills/Defense Stance");
-            var abilitiesNames = new [] {"Пути война", "Рывок", "Защитная стойка"};
+            var abilitiesNames = new [] {"Путь война", "Рывок", "Защитная стойка"};
             sniper.Sprite = sprite;
             sniper.AbilitiesNames = abilitiesNames;
             sniper.Icons = new[] {firstAbility, secondAbility, thirdAbility};
