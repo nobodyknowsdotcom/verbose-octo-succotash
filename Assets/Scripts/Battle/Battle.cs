@@ -300,7 +300,13 @@ public class Battle : MonoBehaviour
         {
             abilitiesPanel.SetActive(true);
             abilitiesPanel.transform.GetChild(1).GetComponent<Button>().enabled = !m_CurrentUnit.IsMoved;
+            abilitiesPanel.transform.GetChild(1).GetChild(2).gameObject.SetActive(m_CurrentUnit.IsMoved);
+            
             abilitiesPanel.transform.Find("ActiveAbilities").GetChild(0).GetComponent<Button>().enabled = !m_CurrentUnit.IsUsedAbility;
+            abilitiesPanel.transform.Find("ActiveAbilities").GetChild(0).GetChild(2).gameObject.SetActive(m_CurrentUnit.IsUsedAbility);
+            
+            abilitiesPanel.transform.Find("ActiveAbilities").GetChild(1).GetChild(2).gameObject.SetActive(true);
+            abilitiesPanel.transform.Find("ActiveAbilities").GetChild(2).GetChild(2).gameObject.SetActive(true);
             UpdateAbilitiesPanel();
             
             foreach (Transform child in abilitiesPanel.transform)
