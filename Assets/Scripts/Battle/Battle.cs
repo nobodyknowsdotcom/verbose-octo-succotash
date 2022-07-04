@@ -1,9 +1,7 @@
-using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
-using System.Net;
 using Entities;
 using UnityEngine;
 using UnityEngine.EventSystems;
@@ -49,7 +47,12 @@ public class Battle : MonoBehaviour
         unitRect.sizeDelta = new Vector2 (1.18f, 1.18f);
         _unitsPositions = new Dictionary<GameObject, Unit>();
 
-        m_AllySquad = SquadsManager.Squads[SquadsManager.CurrentSquad];
+        m_AllySquad = new List<Unit>
+        {
+            Swordsman.CreateInstance(true),
+            Assault.CreateInstance(true),
+            Sniper.CreateInstance(true)
+        };
 
         DrawCells();
     }
