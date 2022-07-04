@@ -151,8 +151,11 @@ public class Battle : MonoBehaviour
                 cell.transform.Find("Unit(Clone)").Find("OnActiveBackground").gameObject.SetActive(false);
             }
             
-            cell.transform.Find("OnReachable").gameObject.SetActive(m_ReachableCells.Contains(cell));
             cell.transform.Find("OnAvailable").gameObject.SetActive(m_AvailableCells.Contains(cell));
+            if (m_CurrentUnit.IsMoved)
+            {
+                cell.transform.Find("OnReachable").gameObject.SetActive(m_ReachableCells.Contains(cell));
+            }
             cell.transform.Find("OnTarget").gameObject.SetActive(cell == m_TargetCell);
         }
 
