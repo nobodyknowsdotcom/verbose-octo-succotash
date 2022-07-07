@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Drawing;
@@ -41,10 +42,10 @@ public class Battle : MonoBehaviour
     {
         Application.targetFrameRate = 30;
         
-        var cellRect = cellPrefab.transform as RectTransform;
-        cellRect.sizeDelta = new Vector2 (1.218f * 1080/Screen.height, 1.218f * 1080/Screen.height);
-        var unitRect = unitPrefab.transform as RectTransform;
-        unitRect.sizeDelta = new Vector2 (1.18f, 1.18f);
+        var cellPrefabRect = cellPrefab.transform as RectTransform;
+        cellPrefabRect.sizeDelta = new Vector2 (1.218f * 1080/Screen.height, 1.218f * 1080/Screen.height);
+        var unitPrefabRect = unitPrefab.transform as RectTransform;
+        unitPrefabRect.sizeDelta = new Vector2 (1.18f, 1.18f);
         _unitsPositions = new Dictionary<GameObject, Unit>();
 
         m_AllySquad = new List<Unit>
@@ -62,7 +63,6 @@ public class Battle : MonoBehaviour
         CreateEnemySquad();
         SpawnUnitsOnField();
         SwitchToNextUnit();
-
         m_AvailableCells = GetAvailableCells(m_CurrentCell, m_CurrentUnit.MovingRange);
         m_ReachableCells = new List<GameObject>();
     }
@@ -70,7 +70,6 @@ public class Battle : MonoBehaviour
     public void Update()
     {
         UpdateCells();
-        
         UpdateCurrentUnitCard();
         UpdateAvailableActions();
         UpdateEnemyUnitsPanel();
@@ -83,7 +82,6 @@ public class Battle : MonoBehaviour
         if (m_CurrentCell != null && selectedCell != m_CurrentCell && !(_unitsPositions[m_CurrentCell].IsUsedAbility & _unitsPositions[m_CurrentCell].IsMoved))
         {
             m_TargetCell = selectedCell;
-
             m_AvailableCells = new List<GameObject>();
             m_ReachableCells = new List<GameObject>();
         }
@@ -94,7 +92,6 @@ public class Battle : MonoBehaviour
             {
                 m_CurrentCell = null;
                 m_TargetCell = null;
-                
                 m_AvailableCells = new List<GameObject>();
                 m_ReachableCells = new List<GameObject>();
             }
@@ -108,7 +105,7 @@ public class Battle : MonoBehaviour
 
                     if (!m_CurrentUnit.IsMoved)
                         m_AvailableCells = GetAvailableCells(m_CurrentCell, m_CurrentUnit.MovingRange);
-                    if (!m_CurrentUnit.IsUsedAbility)
+                    else if (!m_CurrentUnit.IsUsedAbility)
                         m_ReachableCells = GetAvailableCells(m_CurrentCell, m_CurrentUnit.AttackRange);
                 }
             }
@@ -119,11 +116,9 @@ public class Battle : MonoBehaviour
     {
         var result = new List<GameObject>();
         var barriers = GetUnitsAsPoints();
-        
         foreach (var cell in m_CellsGrid)
         {
             if (barriers.Contains(GameObjectToPoint(cell))) continue;
-            
             var currentPosition = GameObjectToPoint(start);
             var targetPosition = GameObjectToPoint(cell);
             var path = Bts(barriers, currentPosition, targetPosition);
@@ -137,7 +132,6 @@ public class Battle : MonoBehaviour
                 }
             }
         }
-
         return result;
     }
     
@@ -150,12 +144,8 @@ public class Battle : MonoBehaviour
                 cell.transform.Find("Unit(Clone)").Find("OnActive").gameObject.SetActive(false);
                 cell.transform.Find("Unit(Clone)").Find("OnActiveBackground").gameObject.SetActive(false);
             }
-            
             cell.transform.Find("OnAvailable").gameObject.SetActive(m_AvailableCells.Contains(cell));
-            if (m_CurrentUnit.IsMoved)
-            {
-                cell.transform.Find("OnReachable").gameObject.SetActive(m_ReachableCells.Contains(cell));
-            }
+            cell.transform.Find("OnReachable").gameObject.SetActive(m_ReachableCells.Contains(cell));
             cell.transform.Find("OnTarget").gameObject.SetActive(cell == m_TargetCell);
         }
 
@@ -164,7 +154,7 @@ public class Battle : MonoBehaviour
             m_CurrentCell.transform.Find("Unit(Clone)").Find("OnActive").gameObject.SetActive(true);
             m_CurrentCell.transform.Find("Unit(Clone)").Find("OnActiveBackground").gameObject.SetActive(true);
         }
-        
+
         if (m_AllySquad.Count == 0 || m_EnemySquad.Count == 0)
         {
             SceneManager.LoadScene("Map");
@@ -176,9 +166,18 @@ public class Battle : MonoBehaviour
         if (m_CurrentCell != null)
         {
             currentUnitCard.SetActive(true);
-            currentUnitCard.transform.Find("Icon").GetComponent<Image>().sprite = m_CurrentUnit.Sprite;
-            currentUnitCard.transform.Find("Health").GetChild(1).GetComponent<Text>().text = m_CurrentUnit.Health.ToString();
-            currentUnitCard.transform.Find("Armor").GetChild(1).GetComponent<Text>().text = m_CurrentUnit.Armor.ToString();
+            try
+            {
+                currentUnitCard.transform.Find("Icon").GetComponent<Image>().sprite = m_CurrentUnit.Sprite;
+                currentUnitCard.transform.Find("Health").GetChild(1).GetComponent<Text>().text =
+                    m_CurrentUnit.Health.ToString();
+                currentUnitCard.transform.Find("Armor").GetChild(1).GetComponent<Text>().text =
+                    m_CurrentUnit.Armor.ToString();
+            }
+            catch (NullReferenceException e)
+            {
+                currentUnitCard.SetActive(false);
+            }
         }
     }
 
@@ -268,32 +267,38 @@ public class Battle : MonoBehaviour
             if (_unitsPositions[m_TargetCell].Health <= 0)
             {
                 Destroy(m_TargetCell.transform.Find("Unit(Clone)").gameObject);
-                
                 _unitsPositions.Remove(m_TargetCell);
             }
-
             m_TargetCell = null;
 
             SwitchToNextUnit();
         }
     }
     
-    private void SwitchToNextUnit()
+    private bool SwitchToNextUnit()
     {
-        m_CurrentUnit = _unitsPositions.Values.FirstOrDefault(unit => !unit.IsUsedAbility && unit.IsAlly);
-        m_CurrentCell = _unitsPositions.FirstOrDefault(x => !x.Value.IsUsedAbility & x.Value == m_CurrentUnit & x.Key != m_CurrentCell).Key;
+        m_CurrentUnit = _unitsPositions.FirstOrDefault(x => x.Value.IsAlly && !x.Value.IsMoved).Value;
+        m_CurrentCell = _unitsPositions.FirstOrDefault(x => x.Value.GetHashCode() == m_CurrentUnit.GetHashCode()).Key;
+        m_TargetCell = null;
 
-        if (!_unitsPositions[m_CurrentCell].IsAlly)
+        if (!m_CurrentUnit.IsMoved)
         {
-            m_CurrentUnit = null;
-            m_CurrentCell = null;
+            m_AvailableCells = GetAvailableCells(m_CurrentCell, m_CurrentUnit.MovingRange);
+            Debug.Log(m_CurrentCell.name);
+        }
+        else if (!m_CurrentUnit.IsUsedAbility)
+        {
+            m_ReachableCells = GetAvailableCells(m_CurrentCell, m_CurrentUnit.AttackRange);
+            Debug.Log(m_CurrentCell.name);
         }
         else
         {
-            if (!m_CurrentUnit.IsMoved)
-                m_AvailableCells = GetAvailableCells(m_CurrentCell, m_CurrentUnit.MovingRange);
+            m_CurrentCell = null;
+            m_AvailableCells = new List<GameObject>();
+            m_ReachableCells = new List<GameObject>();
         }
-        m_TargetCell = null;
+
+        return true;
     }
 
     private void UpdateAvailableActions()
@@ -385,6 +390,46 @@ public class Battle : MonoBehaviour
         unit.transform.SetParent(m_CellsGrid[position.X, position.Y].transform);
     }
     
+    public void EndTurn()
+    {
+        foreach (var unit in _unitsPositions.Values)
+        {
+            unit.RefreshAbilitiesAndMoving();
+        }
+
+        m_ReachableCells = new List<GameObject>();
+        m_AvailableCells = new List<GameObject>();
+        
+        EnemiesTurn();
+        SwitchToNextUnit();
+    }
+
+    private void EnemiesTurn()
+    {
+        foreach (Unit enemy in m_EnemySquad)
+        {
+            (Unit ally, List<Point> path) = GetClosestAlly(enemy);
+            Debug.Log(enemy.Name + ally.Name);
+        }
+    }
+
+    private Tuple<Unit, List<Point>> GetClosestAlly(Unit unit)
+    {
+        var paths = new Dictionary<Unit, List<Point>>();
+        for (int i=0; i<m_AllySquad.Count; i++)
+        {
+            GameObject startCell = _unitsPositions.FirstOrDefault(x => x.Value.GetHashCode() == unit.GetHashCode()).Key;
+            Point start = GameObjectToPoint(startCell);
+            GameObject endCell = _unitsPositions.FirstOrDefault(x => x.Value.GetHashCode() == m_AllySquad[i].GetHashCode()).Key;
+            Point end = GameObjectToPoint(endCell);
+            
+            var pathToUnit = Bts(new List<Point>(), start, end);
+            paths[m_AllySquad[i]] = pathToUnit;
+        }
+        var sortedPaths = from entry in paths orderby entry.Value.Count ascending select entry;
+        return Tuple.Create(sortedPaths.First().Key, sortedPaths.First().Value);
+    }
+    
     private void DrawCells()
     {
         if (cellPrefab == null)
@@ -424,16 +469,6 @@ public class Battle : MonoBehaviour
         };
     }
 
-    public void EndTurn()
-    {
-        foreach (var unit in _unitsPositions.Values)
-        {
-            unit.RefreshAbilitiesAndMoving();
-        }
-        
-        SwitchToNextUnit();
-    }
-
     private static List<Point> Bts(IEnumerable<Point> barriers, Point start, Point end)
     {
         var a = new bool[8, 8];
@@ -445,7 +480,7 @@ public class Battle : MonoBehaviour
         for (int j = 0; j < 8; j++)
             a[i, j] = true;
 
-        if (!(barriers is null))
+        if (barriers != null)
             foreach (var barrier in barriers)
                 a[barrier.X, barrier.Y] = false;
 

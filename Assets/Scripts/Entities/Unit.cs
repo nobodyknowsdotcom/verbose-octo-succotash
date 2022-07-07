@@ -38,7 +38,6 @@ public class Unit : MonoBehaviour
         Accuracy = accuracy;
         MovingRange = movingRange;
         AttackRange = attackRange;
-        AttackRange = attackRange;
         BuyPrice = buyPrice;
         IsAlly = isAlly;
     }
@@ -46,6 +45,23 @@ public class Unit : MonoBehaviour
     public static Unit CreateInstance(string name, bool isAlly, int buyPrice, int maintenancePrice, int damage, int health, int armor, double dodgeChance, double accuracy, int movingRange, int attackRange)
     {
         return new Unit(name, isAlly, buyPrice, maintenancePrice, damage, health, armor, dodgeChance, accuracy, movingRange, attackRange);
+    }
+
+    public override int GetHashCode()
+    {
+        return ShiftAndWrap(Name.GetHashCode(), 2) ^ IsAlly.GetHashCode() + ShiftAndWrap(Accuracy.GetHashCode(), 2) ^ MaintenancePrice.GetHashCode();
+    }
+
+    private int ShiftAndWrap(int value, int positions)
+    {
+        positions = positions & 0x1F;
+
+        // Save the existing bit pattern, but interpret it as an unsigned integer.
+        uint number = BitConverter.ToUInt32(BitConverter.GetBytes(value), 0);
+        // Preserve the bits to be discarded.
+        uint wrapped = number >> (32 - positions);
+        // Shift and wrap the discarded bits.
+        return BitConverter.ToInt32(BitConverter.GetBytes((number << positions) | wrapped), 0);
     }
 
     public void Moved()
