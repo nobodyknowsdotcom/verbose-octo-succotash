@@ -49,7 +49,7 @@ public class Unit : MonoBehaviour
 
     public override int GetHashCode()
     {
-        return ShiftAndWrap(Name.GetHashCode(), 2) ^ IsAlly.GetHashCode() + ShiftAndWrap(Accuracy.GetHashCode(), 2) ^ MaintenancePrice.GetHashCode();
+        return ShiftAndWrap(Name.GetHashCode(), 2) ^ DodgeChance.GetHashCode() + ShiftAndWrap(Accuracy.GetHashCode(), 2) ^ MaintenancePrice.GetHashCode() + IsAlly.GetHashCode();
     }
 
     private int ShiftAndWrap(int value, int positions)

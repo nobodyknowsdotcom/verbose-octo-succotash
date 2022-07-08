@@ -7,6 +7,7 @@ using Entities;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.SceneManagement;
+using UnityEngine.Timeline;
 using UnityEngine.UI;
 using Random = System.Random;
 
@@ -233,8 +234,6 @@ public class Battle : MonoBehaviour
             unit.transform.parent = m_CellsGrid[point.X, point.Y].transform;
             yield return new WaitForSeconds(0.15f);
         }
-        
-        m_ReachableCells = GetAvailableCells(m_CurrentCell, m_CurrentUnit.AttackRange);
     }
 
     private List<Point> GetUnitsAsPoints(params GameObject[] exclude)
@@ -248,7 +247,6 @@ public class Battle : MonoBehaviour
 
         return result;
     }
-
     private Point GameObjectToPoint(GameObject cell)
     {
         // Парсим имя клетки формата 4_7 в точку Point(4,7)
@@ -358,8 +356,8 @@ public class Battle : MonoBehaviour
     private void SpawnUnitsOnField()
     {
         var exitPosition = new Point(0, 7);
-        var allyPositions = GetRandomPointsArray(m_AllySquad.Count, new Point(0,3), new Point(4, 7), new List<Point>{exitPosition});
-        var enemyPositions = GetRandomPointsArray(m_EnemySquad.Count, new Point(3,0), new Point(7, 4), allyPositions.Values.Append(exitPosition).ToList());
+        var allyPositions = GetRandomPointsArray(m_AllySquad.Count, new Point(0,4), new Point(4, 7), new List<Point>{exitPosition});
+        var enemyPositions = GetRandomPointsArray(m_EnemySquad.Count, new Point(4,0), new Point(7, 4), allyPositions.Values.Append(exitPosition).ToList());
         
         m_ExitCell = m_CellsGrid[exitPosition.X, exitPosition.Y];
         m_ExitCell.transform.Find("Exit").gameObject.SetActive(true);
@@ -399,9 +397,11 @@ public class Battle : MonoBehaviour
 
         m_ReachableCells = new List<GameObject>();
         m_AvailableCells = new List<GameObject>();
+        m_CurrentUnit = null;
+        m_CurrentCell = null;
+        m_TargetCell = null;
         
         EnemiesTurn();
-        SwitchToNextUnit();
     }
 
     private void EnemiesTurn()
@@ -409,7 +409,20 @@ public class Battle : MonoBehaviour
         foreach (Unit enemy in m_EnemySquad)
         {
             (Unit ally, List<Point> path) = GetClosestAlly(enemy);
-            Debug.Log(enemy.Name + ally.Name);
+            var enemyCell = _unitsPositions.FirstOrDefault(x => x.Value.GetHashCode() == enemy.GetHashCode()).Key;
+            var enemyAsGameObject = enemyCell.transform.Find("Unit(Clone)").gameObject;
+            
+            // Если не получается атаковать
+            if (path.Count > enemy.AttackRange && path.Count > 1)
+            {
+                // Удаляем часть пути, чтобы атаковать на дистанции
+                path.RemoveRange(path.Count - enemy.AttackRange, enemy.AttackRange);
+                _unitsPositions.Remove(enemyCell);
+                _unitsPositions[m_CellsGrid[path.Last().X, path.Last().Y]] = enemy;
+                _unitsPositions[m_CellsGrid[path.Last().X, path.Last().Y]].Moved();
+                
+                StartCoroutine(Move(enemyAsGameObject, path));
+            }
         }
     }
 
@@ -421,6 +434,11 @@ public class Battle : MonoBehaviour
             GameObject startCell = _unitsPositions.FirstOrDefault(x => x.Value.GetHashCode() == unit.GetHashCode()).Key;
             Point start = GameObjectToPoint(startCell);
             GameObject endCell = _unitsPositions.FirstOrDefault(x => x.Value.GetHashCode() == m_AllySquad[i].GetHashCode()).Key;
+            if (endCell == null)
+            {
+                Debug.Log("Can't find cell with " + m_AllySquad[i].Name);
+                continue;
+            }
             Point end = GameObjectToPoint(endCell);
             
             var pathToUnit = Bts(new List<Point>(), start, end);
