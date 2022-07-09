@@ -409,6 +409,7 @@ public class Battle : MonoBehaviour
         foreach (Unit enemy in m_EnemySquad)
         {
             (Unit ally, List<Point> path) = GetClosestAlly(enemy);
+            var allyCell = m_CellsGrid[path.Last().X, path.Last().Y];
             var enemyCell = _unitsPositions.FirstOrDefault(x => x.Value.GetHashCode() == enemy.GetHashCode()).Key;
             var enemyAsGameObject = enemyCell.transform.Find("Unit(Clone)").gameObject;
             
@@ -422,6 +423,17 @@ public class Battle : MonoBehaviour
                 _unitsPositions[m_CellsGrid[path.Last().X, path.Last().Y]].Moved();
                 
                 StartCoroutine(Move(enemyAsGameObject, path));
+            }
+            // Если атаковать возможно
+            if (path.Count <= enemy.AttackRange)
+            {
+                enemy.Ability1(ally);
+                if (ally.Health <= 0)
+                {
+                    Debug.Log(ally.Name);
+                    Destroy(allyCell.transform.Find("Unit(Clone)").gameObject);
+                    _unitsPositions.Remove(allyCell);
+                }
             }
         }
     }
@@ -441,7 +453,7 @@ public class Battle : MonoBehaviour
             }
             Point end = GameObjectToPoint(endCell);
             
-            var pathToUnit = Bts(new List<Point>(), start, end);
+            var pathToUnit = Bts(GetUnitsAsPoints(startCell, endCell), start, end);
             paths[m_AllySquad[i]] = pathToUnit;
         }
         var sortedPaths = from entry in paths orderby entry.Value.Count ascending select entry;
