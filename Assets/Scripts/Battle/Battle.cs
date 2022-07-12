@@ -33,6 +33,7 @@ public class Battle : MonoBehaviour
     private GameObject m_CurrentCell;
     private GameObject m_TargetCell;
     private GameObject m_ExitCell;
+    private List<GameObject> m_ObstacleCells;
 
     private const int Width = 8;
     private const int Height = 8;
@@ -62,10 +63,12 @@ public class Battle : MonoBehaviour
     public void Start()
     {
         CreateEnemySquad();
+        SpawnExitCell();
+        SpawnObstacles();
         SpawnUnitsOnField();
         SwitchToNextUnit();
-        m_AvailableCells = GetAvailableCells(m_CurrentCell, m_CurrentUnit.MovingRange);
         m_ReachableCells = new List<GameObject>();
+        m_AvailableCells = GetAvailableCells(m_CurrentCell, m_CurrentUnit.MovingRange);
     }
 
     public void Update()
@@ -116,13 +119,13 @@ public class Battle : MonoBehaviour
     private List<GameObject> GetAvailableCells(GameObject start, int range)
     {
         var result = new List<GameObject>();
-        var barriers = GetUnitsAsPoints();
+        var barriers = GetBarriers();
         foreach (var cell in m_CellsGrid)
         {
             if (barriers.Contains(GameObjectToPoint(cell))) continue;
             var currentPosition = GameObjectToPoint(start);
             var targetPosition = GameObjectToPoint(cell);
-            var path = Bts(barriers, currentPosition, targetPosition);
+            var path = GetPath(barriers, currentPosition, targetPosition);
 
             if (path.Count <= range)
             {
@@ -185,10 +188,10 @@ public class Battle : MonoBehaviour
     public void OnMoveButton()
     {
         GameObject unitAsGameObject = m_CurrentCell.transform.Find("Unit(Clone)").gameObject;
-        List<Point> barriers = GetUnitsAsPoints(m_CurrentCell, m_TargetCell);
+        List<Point> barriers = GetBarriers(m_CurrentCell, m_TargetCell);
         Point currentPosition = GameObjectToPoint(m_CurrentCell);
         Point targetPosition = GameObjectToPoint(m_TargetCell);
-        List<Point> path = Bts(barriers, currentPosition, targetPosition);
+        List<Point> path = GetPath(barriers, currentPosition, targetPosition);
 
         if (m_CurrentUnit.MovingRange < path.Count)
         {
@@ -236,15 +239,18 @@ public class Battle : MonoBehaviour
         }
     }
 
-    private List<Point> GetUnitsAsPoints(params GameObject[] exclude)
+    private List<Point> GetBarriers(params GameObject[] exclude)
     {
         var result = new List<Point>();
         foreach (GameObject cell in _unitsPositions.Keys.Where(x => !exclude.Contains(x)))
         {
-            Point p = GameObjectToPoint(cell);
-            result.Add(p);
+            result.Add(GameObjectToPoint(cell));
         }
-
+        foreach (GameObject obstacle in m_ObstacleCells.Where(x => !exclude.Contains(x)))
+        {
+            result.Add(GameObjectToPoint(obstacle));
+        }
+        result.Add(GameObjectToPoint(m_ExitCell));
         return result;
     }
     private Point GameObjectToPoint(GameObject cell)
@@ -257,7 +263,7 @@ public class Battle : MonoBehaviour
     {
         Point currentPosition = GameObjectToPoint(m_CurrentCell);
         Point targetPosition = GameObjectToPoint(m_TargetCell);
-        List<Point> path = Bts(new List<Point>(), currentPosition, targetPosition);
+        List<Point> path = GetPath(GetBarriers(m_CurrentCell, m_TargetCell), currentPosition, targetPosition);
         if (_unitsPositions.ContainsKey(m_TargetCell) && !_unitsPositions[m_TargetCell].IsAlly & !_unitsPositions[m_CurrentCell].IsUsedAbility & path.Count <= m_CurrentUnit.AttackRange)
         {
             m_CurrentUnit.Ability1(_unitsPositions[m_TargetCell]);
@@ -273,7 +279,7 @@ public class Battle : MonoBehaviour
         }
     }
     
-    private bool SwitchToNextUnit()
+    private void SwitchToNextUnit()
     {
         m_CurrentUnit = _unitsPositions.FirstOrDefault(x => x.Value.IsAlly && !x.Value.IsMoved).Value;
         m_CurrentCell = _unitsPositions.FirstOrDefault(x => x.Value.GetHashCode() == m_CurrentUnit.GetHashCode()).Key;
@@ -282,12 +288,10 @@ public class Battle : MonoBehaviour
         if (!m_CurrentUnit.IsMoved)
         {
             m_AvailableCells = GetAvailableCells(m_CurrentCell, m_CurrentUnit.MovingRange);
-            Debug.Log(m_CurrentCell.name);
         }
         else if (!m_CurrentUnit.IsUsedAbility)
         {
             m_ReachableCells = GetAvailableCells(m_CurrentCell, m_CurrentUnit.AttackRange);
-            Debug.Log(m_CurrentCell.name);
         }
         else
         {
@@ -295,8 +299,6 @@ public class Battle : MonoBehaviour
             m_AvailableCells = new List<GameObject>();
             m_ReachableCells = new List<GameObject>();
         }
-
-        return true;
     }
 
     private void UpdateAvailableActions()
@@ -355,12 +357,9 @@ public class Battle : MonoBehaviour
 
     private void SpawnUnitsOnField()
     {
-        var exitPosition = new Point(0, 7);
-        var allyPositions = GetRandomPointsArray(m_AllySquad.Count, new Point(0,4), new Point(4, 7), new List<Point>{exitPosition});
-        var enemyPositions = GetRandomPointsArray(m_EnemySquad.Count, new Point(4,0), new Point(7, 4), allyPositions.Values.Append(exitPosition).ToList());
-        
-        m_ExitCell = m_CellsGrid[exitPosition.X, exitPosition.Y];
-        m_ExitCell.transform.Find("Exit").gameObject.SetActive(true);
+        var obstacles = GetBarriers();
+        var allyPositions = GetRandomPointsArray(m_AllySquad.Count, new Point(0,4), new Point(4, 7), obstacles);
+        var enemyPositions = GetRandomPointsArray(m_EnemySquad.Count, new Point(4,0), new Point(7, 4), obstacles);
 
         for (var i=0; i<m_AllySquad.Count; i++)
         {
@@ -370,7 +369,6 @@ public class Battle : MonoBehaviour
             
             SpawnUnit(allyPrefab, allyPositions[i]);
         }
-        
         for (var i=0; i<m_EnemySquad.Count; i++)
         {
             var enemyPrefab = unitPrefab;
@@ -378,6 +376,26 @@ public class Battle : MonoBehaviour
             _unitsPositions.Add(m_CellsGrid[enemyPositions[i].X, enemyPositions[i].Y], m_EnemySquad[i]);
             
             SpawnUnit(enemyPrefab, enemyPositions[i]);
+        }
+    }
+
+    private void SpawnExitCell()
+    {
+        var exitPosition = new Point(0, 7);
+        m_ExitCell = m_CellsGrid[exitPosition.X, exitPosition.Y];
+        m_ExitCell.transform.Find("Exit").gameObject.SetActive(true);
+    }
+
+    private void SpawnObstacles()
+    {
+        m_ObstacleCells = new List<GameObject>();
+        var obstaclesPositions = GetRandomPointsArray(5, new Point(1,2), new Point(6, 6), new List<Point>{GameObjectToPoint(m_ExitCell)});
+        
+        for (var i=0; i<obstaclesPositions.Count; i++)
+        {
+            GameObject obstacleCell = m_CellsGrid[obstaclesPositions[i].X, obstaclesPositions[i].Y];
+            obstacleCell.transform.Find("Obstacle_1").gameObject.SetActive(true);
+            m_ObstacleCells.Add(obstacleCell);
         }
     }
 
@@ -453,7 +471,7 @@ public class Battle : MonoBehaviour
             }
             Point end = GameObjectToPoint(endCell);
             
-            var pathToUnit = Bts(GetUnitsAsPoints(startCell, endCell), start, end);
+            var pathToUnit = GetPath(GetBarriers(startCell, endCell), start, end);
             paths[m_AllySquad[i]] = pathToUnit;
         }
         var sortedPaths = from entry in paths orderby entry.Value.Count ascending select entry;
@@ -499,7 +517,7 @@ public class Battle : MonoBehaviour
         };
     }
 
-    private static List<Point> Bts(IEnumerable<Point> barriers, Point start, Point end)
+    private static List<Point> GetPath(IEnumerable<Point> barriers, Point start, Point end)
     {
         var a = new bool[8, 8];
         var b = new Point[8, 8];
