@@ -1049,9 +1049,17 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 3132450592097448264, guid: 5afdf8adcc05fb14b9ce446b5ceb44f9, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 6357189580551816628, guid: 5afdf8adcc05fb14b9ce446b5ceb44f9, type: 3}
       propertyPath: m_Name
       value: Damage
+      objectReference: {fileID: 0}
+    - target: {fileID: 6357189580551816628, guid: 5afdf8adcc05fb14b9ce446b5ceb44f9, type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 5afdf8adcc05fb14b9ce446b5ceb44f9, type: 3}

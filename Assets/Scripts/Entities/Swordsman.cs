@@ -25,20 +25,27 @@ namespace Entities
             var accuracy = 0.9;
             
             var swordsman = new Swordsman("Мечник", isAlly, buyPrice, maintenancePrice, damage, health, armor, dodge, accuracy, movingRange, attackRange);
-            SetupSprites(swordsman);
+            SetupAbilities(swordsman);
             return swordsman;
         }
         
-        private static void SetupSprites(Swordsman sniper)
+        private static void SetupAbilities(Swordsman swordsman)
         {
-            var sprite = Resources.Load<Sprite>(sniper.IsAlly ? "Warriors/Swordsman" : "Warriors/Swordsman Enemy");
-            Sprite firstAbility = Resources.Load<Sprite>("Skills/Warrior Path");
-            Sprite secondAbility = Resources.Load<Sprite>("Skills/Dash");
-            Sprite thirdAbility = Resources.Load<Sprite>("Skills/Defense Stance");
-            var abilitiesNames = new [] {"Путь война", "Рывок", "Защитная стойка"};
-            sniper.Sprite = sprite;
-            sniper.AbilitiesNames = abilitiesNames;
-            sniper.Icons = new[] {firstAbility, secondAbility, thirdAbility};
+            swordsman.Sprite = Resources.Load<Sprite>(swordsman.IsAlly ? "Warriors/Swordsman" : "Warriors/Swordsman Enemy");
+            swordsman.ActiveAbilitiesNames = new [] {"Путь война", "Рывок", "Защитная стойка", "Вихрь"};
+            swordsman.ActiveAbilitiesIcons = new[] {Resources.Load<Sprite>("Skills/Warrior Path"),
+                Resources.Load<Sprite>("Skills/Dash"), 
+                Resources.Load<Sprite>("Skills/Defense Stance"), 
+                Resources.Load<Sprite>("Skills/Death Whirl")};
+            
+            swordsman.PassiveAbilitiesIcons = new[] {Resources.Load<Sprite>("Skills/Defense Stance"),
+                Resources.Load<Sprite>("Skills/Vengeance")};
+            swordsman.PassiveAbilitiesNames = new[] {"Контратака", "Месть"};
+            swordsman.PassiveAbilitiesDescriptions = new[]
+            {
+                "Боец контратакует обидчика, если он на соседней клетке.",
+                "Если боец получил урон, то на время следующего хода его урон увеличится на 25%."
+            };
         }
 
         public override void Ability1(Unit enemy)

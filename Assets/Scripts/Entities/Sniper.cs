@@ -24,20 +24,27 @@ namespace Entities
             var dodge = 0.15;
             var accuracy = 0.95;
             var sniper = new Sniper(name, isAlly, buyPrice, maintenancePrice, damage, health, armor, dodge, accuracy, movingRange, attackRange);
-            SetupSprites(sniper);
+            SetupAbilities(sniper);
             return sniper;
         }
         
-        private static void SetupSprites(Sniper sniper)
+        private static void SetupAbilities(Sniper sniper)
         {
-            var sprite = Resources.Load<Sprite>(sniper.IsAlly ? "Warriors/Sniper" : "Warriors/Sniper Enemy");
-            Sprite firstAbility = Resources.Load<Sprite>("Skills/Off-hand Shot");
-            Sprite secondAbility = Resources.Load<Sprite>("Skills/Enemy Tag");
-            Sprite thirdAbility = Resources.Load<Sprite>("Skills/Accurate Shot");
-            var abilitiesNames = new [] {"Выстрел навскидку", "Метка цели", "Точный выстрел"};
-            sniper.Sprite = sprite;
-            sniper.AbilitiesNames = abilitiesNames;
-            sniper.Icons = new[] {firstAbility, secondAbility, thirdAbility};
+            sniper.Sprite = Resources.Load<Sprite>(sniper.IsAlly ? "Warriors/Sniper" : "Warriors/Sniper Enemy");
+            sniper.ActiveAbilitiesNames = new [] {"Выстрел навскидку", "Метка цели", "Точный выстрел", "Разгром"};
+            sniper.ActiveAbilitiesIcons = new[] {Resources.Load<Sprite>("Skills/Off-hand Shot"),
+                Resources.Load<Sprite>("Skills/Enemy Tag"),
+                Resources.Load<Sprite>("Skills/Accurate Shot"),
+                Resources.Load<Sprite>("Skills/Elimination")};
+            
+            sniper.PassiveAbilitiesIcons = new[] {Resources.Load<Sprite>("Skills/Nice View"),
+                Resources.Load<Sprite>("Skills/Defense (Sniper)")};
+            sniper.PassiveAbilitiesNames = new[] {"Хороший обзор", "Глухая оборона"};
+            sniper.PassiveAbilitiesDescriptions = new[]
+            {
+                "Если Юнит засел на возвышенности, то его навыки будут усилены на 25% (не распространяется на дополнительные эффекты).",
+                "Если боец находится в укрытии, то получает дополнительные +10% к Уклонению"
+            };
         }
 
         public override void Ability1(Unit enemy)

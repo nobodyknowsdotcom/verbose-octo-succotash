@@ -22,8 +22,11 @@ public class Unit : MonoBehaviour
     public bool IsUsedAbility { get; set; } = false;
     
     public Sprite Sprite { get; set; }
-    public Sprite[] Icons { get; set; }
-    public string[] AbilitiesNames { get; set; }
+    public Sprite[] ActiveAbilitiesIcons { get; set; }
+    public string[] ActiveAbilitiesNames { get; set; }
+    public Sprite[] PassiveAbilitiesIcons { get; set; }
+    public string[] PassiveAbilitiesNames { get; set; }
+    public string[] PassiveAbilitiesDescriptions { get; set; }
 
     protected Unit(string name, bool isAlly, int buyPrice, int maintenancePrice, int damage, int health, int armor, double dodgeChance, double accuracy, int movingRange, int attackRange)
     {

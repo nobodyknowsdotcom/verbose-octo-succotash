@@ -7,7 +7,6 @@ using Entities;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.SceneManagement;
-using UnityEngine.Timeline;
 using UnityEngine.UI;
 using Random = System.Random;
 
@@ -75,7 +74,7 @@ public class Battle : MonoBehaviour
     {
         UpdateCells();
         UpdateCurrentUnitCard();
-        UpdateAvailableActions();
+        UpdateAbilities();
         UpdateEnemyUnitsPanel();
     }
 
@@ -250,7 +249,6 @@ public class Battle : MonoBehaviour
         {
             result.Add(GameObjectToPoint(obstacle));
         }
-        result.Add(GameObjectToPoint(m_ExitCell));
         return result;
     }
     private Point GameObjectToPoint(GameObject cell)
@@ -301,7 +299,7 @@ public class Battle : MonoBehaviour
         }
     }
 
-    private void UpdateAvailableActions()
+    private void UpdateAbilities()
     {
         if (m_CurrentCell == null)
         {
@@ -315,11 +313,11 @@ public class Battle : MonoBehaviour
             
             abilitiesPanel.transform.Find("ActiveAbilities").GetChild(0).GetComponent<Button>().enabled = !m_CurrentUnit.IsUsedAbility;
             abilitiesPanel.transform.Find("ActiveAbilities").GetChild(0).GetChild(2).gameObject.SetActive(m_CurrentUnit.IsUsedAbility);
-            
+            // Затемнение неспользуемых кнопок способностей
             abilitiesPanel.transform.Find("ActiveAbilities").GetChild(1).GetChild(2).gameObject.SetActive(true);
             abilitiesPanel.transform.Find("ActiveAbilities").GetChild(2).GetChild(2).gameObject.SetActive(true);
+            abilitiesPanel.transform.Find("ActiveAbilities").GetChild(3).GetChild(2).gameObject.SetActive(true);
             UpdateAbilitiesPanel();
-            
             foreach (Transform child in abilitiesPanel.transform)
             {
                 child.gameObject.SetActive(m_CurrentCell != null);
@@ -330,10 +328,10 @@ public class Battle : MonoBehaviour
     private void UpdateAbilitiesPanel()
     {
         var abilitiesParent = abilitiesPanel.transform.Find("ActiveAbilities");
-        for(var i = 0; i < 3; i++)
+        for(var i = 0; i < abilitiesPanel.transform.Find("ActiveAbilities").childCount; i++)
         {
-            abilitiesParent.GetChild(i).Find("Text").GetComponent<Text>().text = m_CurrentUnit.AbilitiesNames[i];
-            abilitiesParent.GetChild(i).Find("Image").GetComponent<Image>().sprite = m_CurrentUnit.Icons[i];
+            abilitiesParent.GetChild(i).Find("Text").GetComponent<Text>().text = m_CurrentUnit.ActiveAbilitiesNames[i];
+            abilitiesParent.GetChild(i).Find("Image").GetComponent<Image>().sprite = m_CurrentUnit.ActiveAbilitiesIcons[i];
         }
     }
     

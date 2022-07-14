@@ -24,20 +24,27 @@ namespace Entities
             var dodge = 0.1;
             var accuracy = 0.75;
             var assault = new Assault(name, isAlly, buyPrice, maintenancePrice, damage, health, armor, dodge, accuracy, movingRange, attackRange);
-            SetupSprites(assault);
+            SetupAbilities(assault);
             return assault;
         }
 
-        private static void SetupSprites(Assault assault)
+        private static void SetupAbilities(Assault assault)
         {
-            var sprite = Resources.Load<Sprite>(assault.IsAlly ? "Warriors/Assault" : "Warriors/Assault Enemy");
-            Sprite firstAbility = Resources.Load<Sprite>("Skills/Burst");
-            Sprite secondAbility = Resources.Load<Sprite>("Skills/First Aid");
-            Sprite thirdAbility = Resources.Load<Sprite>("Skills/Grenade Throw");
-            var abilitiesNames = new string[] {"Очередь из автомата", "Первая помощь", "Бросок гранаты"};
-            assault.Sprite = sprite;
-            assault.AbilitiesNames = abilitiesNames;
-            assault.Icons = new[] {firstAbility, secondAbility, thirdAbility};
+            assault.Sprite = Resources.Load<Sprite>(assault.IsAlly ? "Warriors/Assault" : "Warriors/Assault Enemy");
+            assault.ActiveAbilitiesNames = new [] {"Очередь из автомата", "Первая помощь", "Бросок гранаты", "Свинцовый дождь"};
+            assault.ActiveAbilitiesIcons = new[] {Resources.Load<Sprite>("Skills/Burst"), 
+                Resources.Load<Sprite>("Skills/First Aid"), 
+                Resources.Load<Sprite>("Skills/Grenade Throw"), 
+                Resources.Load<Sprite>("Skills/Bullet Hail")};
+            
+            assault.PassiveAbilitiesIcons = new[] {Resources.Load<Sprite>("Skills/Defense (Assault)"),
+                Resources.Load<Sprite>("Skills/Protection Layer")};
+            assault.PassiveAbilitiesNames = new[] {"Глухая оборона", "Амортизирующая подкладка"};
+            assault.PassiveAbilitiesDescriptions = new[]
+            {
+                "Если боец находится в укрытии, то получает дополнительные +10% к Уклонению",
+                "Экипировка содержит дополнительные слои подкладки и пластины, помогающие гасить взрывную волну."
+            };
         }
 
         public void FirstAid()
