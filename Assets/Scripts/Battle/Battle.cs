@@ -16,6 +16,7 @@ public class Battle : MonoBehaviour
     [SerializeField] private GameObject currentUnitCard;
     [SerializeField] private GameObject abilitiesPanel;
     [SerializeField] private GameObject enemyUnitsPanel;
+    [SerializeField] private GameObject passiveAbilitiesPopup;
     
     [SerializeField] private GameObject cellPrefab;
     [SerializeField] private GameObject unitPrefab;
@@ -74,7 +75,7 @@ public class Battle : MonoBehaviour
     {
         UpdateCells();
         UpdateCurrentUnitCard();
-        UpdateAbilities();
+        UpdateAvailableAbilities();
         UpdateEnemyUnitsPanel();
     }
 
@@ -125,7 +126,6 @@ public class Battle : MonoBehaviour
             var currentPosition = GameObjectToPoint(start);
             var targetPosition = GameObjectToPoint(cell);
             var path = GetPath(barriers, currentPosition, targetPosition);
-
             if (path.Count <= range)
             {
                 foreach (var point in path)
@@ -234,9 +234,14 @@ public class Battle : MonoBehaviour
         {
             unit.transform.position = m_CellsGrid[point.X, point.Y].transform.position;
             unit.transform.parent = m_CellsGrid[point.X, point.Y].transform;
-            yield return new WaitForSeconds(0.15f);
+            yield return new WaitForSeconds(0.17f);
         }
+
+        if (m_CurrentCell != null)
+            m_ReachableCells = GetAvailableCells(m_CurrentCell, m_CurrentUnit.AttackRange);
     }
+    
+    private void WaitUntilCoroutineEnds(){}
 
     private List<Point> GetBarriers(params GameObject[] exclude)
     {
@@ -299,7 +304,7 @@ public class Battle : MonoBehaviour
         }
     }
 
-    private void UpdateAbilities()
+    private void UpdateAvailableAbilities()
     {
         if (m_CurrentCell == null)
         {
@@ -327,14 +332,20 @@ public class Battle : MonoBehaviour
 
     private void UpdateAbilitiesPanel()
     {
-        var abilitiesParent = abilitiesPanel.transform.Find("ActiveAbilities");
-        for(var i = 0; i < abilitiesPanel.transform.Find("ActiveAbilities").childCount; i++)
+        var activeAbilitiesParent = abilitiesPanel.transform.Find("ActiveAbilities");
+        for(var i = 0; i < activeAbilitiesParent.childCount; i++)
         {
-            abilitiesParent.GetChild(i).Find("Text").GetComponent<Text>().text = m_CurrentUnit.ActiveAbilitiesNames[i];
-            abilitiesParent.GetChild(i).Find("Image").GetComponent<Image>().sprite = m_CurrentUnit.ActiveAbilitiesIcons[i];
+            activeAbilitiesParent.GetChild(i).Find("Text").GetComponent<Text>().text = m_CurrentUnit.ActiveAbilitiesNames[i];
+            activeAbilitiesParent.GetChild(i).Find("Image").GetComponent<Image>().sprite = m_CurrentUnit.ActiveAbilitiesIcons[i];
+        }
+        
+        var passiveAbilitiesParent = abilitiesPanel.transform.Find("PassiveAbilities");
+        for(var i = 0; i < passiveAbilitiesParent.childCount; i++)
+        {
+            passiveAbilitiesParent.GetChild(i).GetComponent<Image>().sprite = m_CurrentUnit.PassiveAbilitiesIcons[i];
         }
     }
-    
+
     private void UpdateEnemyUnitsPanel()
     {
         foreach (Transform child in enemyUnitsPanel.transform)
@@ -387,7 +398,7 @@ public class Battle : MonoBehaviour
     private void SpawnObstacles()
     {
         m_ObstacleCells = new List<GameObject>();
-        var obstaclesPositions = GetRandomPointsArray(5, new Point(1,2), new Point(6, 6), new List<Point>{GameObjectToPoint(m_ExitCell)});
+        var obstaclesPositions = GetRandomPointsArray(4, new Point(1,1), new Point(7, 7), new List<Point>{GameObjectToPoint(m_ExitCell)});
         
         for (var i=0; i<obstaclesPositions.Count; i++)
         {
@@ -410,13 +421,12 @@ public class Battle : MonoBehaviour
         {
             unit.RefreshAbilitiesAndMoving();
         }
-
         m_ReachableCells = new List<GameObject>();
         m_AvailableCells = new List<GameObject>();
         m_CurrentUnit = null;
         m_CurrentCell = null;
         m_TargetCell = null;
-        
+        UpdateCells();
         EnemiesTurn();
     }
 
@@ -474,6 +484,25 @@ public class Battle : MonoBehaviour
         }
         var sortedPaths = from entry in paths orderby entry.Value.Count ascending select entry;
         return Tuple.Create(sortedPaths.First().Key, sortedPaths.First().Value);
+    }
+
+    public void OpenPassiveAbilitiesPopup()
+    {
+        var parent = passiveAbilitiesPopup.transform.Find("Panel").Find("ColumnsPassiveAbilities");
+        for (var i = 0; i < parent.childCount; i++)
+        {
+            parent.GetChild(i).Find("Text").GetComponent<Text>().text = m_CurrentUnit.PassiveAbilitiesDescriptions[i];
+            parent.GetChild(i).Find("Title").Find("Image").GetComponent<Image>().sprite =
+                m_CurrentUnit.PassiveAbilitiesIcons[i];
+            parent.GetChild(i).Find("Title").Find("TitleAbility").Find("Text").GetComponent<Text>().text =
+                m_CurrentUnit.PassiveAbilitiesNames[i];
+        }
+        passiveAbilitiesPopup.SetActive(true);
+    }
+    
+    public void ClosePassiveAbilitiesPopup()
+    {
+        passiveAbilitiesPopup.SetActive(false);
     }
     
     private void DrawCells()
