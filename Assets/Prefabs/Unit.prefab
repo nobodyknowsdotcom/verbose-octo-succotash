@@ -1053,6 +1053,10 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 4311124753316483693, guid: 5afdf8adcc05fb14b9ce446b5ceb44f9, type: 3}
+      propertyPath: m_Text
+      value: -40
+      objectReference: {fileID: 0}
     - target: {fileID: 6357189580551816628, guid: 5afdf8adcc05fb14b9ce446b5ceb44f9, type: 3}
       propertyPath: m_Name
       value: Damage
@@ -1060,6 +1064,18 @@ PrefabInstance:
     - target: {fileID: 6357189580551816628, guid: 5afdf8adcc05fb14b9ce446b5ceb44f9, type: 3}
       propertyPath: m_IsActive
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6849701823372752250, guid: 5afdf8adcc05fb14b9ce446b5ceb44f9, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7502562544230394835, guid: 5afdf8adcc05fb14b9ce446b5ceb44f9, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8723059902433946095, guid: 5afdf8adcc05fb14b9ce446b5ceb44f9, type: 3}
+      propertyPath: m_Text
+      value: +40
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 5afdf8adcc05fb14b9ce446b5ceb44f9, type: 3}

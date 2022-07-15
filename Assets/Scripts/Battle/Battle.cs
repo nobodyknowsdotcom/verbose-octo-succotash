@@ -8,6 +8,7 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
+using Color = UnityEngine.Color;
 using Random = System.Random;
 
 public class Battle : MonoBehaviour
@@ -234,14 +235,12 @@ public class Battle : MonoBehaviour
         {
             unit.transform.position = m_CellsGrid[point.X, point.Y].transform.position;
             unit.transform.parent = m_CellsGrid[point.X, point.Y].transform;
-            yield return new WaitForSeconds(0.17f);
+            yield return new WaitForSeconds(0.2f);
         }
 
         if (m_CurrentCell != null)
             m_ReachableCells = GetAvailableCells(m_CurrentCell, m_CurrentUnit.AttackRange);
     }
-    
-    private void WaitUntilCoroutineEnds(){}
 
     private List<Point> GetBarriers(params GameObject[] exclude)
     {
@@ -269,7 +268,9 @@ public class Battle : MonoBehaviour
         List<Point> path = GetPath(GetBarriers(m_CurrentCell, m_TargetCell), currentPosition, targetPosition);
         if (_unitsPositions.ContainsKey(m_TargetCell) && !_unitsPositions[m_TargetCell].IsAlly & !_unitsPositions[m_CurrentCell].IsUsedAbility & path.Count <= m_CurrentUnit.AttackRange)
         {
+            var wasHealth = _unitsPositions[m_TargetCell].Armor + _unitsPositions[m_TargetCell].Health;
             m_CurrentUnit.Ability1(_unitsPositions[m_TargetCell]);
+            StartCoroutine(ShowDamage(m_TargetCell.transform.Find("Unit(Clone)").gameObject, wasHealth - _unitsPositions[m_TargetCell].Health));
 
             if (_unitsPositions[m_TargetCell].Health <= 0)
             {
@@ -438,6 +439,7 @@ public class Battle : MonoBehaviour
             var allyCell = m_CellsGrid[path.Last().X, path.Last().Y];
             var enemyCell = _unitsPositions.FirstOrDefault(x => x.Value.GetHashCode() == enemy.GetHashCode()).Key;
             var enemyAsGameObject = enemyCell.transform.Find("Unit(Clone)").gameObject;
+            var allyAsGameObject = allyCell.transform.Find("Unit(Clone)").gameObject;
             
             // Если не получается атаковать
             if (path.Count > enemy.AttackRange && path.Count > 1)
@@ -453,14 +455,55 @@ public class Battle : MonoBehaviour
             // Если атаковать возможно
             if (path.Count <= enemy.AttackRange)
             {
+                var wasHealth = ally.Damage + ally.Health;
                 enemy.Ability1(ally);
+                StartCoroutine(ShowDamage(allyAsGameObject, wasHealth - ally.Health));
                 if (ally.Health <= 0)
                 {
                     Debug.Log(ally.Name);
-                    Destroy(allyCell.transform.Find("Unit(Clone)").gameObject);
+                    allyCell.transform.Find("Unit(Clone)").gameObject.SetActive(false);
                     _unitsPositions.Remove(allyCell);
                 }
             }
+        }
+    }
+
+    private IEnumerator ShowDamage(GameObject unitAsGameObject, int damage)
+    {
+        var damagePrefab = unitAsGameObject.transform.Find("Damage").Find("HealthMinus");
+        if (damage > 0)
+        {
+            damagePrefab.GetComponent<Text>().text = '-' + damage.ToString();
+        }
+        else
+        {
+            damagePrefab.GetComponent<Text>().text = "Промах!";
+        }
+        damagePrefab.gameObject.SetActive(true);
+        
+        StartCoroutine(FadeTextToFullAlpha(0.5f,damagePrefab.GetComponent<Text>()));
+        yield return new WaitForSeconds(3);
+        StartCoroutine(FadeTextToZeroAlpha(0.5f,damagePrefab.GetComponent<Text>()));
+        damagePrefab.gameObject.SetActive(false);
+    }
+
+    private IEnumerator FadeTextToFullAlpha(float t, Text i)
+    {
+        i.color = new Color(i.color.r, i.color.g, i.color.b, 0);
+        while (i.color.a < 1.0f)
+        {
+            i.color = new Color(i.color.r, i.color.g, i.color.b, i.color.a + (Time.deltaTime / t));
+            yield return null;
+        }
+    }
+
+    private IEnumerator FadeTextToZeroAlpha(float t, Text i)
+    {
+        i.color = new Color(i.color.r, i.color.g, i.color.b, 1);
+        while (i.color.a > 0.0f)
+        {
+            i.color = new Color(i.color.r, i.color.g, i.color.b, i.color.a - (Time.deltaTime / t));
+            yield return null;
         }
     }
 
@@ -538,8 +581,8 @@ public class Battle : MonoBehaviour
     {
         m_EnemySquad = new List<Unit>
         {
-            Swordsman.CreateInstance(false),
             Assault.CreateInstance(false),
+            Swordsman.CreateInstance(false),
             Sniper.CreateInstance(false)
         };
     }
