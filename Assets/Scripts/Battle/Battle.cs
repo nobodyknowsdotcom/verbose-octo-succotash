@@ -18,6 +18,7 @@ public class Battle : MonoBehaviour
     [SerializeField] private GameObject abilitiesPanel;
     [SerializeField] private GameObject enemyUnitsPanel;
     [SerializeField] private GameObject passiveAbilitiesPopup;
+    [SerializeField] private GameObject endTurnButton;
     
     [SerializeField] private GameObject cellPrefab;
     [SerializeField] private GameObject unitPrefab;
@@ -27,6 +28,7 @@ public class Battle : MonoBehaviour
     private List<Unit> m_AllySquad;
     private List<Unit> m_EnemySquad;
     private Unit m_CurrentUnit;
+    private Unit m_CurrentEnemyUnit;
     
     private GameObject[,] m_CellsGrid;
     private List<GameObject> m_AvailableCells;
@@ -68,6 +70,7 @@ public class Battle : MonoBehaviour
         SpawnObstacles();
         SpawnUnitsOnField();
         SwitchToNextUnit();
+        UpdateEnemyUnitsPanel();
         m_ReachableCells = new List<GameObject>();
         m_AvailableCells = GetAvailableCells(m_CurrentCell, m_CurrentUnit.MovingRange);
     }
@@ -77,7 +80,6 @@ public class Battle : MonoBehaviour
         UpdateCells();
         UpdateCurrentUnitCard();
         UpdateAvailableAbilities();
-        UpdateEnemyUnitsPanel();
     }
 
     public void OnCellCLick()
@@ -278,7 +280,8 @@ public class Battle : MonoBehaviour
                 _unitsPositions.Remove(m_TargetCell);
             }
             m_TargetCell = null;
-
+            
+            UpdateEnemyUnitsPanel();
             SwitchToNextUnit();
         }
     }
@@ -361,8 +364,6 @@ public class Battle : MonoBehaviour
             card.transform.Find("Health").Find("Value").GetComponent<Text>().text = unit.Health.ToString();
             card.transform.Find("Armor").Find("Value").GetComponent<Text>().text = unit.Armor.ToString();
         }
-
-        m_EnemySquad.RemoveAll(x => x.Health == 0);
     }
 
     private void SpawnUnitsOnField()
@@ -428,13 +429,18 @@ public class Battle : MonoBehaviour
         m_CurrentCell = null;
         m_TargetCell = null;
         UpdateCells();
-        EnemiesTurn();
+        StartCoroutine(EnemiesTurn());
     }
 
-    private void EnemiesTurn()
+    private IEnumerator EnemiesTurn()
     {
+        endTurnButton.GetComponent<Image>().sprite = Resources.Load<Sprite>("Battle Screen UI Elements/Turn Button Inactive");
         foreach (Unit enemy in m_EnemySquad)
         {
+            if (enemy.GetHashCode() != m_EnemySquad.First().GetHashCode())
+            {
+                enemyUnitsPanel.transform.GetChild(0).SetSiblingIndex(2);
+            }
             (Unit ally, List<Point> path) = GetClosestAlly(enemy);
             var allyCell = m_CellsGrid[path.Last().X, path.Last().Y];
             var enemyCell = _unitsPositions.FirstOrDefault(x => x.Value.GetHashCode() == enemy.GetHashCode()).Key;
@@ -449,7 +455,6 @@ public class Battle : MonoBehaviour
                 _unitsPositions.Remove(enemyCell);
                 _unitsPositions[m_CellsGrid[path.Last().X, path.Last().Y]] = enemy;
                 _unitsPositions[m_CellsGrid[path.Last().X, path.Last().Y]].Moved();
-                
                 StartCoroutine(Move(enemyAsGameObject, path));
             }
             // Если атаковать возможно
@@ -460,12 +465,16 @@ public class Battle : MonoBehaviour
                 StartCoroutine(ShowDamage(allyAsGameObject, wasHealth - ally.Health));
                 if (ally.Health <= 0)
                 {
-                    Debug.Log(ally.Name);
-                    allyCell.transform.Find("Unit(Clone)").gameObject.SetActive(false);
+                    Destroy(allyCell.transform.Find("Unit(Clone)").gameObject);
+                    m_AllySquad.Remove(ally);
                     _unitsPositions.Remove(allyCell);
                 }
+                Debug.Log(enemy.Name + " " + (wasHealth - ally.Health));
             }
+            yield return new WaitForSeconds(2);
         }
+        endTurnButton.GetComponent<Image>().sprite = Resources.Load<Sprite>("Battle Screen UI Elements/Turn Button");
+        yield return new WaitForSeconds(0.1f);
     }
 
     private IEnumerator ShowDamage(GameObject unitAsGameObject, int damage)
@@ -481,10 +490,11 @@ public class Battle : MonoBehaviour
         }
         damagePrefab.gameObject.SetActive(true);
         
-        StartCoroutine(FadeTextToFullAlpha(0.5f,damagePrefab.GetComponent<Text>()));
+        StartCoroutine(FadeTextToFullAlpha(0.2f,damagePrefab.GetComponent<Text>()));
         yield return new WaitForSeconds(3);
-        StartCoroutine(FadeTextToZeroAlpha(0.5f,damagePrefab.GetComponent<Text>()));
+        StartCoroutine(FadeTextToZeroAlpha(0.2f,damagePrefab.GetComponent<Text>()));
         damagePrefab.gameObject.SetActive(false);
+        yield return new WaitForSeconds(0.1f);
     }
 
     private IEnumerator FadeTextToFullAlpha(float t, Text i)
@@ -521,10 +531,10 @@ public class Battle : MonoBehaviour
                 continue;
             }
             Point end = GameObjectToPoint(endCell);
-            
             var pathToUnit = GetPath(GetBarriers(startCell, endCell), start, end);
             paths[m_AllySquad[i]] = pathToUnit;
         }
+        if(m_AllySquad.Count == 1) return Tuple.Create(paths.First().Key, paths.First().Value);
         var sortedPaths = from entry in paths orderby entry.Value.Count ascending select entry;
         return Tuple.Create(sortedPaths.First().Key, sortedPaths.First().Value);
     }

@@ -1872,6 +1872,7 @@ MonoBehaviour:
   abilitiesPanel: {fileID: 1384733460}
   enemyUnitsPanel: {fileID: 1851327764}
   passiveAbilitiesPopup: {fileID: 1327099470}
+  endTurnButton: {fileID: 1921597044}
   cellPrefab: {fileID: 8504819267213613518, guid: 2fb25dc389dddad49919494087b6dfda, type: 3}
   unitPrefab: {fileID: 8454979708811358685, guid: 15c841c8e60f4d44d91a627193a48367, type: 3}
   enemyCardPrefab: {fileID: 3423175362130426080, guid: 043865a4fffffb74db24a7e036be40e2, type: 3}
@@ -7534,9 +7535,9 @@ MonoBehaviour:
     m_FadeDuration: 0.1
   m_SpriteState:
     m_HighlightedSprite: {fileID: 0}
-    m_PressedSprite: {fileID: 0}
-    m_SelectedSprite: {fileID: 0}
-    m_DisabledSprite: {fileID: 0}
+    m_PressedSprite: {fileID: 21300000, guid: ad87819682b32704b837f17ac6dd0362, type: 3}
+    m_SelectedSprite: {fileID: 21300000, guid: fd368fdf02c207545bf96a7acdff6c3f, type: 3}
+    m_DisabledSprite: {fileID: 21300000, guid: 35786290ae6eaa04cb984818c45bb32f, type: 3}
   m_AnimationTriggers:
     m_NormalTrigger: Normal
     m_HighlightedTrigger: Highlighted
