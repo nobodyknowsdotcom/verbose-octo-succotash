@@ -38,7 +38,7 @@ namespace Entities
                 Resources.Load<Sprite>("Skills/Defense Stance"), 
                 Resources.Load<Sprite>("Skills/Death Whirl")};
             
-            swordsman.PassiveAbilitiesIcons = new[] {Resources.Load<Sprite>("Skills/Defense Stance"),
+            swordsman.PassiveAbilitiesIcons = new[] {Resources.Load<Sprite>("Skills/Counter Attack"),
                 Resources.Load<Sprite>("Skills/Vengeance")};
             swordsman.PassiveAbilitiesNames = new[] {"Контратака", "Месть"};
             swordsman.PassiveAbilitiesDescriptions = new[]
