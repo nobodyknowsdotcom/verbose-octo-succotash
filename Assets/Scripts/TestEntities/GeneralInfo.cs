@@ -1,0 +1,13 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using UnityEngine;
+
+public class GeneralInfo : MonoBehaviour
+{
+    // --- TODO: Добавить сюда спрайт персонажа
+    public string Name;
+    public int Level;
+}
