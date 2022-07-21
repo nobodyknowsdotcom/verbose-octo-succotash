@@ -19,13 +19,14 @@ public class TestBattle : MonoBehaviour
     [SerializeField] private GameObject enemyUnitsPanel;
 
     [SerializeField] private GameObject cellPrefab;
-    [SerializeField] private GameObject unitPrefab;
     [SerializeField] private GameObject enemyCardPrefab;
-
-    // Тест
-    [SerializeField] private GameObject unit1;
-    [SerializeField] private GameObject unit2;
-    [SerializeField] private GameObject enemy1;
+    
+    [SerializeField] private GameObject allyInfantrymanPrefab;
+    [SerializeField] private GameObject allySniperPrefab;
+    [SerializeField] private GameObject allySwordsmanPrefab;
+    [SerializeField] private GameObject enemyInfantrymanPrefab;
+    [SerializeField] private GameObject enemySniperPrefab;
+    [SerializeField] private GameObject enemySwordsmanPrefab;
 
     private static Dictionary<GameObject, BattleUnit> _unitsPositions;
     private List<BattleUnit> m_AllySquad;
@@ -50,16 +51,15 @@ public class TestBattle : MonoBehaviour
 
         var cellRect = cellPrefab.transform as RectTransform;
         cellRect.sizeDelta = new Vector2(1.218f * 1080 / Screen.height, 1.218f * 1080 / Screen.height);
-        var unitRect = unitPrefab.transform as RectTransform;
-        unitRect.sizeDelta = new Vector2(1.18f, 1.18f);
         _unitsPositions = new Dictionary<GameObject, BattleUnit>();
 
         // Над этим подумать
         // Заглушка - ниже в коде эти значения меняются
         m_AllySquad = new List<BattleUnit>
         {
-            unit1.GetComponent<BattleUnit>(),
-            unit2.GetComponent<BattleUnit>()
+            allyInfantrymanPrefab.GetComponent<BattleUnit>(),
+            allySwordsmanPrefab.GetComponent<BattleUnit>(),
+            allySniperPrefab.GetComponent<BattleUnit>()
         };
 
         DrawCells();
@@ -390,7 +390,6 @@ public class TestBattle : MonoBehaviour
         {
             Destroy(child.gameObject);
         }
-
         foreach (var unit in m_EnemySquad.Where(x => x.stats.Health > 0))
         {
             GameObject card = Instantiate(enemyCardPrefab, enemyUnitsPanel.transform.position, Quaternion.identity, enemyUnitsPanel.transform);
@@ -476,12 +475,9 @@ public class TestBattle : MonoBehaviour
     {
         m_EnemySquad = new List<BattleUnit>
         {
-            //Пока так
-            enemy1.GetComponent<BattleUnit>()
-
-            //Swordsman.CreateInstance(false),
-            //Assault.CreateInstance(false),
-            //Sniper.CreateInstance(false)
+            enemyInfantrymanPrefab.GetComponent<BattleUnit>(),
+            enemySniperPrefab.GetComponent<BattleUnit>(),
+            enemySwordsmanPrefab.GetComponent<BattleUnit>()
         };
     }
 
