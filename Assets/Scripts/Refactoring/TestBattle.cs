@@ -183,7 +183,7 @@ public class TestBattle : MonoBehaviour
         if (m_CurrentCell != null)
         {
             currentUnitCard.SetActive(true);
-            currentUnitCard.transform.Find("Icon").GetComponent<Image>().sprite = m_CurrentUnit.transform.Find("Visual").GetComponent<Image>().sprite;
+            currentUnitCard.transform.Find("Icon").GetComponent<Image>().sprite = m_CurrentUnit.transform.Find("Visual").Find("Icon").GetComponent<Image>().sprite;
             currentUnitCard.transform.Find("Health").GetChild(1).GetComponent<Text>().text = m_CurrentUnit.stats.Health.ToString();
             currentUnitCard.transform.Find("Armor").GetChild(1).GetComponent<Text>().text = m_CurrentUnit.stats.Armor.ToString();
         }
@@ -394,7 +394,7 @@ public class TestBattle : MonoBehaviour
         foreach (var unit in m_EnemySquad.Where(x => x.stats.Health > 0))
         {
             GameObject card = Instantiate(enemyCardPrefab, enemyUnitsPanel.transform.position, Quaternion.identity, enemyUnitsPanel.transform);
-            card.transform.Find("Icon").GetComponent<Image>().sprite = unit.transform.Find("Visual").GetComponent<Image>().sprite;
+            card.transform.Find("Icon").GetComponent<Image>().sprite = unit.transform.Find("Visual").Find("Icon").GetComponent<Image>().sprite;
             card.transform.Find("Health").Find("Value").GetComponent<Text>().text = unit.stats.Health.ToString();
             card.transform.Find("Armor").Find("Value").GetComponent<Text>().text = unit.stats.Armor.ToString();
         }
