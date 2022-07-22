@@ -4,14 +4,14 @@ using UnityEngine;
 
 public class BattleUnit : MonoBehaviour
 {
-    // Блоки информации о юните
+    // Р‘Р»РѕРєРё РёРЅС„РѕСЂРјР°С†РёРё Рѕ СЋРЅРёС‚Рµ
     public GeneralInfo generalInfo;
     public UnitStats stats;
 
-    // Боевые способности
+    // Р‘РѕРµРІС‹Рµ СЃРїРѕСЃРѕР±РЅРѕСЃС‚Рё
     public UnitAbilities abilities;
 
-    // Информация для боя
+    // РРЅС„РѕСЂРјР°С†РёСЏ РґР»СЏ Р±РѕСЏ
     public UnitBattleInfo inBattleInfo;
 
     public BattleUnit(BattleUnit unitToCopyFrom)
@@ -40,7 +40,7 @@ public class BattleUnit : MonoBehaviour
         }
     }
 
-    // Временно?
+    // Р’СЂРµРјРµРЅРЅРѕ?
     //public BattleUnit GetCopy(bool isUnitAlly)
     //{
     //    var copy = new BattleUnit();

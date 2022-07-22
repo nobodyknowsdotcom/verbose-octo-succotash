@@ -3,13 +3,8 @@
   <component name="ChangeListManager">
     <list default="true" id="0b3f2042-8aef-4295-9e71-03ff8180e52d" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/.idea.verbose-octo-succotash/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.verbose-octo-succotash/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Prefabs/TestPrefabs/InfantrymanPrefab.prefab" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Prefabs/TestPrefabs/InfantrymanPrefab.prefab.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Prefabs/TestPrefabs/SniperPrefab.prefab" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Prefabs/TestPrefabs/SniperPrefab.prefab.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Prefabs/TestPrefabs/SwordsmanPrefab.prefab" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Prefabs/TestPrefabs/SwordsmanPrefab.prefab.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Refactoring/TestBattle.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Refactoring/TestBattle.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Refactoring/BattleUnit.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Refactoring/BattleUnit.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Refactoring/MovingAbility.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Refactoring/MovingAbility.cs" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -56,6 +51,7 @@
       <option value="$PROJECT_DIR$/Assets/Scripts/Entities/Assault.cs" />
       <option value="$PROJECT_DIR$/Assets/Scripts/Battle/Battle.cs" />
       <option value="$PROJECT_DIR$/Assets/Scripts/Refactoring/TestBattle.cs" />
+      <option value="$PROJECT_DIR$/Assets/Scripts/Refactoring/MovingAbility.cs" />
     </changedPaths>
   </component>
   <component name="ProjectId" id="28Swb6SCp9JQooodyj6MSMtxZfz" />
@@ -214,7 +210,8 @@
       <workItem from="1657884230451" duration="51000" />
       <workItem from="1657908286797" duration="7508000" />
       <workItem from="1658390413709" duration="931000" />
-      <workItem from="1658427895041" duration="685000" />
+      <workItem from="1658427895041" duration="890000" />
+      <workItem from="1658498261830" duration="311000" />
     </task>
     <servers />
   </component>

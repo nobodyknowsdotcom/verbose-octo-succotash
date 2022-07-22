@@ -14,8 +14,8 @@ public class MovingAbility : UnitAbility
     public override BattleInfo Use(BattleInfo info)
     {
         //GameObject unitAsGameObject = m_CurrentCell.transform.Find("Unit(Clone)").gameObject;
-        // --- Заменено (временно)
-        GameObject unitAsGameObject = info.m_CurrentCell.transform.GetChild(4).gameObject;
+        // --- Р—Р°РјРµРЅРµРЅРѕ (РІСЂРµРјРµРЅРЅРѕ)
+        GameObject unitAsGameObject = info.m_CurrentCell.transform.GetChild(5).gameObject;
         List<Point> barriers = GetUnitsAsPoints(info, info.m_CurrentCell, info.m_TargetCell);
         Point currentPosition = GameObjectToPoint(info.m_CurrentCell);
         Point targetPosition = GameObjectToPoint(info.m_TargetCell);
@@ -23,7 +23,7 @@ public class MovingAbility : UnitAbility
 
         if (range < path.Count)
         {
-            Debug.Log("Слишком далеко, ты не можешь туда сходить!");
+            Debug.Log("РЎР»РёС€РєРѕРј РґР°Р»РµРєРѕ, С‚С‹ РЅРµ РјРѕР¶РµС€СЊ С‚СѓРґР° СЃС…РѕРґРёС‚СЊ!");
             return info;
         }
 
@@ -53,7 +53,7 @@ public class MovingAbility : UnitAbility
         }
         else
         {
-            Debug.Log("Ты не можешь сходить туда!");
+            Debug.Log("РўС‹ РЅРµ РјРѕР¶РµС€СЊ СЃС…РѕРґРёС‚СЊ С‚СѓРґР°!");
         }
 
         return info;
