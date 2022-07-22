@@ -21,23 +21,23 @@ public class AttackingAbility : UnitAbility
 
     public void CalculateEnemyHealth(BattleInfo info)
     {
-        // Подготовка
+        // РџРѕРґРіРѕС‚РѕРІРєР°
         // --- double coofDamage
         // --- int armCoofDamage
         // --- double coofAccuracy
         // --- int count
 
-        // Доработка
+        // Р”РѕСЂР°Р±РѕС‚РєР°
         var enemy = info._unitsPositions[info.m_TargetCell];
 
-        // Исполнение
+        // РСЃРїРѕР»РЅРµРЅРёРµ
         int damage = 0;
         var random = new System.Random();
 
-        // i - количество выстрелов
+        // i - РєРѕР»РёС‡РµСЃС‚РІРѕ РІС‹СЃС‚СЂРµР»РѕРІ
         for (int i = 0; i < shotsCount; i++)
         {
-            // +0 - это +coofAccuracy
+            // +0 - СЌС‚Рѕ +coofAccuracy
             if (random.NextDouble() <= (info.m_CurrentUnit.stats.Accuracy + 0) * (1 - enemy.stats.DodgeChance))
                 // 1 - coofDamage
                 damage += (int)(info.m_CurrentUnit.stats.Damage * damageMultiplier);

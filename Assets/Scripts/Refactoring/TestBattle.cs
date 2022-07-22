@@ -116,7 +116,7 @@ public class TestBattle : MonoBehaviour
 
                     if (!m_CurrentUnit.inBattleInfo.IsMoved)
                         m_AvailableCells = GetAvailableCells(m_CurrentCell, m_CurrentUnit.abilities.primaryMoveSkill.range);
-                    if (!m_CurrentUnit.inBattleInfo.IsUsedAbility)
+                    else if (!m_CurrentUnit.inBattleInfo.IsUsedAbility)
                         m_ReachableCells = GetAvailableCells(m_CurrentCell, m_CurrentUnit.abilities.primaryAttackSkill.range);
                 }
             }
@@ -194,52 +194,6 @@ public class TestBattle : MonoBehaviour
         var newInfo = m_CurrentUnit.abilities.primaryMoveSkill.Use(GetBattleInfo());
         UpdateBattleInfo(newInfo);
     }
-
-    //public void OnMoveButton()
-    //{
-    //    //GameObject unitAsGameObject = m_CurrentCell.transform.Find("Unit(Clone)").gameObject;
-    //    // --- Заменено (временно)
-    //    GameObject unitAsGameObject = m_CurrentCell.transform.GetChild(4).gameObject;
-    //    List<Point> barriers = GetUnitsAsPoints(m_CurrentCell, m_TargetCell);
-    //    Point currentPosition = GameObjectToPoint(m_CurrentCell);
-    //    Point targetPosition = GameObjectToPoint(m_TargetCell);
-    //    List<Point> path = Bts(barriers, currentPosition, targetPosition);
-
-    //    if (m_CurrentUnit.stats.MovingRange < path.Count)
-    //    {
-    //        Debug.Log("Слишком далеко, ты не можешь туда сходить!");
-    //        return;
-    //    }
-
-    //    if (!_unitsPositions.ContainsKey(m_TargetCell) && m_TargetCell != m_ExitCell && !_unitsPositions[m_CurrentCell].inBattleInfo.IsMoved)
-    //    {
-    //        _unitsPositions[m_TargetCell] = m_CurrentUnit;
-    //        _unitsPositions.Remove(m_CurrentCell);
-
-    //        m_CurrentCell = m_TargetCell;
-    //        m_TargetCell = null;
-
-    //        StartCoroutine(Move(unitAsGameObject, path));
-    //        _unitsPositions[m_CurrentCell].inBattleInfo.Moved();
-    //    }
-    //    else if (m_TargetCell == m_ExitCell)
-    //    {
-    //        m_AllySquad.Remove(_unitsPositions[m_CurrentCell]);
-    //        _unitsPositions.Remove(m_CurrentCell);
-
-    //        StartCoroutine(Move(unitAsGameObject, path));
-    //        Destroy(unitAsGameObject);
-
-    //        if (m_AllySquad.Count != 0)
-    //        {
-    //            SwitchToNextUnit();
-    //        }
-    //    }
-    //    else
-    //    {
-    //        Debug.Log("Ты не можешь сходить туда!");
-    //    }
-    //}
 
     private IEnumerator Move(GameObject unit, List<Point> path)
     {

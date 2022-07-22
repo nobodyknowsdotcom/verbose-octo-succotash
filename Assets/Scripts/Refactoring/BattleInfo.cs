@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class BattleInfo : MonoBehaviour
 {
-    // Было статическим
+    // Р‘С‹Р»Рѕ СЃС‚Р°С‚РёС‡РµСЃРєРёРј
     public Dictionary<GameObject, BattleUnit> _unitsPositions;
     public List<BattleUnit> m_AllySquad;
     public List<BattleUnit> m_EnemySquad;

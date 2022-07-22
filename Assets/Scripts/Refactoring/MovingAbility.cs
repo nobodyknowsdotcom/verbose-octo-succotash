@@ -35,21 +35,18 @@ public class MovingAbility : UnitAbility
             info.m_CurrentCell = info.m_TargetCell;
             info.m_TargetCell = null;
 
-            StartCoroutine(Move(info, unitAsGameObject, path));
+            StartCoroutine(MoveAndGetCells(info, unitAsGameObject, path));
             info._unitsPositions[info.m_CurrentCell].inBattleInfo.Moved();
         }
         else if (info.m_TargetCell == info.m_ExitCell)
         {
             info.m_AllySquad.Remove(info._unitsPositions[info.m_CurrentCell]);
             info._unitsPositions.Remove(info.m_CurrentCell);
+            
+            info.m_CurrentCell = null;
+            info.m_CurrentUnit = null;
 
-            StartCoroutine(Move(info, unitAsGameObject, path));
-            Destroy(unitAsGameObject);
-
-            //if (m_AllySquad.Count != 0)
-            //{
-            //    SwitchToNextUnit();
-            //}
+            StartCoroutine(MoveAndDestroy(info, unitAsGameObject, path));
         }
         else
         {
@@ -59,16 +56,26 @@ public class MovingAbility : UnitAbility
         return info;
     }
 
-    private IEnumerator Move(BattleInfo info, GameObject unit, List<Point> path)
+    private IEnumerator MoveAndGetCells(BattleInfo info, GameObject unit, List<Point> path)
     {
         foreach (var point in path)
         {
             unit.transform.position = info.m_CellsGrid[point.X, point.Y].transform.position;
             unit.transform.parent = info.m_CellsGrid[point.X, point.Y].transform;
-            yield return new WaitForSeconds(0.15f);
+            yield return new WaitForSeconds(0.2f);
         }
-
         info.m_ReachableCells = GetAvailableCells(info, info.m_CurrentCell, range);
+    }
+    
+    private IEnumerator MoveAndDestroy(BattleInfo info, GameObject unit, List<Point> path)
+    {
+        foreach (var point in path)
+        {
+            unit.transform.position = info.m_CellsGrid[point.X, point.Y].transform.position;
+            unit.transform.parent = info.m_CellsGrid[point.X, point.Y].transform;
+            yield return new WaitForSeconds(0.2f);
+        }
+        Destroy(unit);
     }
 
     private List<GameObject> GetAvailableCells(BattleInfo info, GameObject start, int range)
