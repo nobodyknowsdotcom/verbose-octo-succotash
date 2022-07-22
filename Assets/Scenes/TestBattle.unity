@@ -534,8 +534,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: Battle, Assembly-CSharp
+      - m_Target: {fileID: 474058936}
+        m_TargetAssemblyTypeName: TestBattle, Assembly-CSharp
         m_MethodName: EndTurn
         m_Mode: 1
         m_Arguments:
@@ -1021,6 +1021,7 @@ MonoBehaviour:
   currentUnitCard: {fileID: 1986444917}
   abilitiesPanel: {fileID: 214712101}
   enemyUnitsPanel: {fileID: 2143513641}
+  endTurnButton: {fileID: 0}
   cellPrefab: {fileID: 8504819267213613518, guid: 2fb25dc389dddad49919494087b6dfda, type: 3}
   enemyCardPrefab: {fileID: 3423175362130426080, guid: 043865a4fffffb74db24a7e036be40e2, type: 3}
   allyInfantrymanPrefab: {fileID: 1132078522477098000, guid: 2632bdfd6170926448174ca82f6267f0, type: 3}

@@ -17,6 +17,7 @@ public class TestBattle : MonoBehaviour
     [SerializeField] private GameObject currentUnitCard;
     [SerializeField] private GameObject abilitiesPanel;
     [SerializeField] private GameObject enemyUnitsPanel;
+    [SerializeField] private GameObject endTurnButton;
 
     [SerializeField] private GameObject cellPrefab;
     [SerializeField] private GameObject enemyCardPrefab;
@@ -131,15 +132,12 @@ public class TestBattle : MonoBehaviour
     {
         var result = new List<GameObject>();
         var barriers = GetUnitsAsPoints();
-
         foreach (var cell in m_CellsGrid)
         {
             if (barriers.Contains(GameObjectToPoint(cell))) continue;
-
             var currentPosition = GameObjectToPoint(start);
             var targetPosition = GameObjectToPoint(cell);
             var path = Bts(barriers, currentPosition, targetPosition);
-
             if (path.Count <= range)
             {
                 foreach (var point in path)
@@ -406,6 +404,9 @@ public class TestBattle : MonoBehaviour
         {
             unit.inBattleInfo.RefreshAbilitiesAndMoving();
         }
+
+        m_ReachableCells = new List<GameObject>();
+        m_AvailableCells = new List<GameObject>();
 
         SwitchToNextUnit();
     }
