@@ -100,6 +100,8 @@ public class TestBattle : MonoBehaviour
             // Если игрок выбрал текущую клетку (произошел даблклик) -- обнуляем currentCell и targetCell 
             if (selectedCell == m_CurrentCell)
             {
+                m_CurrentUnit.uiController.DisableHighlight();
+                
                 m_CurrentCell = null;
                 m_TargetCell = null;
 
@@ -113,6 +115,8 @@ public class TestBattle : MonoBehaviour
                 {
                     m_CurrentUnit = _unitsPositions[selectedCell];
                     m_CurrentCell = selectedCell;
+                    
+                    m_CurrentUnit.uiController.EnableHighlight();
 
                     if (!m_CurrentUnit.inBattleInfo.IsMoved)
                         m_AvailableCells = GetAvailableCells(m_CurrentCell, m_CurrentUnit.abilities.primaryMoveSkill.range);
@@ -155,26 +159,10 @@ public class TestBattle : MonoBehaviour
     {
         foreach (var cell in m_CellsGrid)
         {
-            //if (_unitsPositions.ContainsKey(cell))
-            //{
-            //    cell.transform.Find("Unit(Clone)").Find("OnActive").gameObject.SetActive(false);
-            //    cell.transform.Find("Unit(Clone)").Find("OnActiveBackground").gameObject.SetActive(false);
-            //}
 
             cell.transform.Find("OnReachable").gameObject.SetActive(m_ReachableCells.Contains(cell));
             cell.transform.Find("OnAvailable").gameObject.SetActive(m_AvailableCells.Contains(cell));
             cell.transform.Find("OnTarget").gameObject.SetActive(cell == m_TargetCell);
-        }
-
-        //if (m_CurrentCell != null)
-        //{
-        //    m_CurrentCell.transform.Find("Unit(Clone)").Find("OnActive").gameObject.SetActive(true);
-        //    m_CurrentCell.transform.Find("Unit(Clone)").Find("OnActiveBackground").gameObject.SetActive(true);
-        //}
-
-        if (m_AllySquad.Count == 0 || m_EnemySquad.Count == 0)
-        {
-            SceneManager.LoadScene("Map");
         }
     }
 
@@ -285,6 +273,7 @@ public class TestBattle : MonoBehaviour
         {
             if (!m_CurrentUnit.inBattleInfo.IsMoved)
                 m_AvailableCells = GetAvailableCells(m_CurrentCell, m_CurrentUnit.abilities.primaryMoveSkill.range);
+            m_CurrentUnit.uiController.EnableHighlight();
         }
         m_TargetCell = null;
     }

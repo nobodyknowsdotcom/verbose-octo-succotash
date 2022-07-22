@@ -14,6 +14,8 @@ public class BattleUnit : MonoBehaviour
     // Информация для боя
     public UnitBattleInfo inBattleInfo;
 
+    // Контроллер для визуала юнита
+    public UnitUi uiController;
     public BattleUnit(BattleUnit unitToCopyFrom)
     {
         generalInfo = unitToCopyFrom.generalInfo;
@@ -38,19 +40,10 @@ public class BattleUnit : MonoBehaviour
         {
             abilities = gameObject.GetComponentInChildren<UnitAbilities>();
         }
+        
+        if (uiController == null)
+        {
+            uiController = gameObject.GetComponentInChildren<UnitUi>();
+        }
     }
-
-    // Временно?
-    //public BattleUnit GetCopy(bool isUnitAlly)
-    //{
-    //    var copy = new BattleUnit();
-    //    copy.generalInfo = generalInfo;
-    //    copy.stats = stats;
-    //    copy.abilities = abilities;
-
-    //    copy.inBattleInfo = inBattleInfo;
-    //    copy.inBattleInfo.IsAlly = isUnitAlly;
-
-    //    return copy;
-    //}
 }
