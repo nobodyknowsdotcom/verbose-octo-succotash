@@ -15,7 +15,13 @@ public class AttackingAbility : UnitAbility
     public override BattleInfo Use(BattleInfo info)
     {
         CalculateEnemyHealth(info);
-        info.m_TargetCell.GetComponent<TileVisualController>().HighlightTile();
+        var enemy = info._unitsPositions[info.m_TargetCell];
+        if (enemy.stats.IsDead())
+        {
+            info._unitsPositions.Remove(info.m_TargetCell);
+            info.m_EnemySquad.Remove(enemy);
+            Destroy(enemy.gameObject);
+        }
         return info;
     }
 

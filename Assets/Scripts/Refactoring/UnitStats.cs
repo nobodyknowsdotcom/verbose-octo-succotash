@@ -14,4 +14,6 @@ public class UnitStats : MonoBehaviour
     public int Armor;
     public double DodgeChance;
     public double Accuracy;
+
+    public bool IsDead() => (Health == 0 && Armor == 0);
 }

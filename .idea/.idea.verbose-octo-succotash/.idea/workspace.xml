@@ -3,10 +3,11 @@
   <component name="ChangeListManager">
     <list default="true" id="0b3f2042-8aef-4295-9e71-03ff8180e52d" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/.idea.verbose-octo-succotash/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.verbose-octo-succotash/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Prefabs/TestPrefabs/TestUnit.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Prefabs/TestPrefabs/TestUnit.prefab" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Prefabs/Unit.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Prefabs/Unit.prefab" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Refactoring/BattleUnit.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Refactoring/BattleUnit.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Refactoring/AttackingAbility.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Refactoring/AttackingAbility.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Refactoring/HealingAbility.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Refactoring/HealingAbility.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Refactoring/MovingAbility.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Refactoring/MovingAbility.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/Scripts/Refactoring/TestBattle.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Refactoring/TestBattle.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Refactoring/UnitStats.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Refactoring/UnitStats.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/UserSettings/Layouts/default-2021.dwlt" beforeDir="false" afterPath="$PROJECT_DIR$/UserSettings/Layouts/default-2021.dwlt" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -53,11 +54,12 @@
       <option value="$PROJECT_DIR$/Assets/Scripts/Entities/Swordsman.cs" />
       <option value="$PROJECT_DIR$/Assets/Scripts/Entities/Assault.cs" />
       <option value="$PROJECT_DIR$/Assets/Scripts/Battle/Battle.cs" />
-      <option value="$PROJECT_DIR$/Assets/Scripts/Refactoring/AttackingAbility.cs" />
-      <option value="$PROJECT_DIR$/Assets/Scripts/Refactoring/MovingAbility.cs" />
       <option value="$PROJECT_DIR$/Assets/Scripts/Refactoring/UnitUi.cs" />
-      <option value="$PROJECT_DIR$/Assets/Scripts/Refactoring/BattleUnit.cs" />
+      <option value="$PROJECT_DIR$/Assets/Scripts/Refactoring/UnitStats.cs" />
       <option value="$PROJECT_DIR$/Assets/Scripts/Refactoring/TestBattle.cs" />
+      <option value="$PROJECT_DIR$/Assets/Scripts/Refactoring/MovingAbility.cs" />
+      <option value="$PROJECT_DIR$/Assets/Scripts/Refactoring/BattleUnit.cs" />
+      <option value="$PROJECT_DIR$/Assets/Scripts/Refactoring/AttackingAbility.cs" />
     </changedPaths>
   </component>
   <component name="ProjectId" id="28Swb6SCp9JQooodyj6MSMtxZfz" />
@@ -218,7 +220,8 @@
       <workItem from="1658390413709" duration="931000" />
       <workItem from="1658427895041" duration="890000" />
       <workItem from="1658498261830" duration="2549000" />
-      <workItem from="1658502322974" duration="2082000" />
+      <workItem from="1658502322974" duration="2125000" />
+      <workItem from="1658513174115" duration="3788000" />
     </task>
     <servers />
   </component>

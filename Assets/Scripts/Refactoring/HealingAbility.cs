@@ -13,8 +13,8 @@ public class HealingAbility : UnitAbility
 
     public override BattleInfo Use(BattleInfo info)
     {
-        // Áàçîâàÿ ñïîñîáíîñòü ëå÷åíèÿ
-        // Ëå÷èò ñåáÿ íà ïðîöåíò îò ìàêñèìàëüíîãî çäîðîâüÿ
+        // Ð‘Ð°Ð·Ð¾Ð²Ð°Ñ ÑÐ¿Ð¾ÑÐ¾Ð±Ð½Ð¾ÑÑ‚ÑŒ Ð»ÐµÑ‡ÐµÐ½Ð¸Ñ
+        // Ð›ÐµÑ‡Ð¸Ñ‚ ÑÐµÐ±Ñ Ð½Ð° Ð¿Ñ€Ð¾Ñ†ÐµÐ½Ñ‚ Ð¾Ñ‚ Ð¼Ð°ÐºÑÐ¸Ð¼Ð°Ð»ÑŒÐ½Ð¾Ð³Ð¾ Ð·Ð´Ð¾Ñ€Ð¾Ð²ÑŒÑ
         int totalHealing = (int)(info.m_CurrentUnit.stats.MaxHealth * healingAmount);
         info.m_CurrentUnit.stats.Health += totalHealing;
         if (info.m_CurrentUnit.stats.Health > info.m_CurrentUnit.stats.MaxHealth)

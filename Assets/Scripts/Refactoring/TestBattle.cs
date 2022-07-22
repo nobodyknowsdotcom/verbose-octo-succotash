@@ -159,7 +159,6 @@ public class TestBattle : MonoBehaviour
     {
         foreach (var cell in m_CellsGrid)
         {
-
             cell.transform.Find("OnReachable").gameObject.SetActive(m_ReachableCells.Contains(cell));
             cell.transform.Find("OnAvailable").gameObject.SetActive(m_AvailableCells.Contains(cell));
             cell.transform.Find("OnTarget").gameObject.SetActive(cell == m_TargetCell);
@@ -181,18 +180,6 @@ public class TestBattle : MonoBehaviour
     {
         var newInfo = m_CurrentUnit.abilities.primaryMoveSkill.Use(GetBattleInfo());
         UpdateBattleInfo(newInfo);
-    }
-
-    private IEnumerator Move(GameObject unit, List<Point> path)
-    {
-        foreach (var point in path)
-        {
-            unit.transform.position = m_CellsGrid[point.X, point.Y].transform.position;
-            unit.transform.parent = m_CellsGrid[point.X, point.Y].transform;
-            yield return new WaitForSeconds(0.15f);
-        }
-
-        m_ReachableCells = GetAvailableCells(m_CurrentCell, m_CurrentUnit.abilities.primaryAttackSkill.range);
     }
 
     private List<Point> GetUnitsAsPoints(params GameObject[] exclude)
@@ -221,19 +208,10 @@ public class TestBattle : MonoBehaviour
         if (_unitsPositions.ContainsKey(m_TargetCell) && !_unitsPositions[m_TargetCell].inBattleInfo.IsAlly & !_unitsPositions[m_CurrentCell].inBattleInfo.IsUsedAbility & path.Count <= m_CurrentUnit.abilities.primaryAttackSkill.range)
         {
             var newInfo = m_CurrentUnit.abilities.primaryAttackSkill.Use(GetBattleInfo());
-            UpdateBattleInfo(newInfo);
-
-            //m_CurrentUnit.Ability1(_unitsPositions[m_TargetCell]);
-
-            //if (_unitsPositions[m_TargetCell].Health <= 0)
-            //{
-            //    Destroy(m_TargetCell.transform.Find("Unit(Clone)").gameObject);
-
-            //    _unitsPositions.Remove(m_TargetCell);
-            //}
 
             m_TargetCell = null;
-
+            
+            UpdateBattleInfo(newInfo);
             SwitchToNextUnit();
         }
     }
@@ -262,7 +240,7 @@ public class TestBattle : MonoBehaviour
     private void SwitchToNextUnit()
     {
         m_CurrentUnit = _unitsPositions.Values.FirstOrDefault(unit => !unit.inBattleInfo.IsUsedAbility && unit.inBattleInfo.IsAlly);
-        m_CurrentCell = _unitsPositions.FirstOrDefault(x => !x.Value.inBattleInfo.IsUsedAbility & x.Value == m_CurrentUnit & x.Key != m_CurrentCell).Key;
+        m_CurrentCell = _unitsPositions.FirstOrDefault(x => x.Value == m_CurrentUnit).Key;
 
         if (!_unitsPositions[m_CurrentCell].inBattleInfo.IsAlly)
         {
@@ -340,8 +318,6 @@ public class TestBattle : MonoBehaviour
             card.transform.Find("Health").Find("Value").GetComponent<Text>().text = unit.stats.Health.ToString();
             card.transform.Find("Armor").Find("Value").GetComponent<Text>().text = unit.stats.Armor.ToString();
         }
-
-        m_EnemySquad.RemoveAll(x => x.stats.Health == 0);
     }
 
     private void SpawnUnitsOnField()
