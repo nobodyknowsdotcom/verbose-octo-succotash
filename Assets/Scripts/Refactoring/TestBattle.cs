@@ -247,16 +247,17 @@ public class TestBattle : MonoBehaviour
 
     private void SwitchToNextUnit()
     {
+        if (m_CurrentUnit != null) m_CurrentUnit.uiController.DisableHighlight();
         m_CurrentUnit = _unitsPositions.Values.FirstOrDefault(unit => !unit.inBattleInfo.IsUsedAbility && unit.inBattleInfo.IsAlly);
-        m_CurrentCell = _unitsPositions.FirstOrDefault(x => x.Value == m_CurrentUnit).Key;
 
-        if (!_unitsPositions[m_CurrentCell].inBattleInfo.IsAlly)
+        if (m_CurrentUnit == null || !m_CurrentUnit.inBattleInfo.IsAlly)
         {
             m_CurrentUnit = null;
             m_CurrentCell = null;
         }
         else
         {
+            m_CurrentCell = _unitsPositions.FirstOrDefault(x => x.Value == m_CurrentUnit).Key;
             if (!m_CurrentUnit.inBattleInfo.IsMoved)
                 m_AvailableCells = GetAvailableCells(m_CurrentCell, m_CurrentUnit.abilities.primaryMoveSkill.range);
             m_CurrentUnit.uiController.EnableHighlight();

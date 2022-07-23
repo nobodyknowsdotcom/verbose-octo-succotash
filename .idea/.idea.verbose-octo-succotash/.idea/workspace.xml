@@ -3,8 +3,6 @@
   <component name="ChangeListManager">
     <list default="true" id="0b3f2042-8aef-4295-9e71-03ff8180e52d" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/.idea.verbose-octo-succotash/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.verbose-octo-succotash/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scenes/TestBattle.unity" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scenes/TestBattle.unity" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Refactoring/AreaOfEffectAbility.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Refactoring/AreaOfEffectAbility.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/Scripts/Refactoring/TestBattle.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Refactoring/TestBattle.cs" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -226,6 +224,7 @@
       <workItem from="1658562253142" duration="3735000" />
       <workItem from="1658572019097" duration="278000" />
       <workItem from="1658572450653" duration="96000" />
+      <workItem from="1658606010433" duration="992000" />
     </task>
     <servers />
   </component>
