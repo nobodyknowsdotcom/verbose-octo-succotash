@@ -15,7 +15,7 @@ public class MovingAbility : UnitAbility
     {
         //GameObject unitAsGameObject = m_CurrentCell.transform.Find("Unit(Clone)").gameObject;
         // --- Заменено (временно)
-        GameObject unitAsGameObject = info.m_CurrentCell.transform.GetChild(5).gameObject;
+        GameObject unitAsGameObject = info.m_CurrentCell.transform.GetChild(4).gameObject;
         List<Point> barriers = GetUnitsAsPoints(info, info.m_CurrentCell, info.m_TargetCell);
         Point currentPosition = GameObjectToPoint(info.m_CurrentCell);
         Point targetPosition = GameObjectToPoint(info.m_TargetCell);

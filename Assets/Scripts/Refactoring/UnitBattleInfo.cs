@@ -13,12 +13,12 @@ public class UnitBattleInfo : MonoBehaviour
         IsMoved = true;
     }
 
-    public void RefreshAbilities()
+    private void RefreshAbilities()
     {
         IsUsedAbility = false;
     }
 
-    public void RefreshMoving()
+    private void RefreshMoving()
     {
         IsMoved = false;
     }

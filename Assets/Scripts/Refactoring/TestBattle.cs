@@ -300,6 +300,7 @@ public class TestBattle : MonoBehaviour
         {
             abilitiesParent.GetChild(i + 1).Find("Text").GetComponent<Text>().text = m_CurrentUnit.abilities.otherAbilities[i].abilityName;
             abilitiesParent.GetChild(i + 1).Find("Image").GetComponent<Image>().sprite = m_CurrentUnit.abilities.otherAbilities[i].sprite;
+            abilitiesParent.GetChild(i + 1).Find("Disabled").gameObject.SetActive(true);
         }
     }
 
