@@ -10,9 +10,9 @@ public class AreaOfEffectAbility : AttackingAbility
     public override BattleInfo Use(BattleInfo info)
     {
         var targetPoint = GameObjectToPoint(info.m_TargetCell);
-        for (int i = targetPoint.X; i < targetPoint.X + area && i < 8; i++)
+        for (int i = targetPoint.X; i < targetPoint.X + area && i < 7; i++)
         {
-            for (int j = targetPoint.Y; j < targetPoint.Y + area && j < 8; j++)
+            for (int j = targetPoint.Y; j < targetPoint.Y + area && j < 7; j++)
             {
                 if (info._unitsPositions.ContainsKey(info.m_CellsGrid[i, j]))
                 {
