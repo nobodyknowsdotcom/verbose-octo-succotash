@@ -57,6 +57,17 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 8d468b85541cfe84f8312184afd0489d, type: 3}
+--- !u!114 &6513041127229748905 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 5171207232749370413, guid: 8d468b85541cfe84f8312184afd0489d, type: 3}
+  m_PrefabInstance: {fileID: 2135033816568105604}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3534f8df50f60a1468b6614d2e504dc5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &2250579970793619979
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -226,7 +237,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3504169036147009958, guid: 3697b65e1ec4812439f846f37cba6b3e, type: 3}
       propertyPath: m_Name
-      value: InfantrymanPrefab
+      value: AllyInfantrymanPrefab
       objectReference: {fileID: 0}
     - target: {fileID: 5353518965328651158, guid: 3697b65e1ec4812439f846f37cba6b3e, type: 3}
       propertyPath: m_AnchorMax.x
@@ -294,7 +305,7 @@ PrefabInstance:
       objectReference: {fileID: 103959295141346159}
     - target: {fileID: 7318943634637244979, guid: 3697b65e1ec4812439f846f37cba6b3e, type: 3}
       propertyPath: otherAbilities.Array.size
-      value: 2
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 7318943634637244979, guid: 3697b65e1ec4812439f846f37cba6b3e, type: 3}
       propertyPath: otherAbilities.Array.data[0]
@@ -304,6 +315,10 @@ PrefabInstance:
       propertyPath: otherAbilities.Array.data[1]
       value: 
       objectReference: {fileID: 3615917622390239021}
+    - target: {fileID: 7318943634637244979, guid: 3697b65e1ec4812439f846f37cba6b3e, type: 3}
+      propertyPath: otherAbilities.Array.data[2]
+      value: 
+      objectReference: {fileID: 6513041127229748905}
     - target: {fileID: 7782360042308140543, guid: 3697b65e1ec4812439f846f37cba6b3e, type: 3}
       propertyPath: m_Pivot.x
       value: 0.5
