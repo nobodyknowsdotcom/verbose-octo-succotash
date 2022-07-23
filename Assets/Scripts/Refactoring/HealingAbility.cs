@@ -15,14 +15,14 @@ public class HealingAbility : UnitAbility
     {
         // Базовая способность лечения
         // Лечит себя на процент от максимального здоровья
-        int totalHealing = (int)(info.m_CurrentUnit.stats.MaxHealth * healingAmount);
-        info.m_CurrentUnit.stats.Health += totalHealing;
-        if (info.m_CurrentUnit.stats.Health > info.m_CurrentUnit.stats.MaxHealth)
+        int totalHealing = (int)(info.currentUnit.stats.MaxHealth * healingAmount);
+        info.currentUnit.stats.Health += totalHealing;
+        if (info.currentUnit.stats.Health > info.currentUnit.stats.MaxHealth)
         {
-            info.m_CurrentUnit.stats.Health = info.m_CurrentUnit.stats.MaxHealth;
+            info.currentUnit.stats.Health = info.currentUnit.stats.MaxHealth;
         }
 
-        info.m_CurrentUnit.inBattleInfo.IsUsedAbility = true;
+        info.currentUnit.inBattleInfo.IsUsedAbility = true;
 
         return info;
     }

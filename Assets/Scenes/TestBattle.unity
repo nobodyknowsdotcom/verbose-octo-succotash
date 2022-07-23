@@ -1023,6 +1023,7 @@ MonoBehaviour:
   enemyUnitsPanel: {fileID: 2143513641}
   endTurnButton: {fileID: 180382401}
   cellPrefab: {fileID: 8504819267213613518, guid: d2a03e39b8dc66b4eb628f3e8fa205a8, type: 3}
+  rockPrefab: {fileID: 8504819267213613518, guid: 2fb25dc389dddad49919494087b6dfda, type: 3}
   enemyCardPrefab: {fileID: 3423175362130426080, guid: 043865a4fffffb74db24a7e036be40e2, type: 3}
   allyInfantrymanPrefab: {fileID: 1132078522477098000, guid: 2632bdfd6170926448174ca82f6267f0, type: 3}
   allySniperPrefab: {fileID: 8643042221101604444, guid: b98843dab3a373e4eac5361f49a61316, type: 3}

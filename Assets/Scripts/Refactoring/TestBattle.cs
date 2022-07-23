@@ -5,6 +5,7 @@ using System.Drawing;
 using System.Linq;
 using System.Net;
 using Entities;
+using Unity.Mathematics;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.SceneManagement;
@@ -20,6 +21,7 @@ public class TestBattle : MonoBehaviour
     [SerializeField] private GameObject endTurnButton;
 
     [SerializeField] private GameObject cellPrefab;
+    [SerializeField] private GameObject rockPrefab;
     [SerializeField] private GameObject enemyCardPrefab;
     
     [SerializeField] private GameObject allyInfantrymanPrefab;
@@ -30,16 +32,17 @@ public class TestBattle : MonoBehaviour
     [SerializeField] private GameObject enemySwordsmanPrefab;
 
     private static Dictionary<GameObject, BattleUnit> _unitsPositions;
-    private List<BattleUnit> m_AllySquad;
-    private List<BattleUnit> m_EnemySquad;
-    private BattleUnit m_CurrentUnit;
+    private List<BattleUnit> _allySquad;
+    private List<BattleUnit> _enemySquad;
+    private BattleUnit _currentUnit;
 
-    private GameObject[,] m_CellsGrid;
-    private List<GameObject> m_AvailableCells;
-    private List<GameObject> m_ReachableCells;
-    private GameObject m_CurrentCell;
-    private GameObject m_TargetCell;
-    private GameObject m_ExitCell;
+    private GameObject[,] _cellsGrid;
+    private List<GameObject> _availableCells;
+    private List<GameObject> _reachableCells;
+    private GameObject _currentCell;
+    private GameObject _targetCell;
+    public List<Obstacle> obstacles;
+    private GameObject _exitCell;
 
     private const int Width = 8;
     private const int Height = 8;
@@ -56,7 +59,7 @@ public class TestBattle : MonoBehaviour
 
         // Над этим подумать
         // Заглушка - ниже в коде эти значения меняются
-        m_AllySquad = new List<BattleUnit>
+        _allySquad = new List<BattleUnit>
         {
             allyInfantrymanPrefab.GetComponent<BattleUnit>(),
             allySwordsmanPrefab.GetComponent<BattleUnit>(),
@@ -72,8 +75,8 @@ public class TestBattle : MonoBehaviour
         SpawnUnitsOnField();
         SwitchToNextUnit();
 
-        m_AvailableCells = GetAvailableCells(m_CurrentCell, m_CurrentUnit.abilities.primaryMoveSkill.range);
-        m_ReachableCells = new List<GameObject>();
+        _availableCells = GetAvailableCells(_currentCell, _currentUnit.abilities.primaryMoveSkill.range);
+        _reachableCells = new List<GameObject>();
     }
 
     public void Update()
@@ -89,40 +92,40 @@ public class TestBattle : MonoBehaviour
     {
         var selectedCell = EventSystem.current.currentSelectedGameObject;
         // Если уже существует текущая клетка (подсвечивается зеленым), то назначаем targetCell
-        if (m_CurrentCell != null && selectedCell != m_CurrentCell && !(_unitsPositions[m_CurrentCell].inBattleInfo.IsUsedAbility & _unitsPositions[m_CurrentCell].inBattleInfo.IsMoved))
+        if (_currentCell != null && selectedCell != _currentCell && !(_unitsPositions[_currentCell].inBattleInfo.IsUsedAbility & _unitsPositions[_currentCell].inBattleInfo.IsMoved))
         {
-            m_TargetCell = selectedCell;
+            _targetCell = selectedCell;
 
-            m_AvailableCells = new List<GameObject>();
-            m_ReachableCells = new List<GameObject>();
+            _availableCells = new List<GameObject>();
+            _reachableCells = new List<GameObject>();
         }
         else
         {
             // Если игрок выбрал текущую клетку (произошел даблклик) -- обнуляем currentCell и targetCell 
-            if (selectedCell == m_CurrentCell)
+            if (selectedCell == _currentCell)
             {
-                m_CurrentUnit.uiController.DisableHighlight();
+                _currentUnit.uiController.DisableHighlight();
                 
-                m_CurrentCell = null;
-                m_TargetCell = null;
+                _currentCell = null;
+                _targetCell = null;
 
-                m_AvailableCells = new List<GameObject>();
-                m_ReachableCells = new List<GameObject>();
+                _availableCells = new List<GameObject>();
+                _reachableCells = new List<GameObject>();
             }
             else
             {
                 // Если текущая клетка ещё не назначена, то назначаем выбранную клетку текущей (если в ней находится союзный юнит)
                 if (_unitsPositions.Keys.Contains(selectedCell) && _unitsPositions[selectedCell].inBattleInfo.IsAlly)
                 {
-                    m_CurrentUnit = _unitsPositions[selectedCell];
-                    m_CurrentCell = selectedCell;
+                    _currentUnit = _unitsPositions[selectedCell];
+                    _currentCell = selectedCell;
                     
-                    m_CurrentUnit.uiController.EnableHighlight();
+                    _currentUnit.uiController.EnableHighlight();
 
-                    if (!m_CurrentUnit.inBattleInfo.IsMoved)
-                        m_AvailableCells = GetAvailableCells(m_CurrentCell, m_CurrentUnit.abilities.primaryMoveSkill.range);
-                    else if (!m_CurrentUnit.inBattleInfo.IsUsedAbility)
-                        m_ReachableCells = GetAvailableCells(m_CurrentCell, m_CurrentUnit.abilities.primaryAttackSkill.range);
+                    if (!_currentUnit.inBattleInfo.IsMoved)
+                        _availableCells = GetAvailableCells(_currentCell, _currentUnit.abilities.primaryMoveSkill.range);
+                    else if (!_currentUnit.inBattleInfo.IsUsedAbility)
+                        _reachableCells = GetAvailableCells(_currentCell, _currentUnit.abilities.primaryAttackSkill.range);
                 }
             }
         }
@@ -132,7 +135,7 @@ public class TestBattle : MonoBehaviour
     {
         var result = new List<GameObject>();
         var barriers = GetUnitsAsPoints();
-        foreach (var cell in m_CellsGrid)
+        foreach (var cell in _cellsGrid)
         {
             if (barriers.Contains(GameObjectToPoint(cell))) continue;
             var currentPosition = GameObjectToPoint(start);
@@ -142,7 +145,7 @@ public class TestBattle : MonoBehaviour
             {
                 foreach (var point in path)
                 {
-                    var cellAtPoint = m_CellsGrid[point.X, point.Y];
+                    var cellAtPoint = _cellsGrid[point.X, point.Y];
                     result.Add(cellAtPoint);
                 }
             }
@@ -155,28 +158,28 @@ public class TestBattle : MonoBehaviour
     // --- TODO: Вынести функционал в отдельный класс, привязанный к префабу юнита
     private void UpdateCells()
     {
-        foreach (var cell in m_CellsGrid)
+        foreach (var cell in _cellsGrid)
         {
-            cell.transform.Find("OnReachable").gameObject.SetActive(m_ReachableCells.Contains(cell));
-            cell.transform.Find("OnAvailable").gameObject.SetActive(m_AvailableCells.Contains(cell));
-            cell.transform.Find("OnTarget").gameObject.SetActive(cell == m_TargetCell);
+            cell.transform.Find("OnReachable").gameObject.SetActive(_reachableCells.Contains(cell));
+            cell.transform.Find("OnAvailable").gameObject.SetActive(_availableCells.Contains(cell));
+            cell.transform.Find("OnTarget").gameObject.SetActive(cell == _targetCell);
         }
     }
 
     private void UpdateCurrentUnitCard()
     {
-        if (m_CurrentCell != null)
+        if (_currentCell != null)
         {
             currentUnitCard.SetActive(true);
-            currentUnitCard.transform.Find("Icon").GetComponent<Image>().sprite = m_CurrentUnit.transform.Find("Visual").Find("Icon").GetComponent<Image>().sprite;
-            currentUnitCard.transform.Find("Health").GetChild(1).GetComponent<Text>().text = m_CurrentUnit.stats.Health.ToString();
-            currentUnitCard.transform.Find("Armor").GetChild(1).GetComponent<Text>().text = m_CurrentUnit.stats.Armor.ToString();
+            currentUnitCard.transform.Find("Icon").GetComponent<Image>().sprite = _currentUnit.transform.Find("Visual").Find("Icon").GetComponent<Image>().sprite;
+            currentUnitCard.transform.Find("Health").GetChild(1).GetComponent<Text>().text = _currentUnit.stats.Health.ToString();
+            currentUnitCard.transform.Find("Armor").GetChild(1).GetComponent<Text>().text = _currentUnit.stats.Armor.ToString();
         }
     }
 
     public void OnMoveButton()
     {
-        var newInfo = m_CurrentUnit.abilities.primaryMoveSkill.Use(GetBattleInfo());
+        var newInfo = _currentUnit.abilities.primaryMoveSkill.Use(GetBattleInfo());
         UpdateBattleInfo(newInfo);
     }
 
@@ -200,14 +203,14 @@ public class TestBattle : MonoBehaviour
 
     public void FirstAbilityButton()
     {
-        Point currentPosition = GameObjectToPoint(m_CurrentCell);
-        Point targetPosition = GameObjectToPoint(m_TargetCell);
+        Point currentPosition = GameObjectToPoint(_currentCell);
+        Point targetPosition = GameObjectToPoint(_targetCell);
         List<Point> path = Bts(new List<Point>(), currentPosition, targetPosition);
-        if (_unitsPositions.ContainsKey(m_TargetCell) && !_unitsPositions[m_TargetCell].inBattleInfo.IsAlly & !_unitsPositions[m_CurrentCell].inBattleInfo.IsUsedAbility & path.Count <= m_CurrentUnit.abilities.primaryAttackSkill.range)
+        if (_unitsPositions.ContainsKey(_targetCell) && !_unitsPositions[_targetCell].inBattleInfo.IsAlly & !_unitsPositions[_currentCell].inBattleInfo.IsUsedAbility & path.Count <= _currentUnit.abilities.primaryAttackSkill.range)
         {
-            var newInfo = m_CurrentUnit.abilities.primaryAttackSkill.Use(GetBattleInfo());
+            var newInfo = _currentUnit.abilities.primaryAttackSkill.Use(GetBattleInfo());
 
-            m_TargetCell = null;
+            _targetCell = null;
             
             UpdateBattleInfo(newInfo);
             SwitchToNextUnit();
@@ -217,82 +220,82 @@ public class TestBattle : MonoBehaviour
     // Функционал второй кнопки способностей
     public void SecondAbilityButton()
     {
-        var newInfo = m_CurrentUnit.abilities.otherAbilities[0].Use(GetBattleInfo());
+        var newInfo = _currentUnit.abilities.otherAbilities[0].Use(GetBattleInfo());
         UpdateBattleInfo(newInfo);
 
-        m_TargetCell = null;
+        _targetCell = null;
 
         SwitchToNextUnit();
     }
 
     public void ThirdAbilityButton()
     {
-        var newInfo = m_CurrentUnit.abilities.otherAbilities[1].Use(GetBattleInfo());
+        var newInfo = _currentUnit.abilities.otherAbilities[1].Use(GetBattleInfo());
         UpdateBattleInfo(newInfo);
 
-        m_TargetCell = null;
+        _targetCell = null;
 
         SwitchToNextUnit();
     }
     
     public void FourthAbilityButton()
     {
-        var newInfo = m_CurrentUnit.abilities.otherAbilities[2].Use(GetBattleInfo());
+        var newInfo = _currentUnit.abilities.otherAbilities[2].Use(GetBattleInfo());
         UpdateBattleInfo(newInfo);
 
-        m_TargetCell = null;
+        _targetCell = null;
 
         SwitchToNextUnit();
     }
 
     private void SwitchToNextUnit()
     {
-        if (m_CurrentUnit != null) m_CurrentUnit.uiController.DisableHighlight();
-        m_CurrentUnit = _unitsPositions.Values.FirstOrDefault(unit => !unit.inBattleInfo.IsUsedAbility && unit.inBattleInfo.IsAlly);
+        if (_currentUnit != null) _currentUnit.uiController.DisableHighlight();
+        _currentUnit = _unitsPositions.Values.FirstOrDefault(unit => !unit.inBattleInfo.IsUsedAbility && unit.inBattleInfo.IsAlly);
 
-        if (m_CurrentUnit == null || !m_CurrentUnit.inBattleInfo.IsAlly)
+        if (_currentUnit == null || !_currentUnit.inBattleInfo.IsAlly)
         {
-            m_CurrentUnit = null;
-            m_CurrentCell = null;
+            _currentUnit = null;
+            _currentCell = null;
         }
         else
         {
-            m_CurrentCell = _unitsPositions.FirstOrDefault(x => x.Value == m_CurrentUnit).Key;
-            if (!m_CurrentUnit.inBattleInfo.IsMoved)
-                m_AvailableCells = GetAvailableCells(m_CurrentCell, m_CurrentUnit.abilities.primaryMoveSkill.range);
-            m_CurrentUnit.uiController.EnableHighlight();
+            _currentCell = _unitsPositions.FirstOrDefault(x => x.Value == _currentUnit).Key;
+            if (!_currentUnit.inBattleInfo.IsMoved)
+                _availableCells = GetAvailableCells(_currentCell, _currentUnit.abilities.primaryMoveSkill.range);
+            _currentUnit.uiController.EnableHighlight();
         }
-        m_TargetCell = null;
+        _targetCell = null;
     }
 
     private void UpdateAvailableActions()
     {
-        if (m_CurrentCell == null)
+        if (_currentCell == null)
         {
             abilitiesPanel.SetActive(false);
         }
         else
         {
             abilitiesPanel.SetActive(true);
-            abilitiesPanel.transform.GetChild(1).GetComponent<Button>().enabled = !m_CurrentUnit.inBattleInfo.IsMoved;
-            abilitiesPanel.transform.GetChild(1).GetChild(2).gameObject.SetActive(m_CurrentUnit.inBattleInfo.IsMoved);
+            abilitiesPanel.transform.GetChild(1).GetComponent<Button>().enabled = !_currentUnit.inBattleInfo.IsMoved;
+            abilitiesPanel.transform.GetChild(1).GetChild(2).gameObject.SetActive(_currentUnit.inBattleInfo.IsMoved);
 
             Transform abilitiesPanelTransform = abilitiesPanel.transform.Find("ActiveAbilities");
 
-            abilitiesPanelTransform.GetChild(0).GetComponent<Button>().enabled = !m_CurrentUnit.inBattleInfo.IsUsedAbility;
-            abilitiesPanelTransform.GetChild(0).GetChild(2).gameObject.SetActive(m_CurrentUnit.inBattleInfo.IsUsedAbility);
-
-            abilitiesPanelTransform.GetChild(1).GetComponent<Button>().enabled = !m_CurrentUnit.inBattleInfo.IsUsedAbility;
-            abilitiesPanelTransform.GetChild(1).GetChild(2).gameObject.SetActive(m_CurrentUnit.inBattleInfo.IsUsedAbility);
-
-            abilitiesPanelTransform.GetChild(2).GetComponent<Button>().enabled = !m_CurrentUnit.inBattleInfo.IsUsedAbility;
-            abilitiesPanelTransform.GetChild(2).GetChild(2).gameObject.SetActive(m_CurrentUnit.inBattleInfo.IsUsedAbility);
+            abilitiesPanelTransform.GetChild(0).GetComponent<Button>().enabled = !_currentUnit.inBattleInfo.IsUsedAbility;
+            abilitiesPanelTransform.GetChild(0).GetChild(2).gameObject.SetActive(_currentUnit.inBattleInfo.IsUsedAbility);
+            abilitiesPanelTransform.GetChild(1).GetComponent<Button>().enabled = !_currentUnit.inBattleInfo.IsUsedAbility;
+            abilitiesPanelTransform.GetChild(1).GetChild(2).gameObject.SetActive(_currentUnit.inBattleInfo.IsUsedAbility);
+            abilitiesPanelTransform.GetChild(2).GetComponent<Button>().enabled = !_currentUnit.inBattleInfo.IsUsedAbility;
+            abilitiesPanelTransform.GetChild(2).GetChild(2).gameObject.SetActive(_currentUnit.inBattleInfo.IsUsedAbility);
+            abilitiesPanelTransform.GetChild(3).GetComponent<Button>().enabled = !_currentUnit.inBattleInfo.IsUsedAbility;
+            abilitiesPanelTransform.GetChild(3).GetChild(2).gameObject.SetActive(_currentUnit.inBattleInfo.IsUsedAbility);
 
             UpdateAbilitiesPanel();
 
             foreach (Transform child in abilitiesPanel.transform)
             {
-                child.gameObject.SetActive(m_CurrentCell != null);
+                child.gameObject.SetActive(_currentCell != null);
             }
         }
     }
@@ -301,16 +304,16 @@ public class TestBattle : MonoBehaviour
     {
         // Микро-тестик
         var moveParent = abilitiesPanel.transform.Find("Move");
-        moveParent.Find("Image").GetComponent<Image>().sprite = m_CurrentUnit.abilities.primaryMoveSkill.sprite;
+        moveParent.Find("Image").GetComponent<Image>().sprite = _currentUnit.abilities.primaryMoveSkill.sprite;
 
         var abilitiesParent = abilitiesPanel.transform.Find("ActiveAbilities");
-        abilitiesParent.GetChild(0).Find("Text").GetComponent<Text>().text = m_CurrentUnit.abilities.primaryAttackSkill.abilityName;
-        abilitiesParent.GetChild(0).Find("Image").GetComponent<Image>().sprite = m_CurrentUnit.abilities.primaryAttackSkill.sprite;
+        abilitiesParent.GetChild(0).Find("Text").GetComponent<Text>().text = _currentUnit.abilities.primaryAttackSkill.abilityName;
+        abilitiesParent.GetChild(0).Find("Image").GetComponent<Image>().sprite = _currentUnit.abilities.primaryAttackSkill.sprite;
 
-        for (int i = 0; i < m_CurrentUnit.abilities.otherAbilities.Count; i++)
+        for (int i = 0; i < _currentUnit.abilities.otherAbilities.Count; i++)
         {
-            abilitiesParent.GetChild(i + 1).Find("Text").GetComponent<Text>().text = m_CurrentUnit.abilities.otherAbilities[i].abilityName;
-            abilitiesParent.GetChild(i + 1).Find("Image").GetComponent<Image>().sprite = m_CurrentUnit.abilities.otherAbilities[i].sprite;
+            abilitiesParent.GetChild(i + 1).Find("Text").GetComponent<Text>().text = _currentUnit.abilities.otherAbilities[i].abilityName;
+            abilitiesParent.GetChild(i + 1).Find("Image").GetComponent<Image>().sprite = _currentUnit.abilities.otherAbilities[i].sprite;
         }
     }
 
@@ -320,7 +323,7 @@ public class TestBattle : MonoBehaviour
         {
             Destroy(child.gameObject);
         }
-        foreach (var unit in m_EnemySquad.Where(x => x.stats.Health > 0))
+        foreach (var unit in _enemySquad.Where(x => x.stats.Health > 0))
         {
             GameObject card = Instantiate(enemyCardPrefab, enemyUnitsPanel.transform.position, Quaternion.identity, enemyUnitsPanel.transform);
             card.transform.Find("Icon").GetComponent<Image>().sprite = unit.transform.Find("Visual").Find("Icon").GetComponent<Image>().sprite;
@@ -332,40 +335,51 @@ public class TestBattle : MonoBehaviour
     private void SpawnUnitsOnField()
     {
         var exitPosition = new Point(0, 7);
-        var allyPositions = GetRandomPointsArray(m_AllySquad.Count, new Point(0, 3), new Point(4, 7), new List<Point> { exitPosition });
-        var enemyPositions = GetRandomPointsArray(m_EnemySquad.Count, new Point(3, 0), new Point(7, 4), allyPositions.Values.Append(exitPosition).ToList());
+        SpawnObstacles(new List<Point>{exitPosition});
+        var restrictedPoints = GetBattleInfo().GetBarriers();
+        restrictedPoints.Add(exitPosition);
+        var allyPositions = GetRandomPointsArray(_allySquad.Count, new Point(0, 3), new Point(4, 7), restrictedPoints);
+        var enemyPositions = GetRandomPointsArray(_enemySquad.Count, new Point(3, 0), new Point(7, 4), allyPositions.Values.Concat(restrictedPoints).ToList());
 
-        m_ExitCell = m_CellsGrid[exitPosition.X, exitPosition.Y];
-        m_ExitCell.transform.Find("Exit").gameObject.SetActive(true);
+        _exitCell = _cellsGrid[exitPosition.X, exitPosition.Y];
+        _exitCell.transform.Find("Exit").gameObject.SetActive(true);
 
-        for (var i = 0; i < m_AllySquad.Count; i++)
+        for (var i = 0; i < _allySquad.Count; i++)
         {
-            //var allyPrefab = unitPrefab;
-            //allyPrefab.transform.Find("Icon").GetComponent<Image>().sprite = m_AllySquad[i].Sprite;
-            
-            var unit = SpawnUnit(m_AllySquad[i].gameObject, allyPositions[i], true);
-            _unitsPositions.Add(m_CellsGrid[allyPositions[i].X, allyPositions[i].Y], unit.GetComponent<BattleUnit>());
-            m_AllySquad[i] = unit.GetComponent<BattleUnit>();
+            var unit = SpawnUnit(_allySquad[i].gameObject, allyPositions[i], true);
+            _unitsPositions.Add(_cellsGrid[allyPositions[i].X, allyPositions[i].Y], unit.GetComponent<BattleUnit>());
+            _allySquad[i] = unit.GetComponent<BattleUnit>();
         }
 
-        for (var i = 0; i < m_EnemySquad.Count; i++)
+        for (var i = 0; i < _enemySquad.Count; i++)
         {
-            //var enemyPrefab = unitPrefab;
-            //enemyPrefab.transform.Find("Icon").GetComponent<Image>().sprite = m_EnemySquad[i].Sprite;
-            
-            var unit = SpawnUnit(m_EnemySquad[i].gameObject, enemyPositions[i], false);
-            _unitsPositions.Add(m_CellsGrid[enemyPositions[i].X, enemyPositions[i].Y], unit.GetComponent<BattleUnit>());
-            m_EnemySquad[i] = unit.GetComponent<BattleUnit>();
+            var unit = SpawnUnit(_enemySquad[i].gameObject, enemyPositions[i], false);
+            _unitsPositions.Add(_cellsGrid[enemyPositions[i].X, enemyPositions[i].Y], unit.GetComponent<BattleUnit>());
+            _enemySquad[i] = unit.GetComponent<BattleUnit>();
         }
+    }
+
+    private void SpawnObstacles(List<Point> restrictedPoints)
+    {
+        var obstaclesPositions = GetRandomPointsArray(4, new Point(1,1), new Point(7, 7), restrictedPoints);
+        for (var i=0; i<obstaclesPositions.Count; i++)
+        {
+            GameObject parent = _cellsGrid[obstaclesPositions[i].X, obstaclesPositions[i].Y];
+            var obstacle = Instantiate(rockPrefab, parent.transform.position, quaternion.identity);
+            obstacle.transform.SetParent(parent.transform);
+            obstacle.GetComponent<Obstacle>().Position = new Point(obstaclesPositions[i].X, obstaclesPositions[i].Y);
+            obstacles.Add(obstacle.GetComponent<Obstacle>());
+        }
+        UpdateBattleInfo(GetBattleInfo());
     }
 
     // Добавил аргумент isAlly
     private GameObject SpawnUnit(GameObject prefab, Point position, bool isAlly)
     {
         var unit = Instantiate(prefab,
-            m_CellsGrid[position.X, position.Y].transform.position, Quaternion.identity);
+            _cellsGrid[position.X, position.Y].transform.position, Quaternion.identity);
         unit.GetComponent<BattleUnit>().inBattleInfo.IsAlly = isAlly;
-        unit.transform.SetParent(m_CellsGrid[position.X, position.Y].transform);
+        unit.transform.SetParent(_cellsGrid[position.X, position.Y].transform);
 
         return unit;
     }
@@ -381,27 +395,27 @@ public class TestBattle : MonoBehaviour
         var rectPrefab = (RectTransform)cellPrefab.transform;
         var cellSize = rectPrefab.rect.width;
 
-        m_CellsGrid = new GameObject[Width, Height];
+        _cellsGrid = new GameObject[Width, Height];
         var startPos = cellsParent.transform.position + new Vector3(cellSize / 2, cellSize / 2);
 
         for (int i = 0; i < Height; i++)
         {
             for (int j = 0; j < Width; j++)
             {
-                m_CellsGrid[i, j] = Instantiate(
+                _cellsGrid[i, j] = Instantiate(
                     cellPrefab,
                     startPos + new Vector3(i * cellSize, j * cellSize, 0),
                     Quaternion.identity);
-                m_CellsGrid[i, j].transform.SetParent(cellsParent.transform);
-                m_CellsGrid[i, j].gameObject.name = i + "_" + j;
-                m_CellsGrid[i, j].GetComponent<Button>().onClick.AddListener(OnCellCLick);
+                _cellsGrid[i, j].transform.SetParent(cellsParent.transform);
+                _cellsGrid[i, j].gameObject.name = i + "_" + j;
+                _cellsGrid[i, j].GetComponent<Button>().onClick.AddListener(OnCellCLick);
             }
         }
     }
 
     private void CreateEnemySquad()
     {
-        m_EnemySquad = new List<BattleUnit>
+        _enemySquad = new List<BattleUnit>
         {
             enemyInfantrymanPrefab.GetComponent<BattleUnit>(),
             enemySniperPrefab.GetComponent<BattleUnit>(),
@@ -416,8 +430,8 @@ public class TestBattle : MonoBehaviour
             unit.inBattleInfo.RefreshAbilitiesAndMoving();
         }
 
-        m_ReachableCells = new List<GameObject>();
-        m_AvailableCells = new List<GameObject>();
+        _reachableCells = new List<GameObject>();
+        _availableCells = new List<GameObject>();
 
         SwitchToNextUnit();
     }
@@ -514,34 +528,36 @@ public class TestBattle : MonoBehaviour
     {
         var battleInfo = new BattleInfo();
 
-        battleInfo._unitsPositions = _unitsPositions;
-        battleInfo.m_AllySquad = m_AllySquad;
-        battleInfo.m_EnemySquad = m_EnemySquad;
-        battleInfo.m_CurrentUnit = m_CurrentUnit;
+        battleInfo.UnitsPositions = _unitsPositions;
+        battleInfo.allySquad = _allySquad;
+        battleInfo.enemySquad = _enemySquad;
+        battleInfo.currentUnit = _currentUnit;
 
-        battleInfo.m_CellsGrid = m_CellsGrid;
-        battleInfo.m_AvailableCells = m_AvailableCells;
-        battleInfo.m_ReachableCells = m_ReachableCells;
-        battleInfo.m_CurrentCell = m_CurrentCell;
-        battleInfo.m_TargetCell = m_TargetCell;
-        battleInfo.m_ExitCell = m_ExitCell;
+        battleInfo.CellsGrid = _cellsGrid;
+        battleInfo.availableCells = _availableCells;
+        battleInfo.reachableCells = _reachableCells;
+        battleInfo.currentCell = _currentCell;
+        battleInfo.targetCell = _targetCell;
+        battleInfo.obstacles = obstacles;
+        battleInfo.exitCell = _exitCell;
 
         return battleInfo;
     }
 
     private void UpdateBattleInfo(BattleInfo info)
     {
-        _unitsPositions = info._unitsPositions;
-        m_AllySquad = info.m_AllySquad;
-        m_EnemySquad = info.m_EnemySquad;
-        m_CurrentUnit = info.m_CurrentUnit;
+        _unitsPositions = info.UnitsPositions;
+        _allySquad = info.allySquad;
+        _enemySquad = info.enemySquad;
+        _currentUnit = info.currentUnit;
 
-        m_CellsGrid = info.m_CellsGrid;
-        m_AvailableCells = info.m_AvailableCells;
-        m_ReachableCells = info.m_ReachableCells;
-        m_CurrentCell = info.m_CurrentCell;
-        m_TargetCell = info.m_TargetCell;
-        m_ExitCell = info.m_ExitCell;
+        _cellsGrid = info.CellsGrid;
+        _availableCells = info.availableCells;
+        _reachableCells = info.reachableCells;
+        _currentCell = info.currentCell;
+        _targetCell = info.targetCell;
+        obstacles = info.obstacles;
+        _exitCell = info.exitCell;
     }
 }
 

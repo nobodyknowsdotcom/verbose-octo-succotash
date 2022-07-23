@@ -93,7 +93,7 @@ public class UnitAbility : MonoBehaviour
     protected List<Point> GetUnitsAsPoints(BattleInfo info, params GameObject[] exclude)
     {
         var result = new List<Point>();
-        foreach (GameObject cell in info._unitsPositions.Keys.Where(x => !exclude.Contains(x)))
+        foreach (GameObject cell in info.UnitsPositions.Keys.Where(x => !exclude.Contains(x)))
         {
             Point p = GameObjectToPoint(cell);
             result.Add(p);

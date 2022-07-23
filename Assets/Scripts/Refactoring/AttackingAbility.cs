@@ -15,11 +15,11 @@ public class AttackingAbility : UnitAbility
     public override BattleInfo Use(BattleInfo info)
     {
         CalculateEnemyHealth(info);
-        var enemy = info._unitsPositions[info.m_TargetCell];
+        var enemy = info.UnitsPositions[info.targetCell];
         if (enemy.stats.IsDead())
         {
-            info._unitsPositions.Remove(info.m_TargetCell);
-            info.m_EnemySquad.Remove(enemy);
+            info.UnitsPositions.Remove(info.targetCell);
+            info.enemySquad.Remove(enemy);
             Destroy(enemy.gameObject);
         }
         return info;
@@ -34,7 +34,7 @@ public class AttackingAbility : UnitAbility
         // --- int count
 
         // Доработка
-        var enemy = info._unitsPositions[info.m_TargetCell];
+        var enemy = info.UnitsPositions[info.targetCell];
 
         // Исполнение
         int damage = 0;
@@ -44,9 +44,9 @@ public class AttackingAbility : UnitAbility
         for (int i = 0; i < shotsCount; i++)
         {
             // +0 - это +coofAccuracy
-            if (random.NextDouble() <= (info.m_CurrentUnit.stats.Accuracy + 0) * (1 - enemy.stats.DodgeChance))
+            if (random.NextDouble() <= (info.currentUnit.stats.Accuracy + 0) * (1 - enemy.stats.DodgeChance))
                 // 1 - coofDamage
-                damage += (int)(info.m_CurrentUnit.stats.Damage * damageMultiplier);
+                damage += (int)(info.currentUnit.stats.Damage * damageMultiplier);
         }
 
         // 1 - armCoofDamage
@@ -70,6 +70,6 @@ public class AttackingAbility : UnitAbility
             enemy.stats.Health = 0;
         }
 
-        info.m_CurrentUnit.inBattleInfo.IsUsedAbility = true;
+        info.currentUnit.inBattleInfo.IsUsedAbility = true;
     }
 }

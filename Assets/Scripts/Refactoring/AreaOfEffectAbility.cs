@@ -9,14 +9,14 @@ public class AreaOfEffectAbility : AttackingAbility
 
     public override BattleInfo Use(BattleInfo info)
     {
-        var targetPoint = GameObjectToPoint(info.m_TargetCell);
+        var targetPoint = GameObjectToPoint(info.targetCell);
         for (int i = targetPoint.X; i < targetPoint.X + area && i < 7; i++)
         {
             for (int j = targetPoint.Y; j < targetPoint.Y + area && j < 7; j++)
             {
-                if (info._unitsPositions.ContainsKey(info.m_CellsGrid[i, j]))
+                if (info.UnitsPositions.ContainsKey(info.CellsGrid[i, j]))
                 {
-                    info.m_TargetCell = info.m_CellsGrid[i, j];
+                    info.targetCell = info.CellsGrid[i, j];
                     CalculateEnemyHealth(info);
                 }
             }

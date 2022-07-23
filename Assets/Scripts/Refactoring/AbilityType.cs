@@ -9,5 +9,6 @@ public enum AbilityType
     Basic,
     Moving,
     Attacking,
-    Healing
+    Healing,
+    Buff
 }
